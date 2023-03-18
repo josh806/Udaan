@@ -1,3 +1,9 @@
 # classzoom
 
-hello
+## Development
+
+### Git
+#### Commit
+```
+npm run commit
+```
