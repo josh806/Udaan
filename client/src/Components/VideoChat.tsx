@@ -1,4 +1,5 @@
- const VideoChat = ()=> {
+import React from "react";
+const VideoChat = () => {
    return (
      <>
        <div className="hello">

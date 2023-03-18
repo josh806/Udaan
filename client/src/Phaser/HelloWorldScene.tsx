@@ -26,7 +26,12 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 300, "sky").setScale(2.7);
+    let bg = this.add.image(400, 300, "sky");
+    bg.displayHeight = +this.sys.game.config.height;
+    bg.scaleX = bg.scaleY * 1.5;
+    bg.y = +this.sys.game.config.height / 2;
+    bg.x = +this.sys.game.config.width / 2;
+
     this.platforms = this.physics.add.staticGroup();
     this.platforms.create(400, 800, "ground").setScale(2).refreshBody();
     this.platforms.create(1200, 800, "ground").setScale(2).refreshBody();
@@ -87,6 +92,9 @@ export default class HelloWorldScene extends Phaser.Scene {
       undefined,
       this
     );
+    //cameras
+    this.cameras.main.setBounds(0,0, bg.displayWidth, bg.displayHeight);
+    this.cameras.main.startFollow(this.player);
   }
   private hitBomb(
     player: Phaser.GameObjects.GameObject,
@@ -115,13 +123,16 @@ export default class HelloWorldScene extends Phaser.Scene {
         child.enableBody(true, child.x, 0, true, true);
       });
       if (this.player) {
-
         let x =
           this.player.x < 400
             ? Phaser.Math.Between(400, 800)
             : Phaser.Math.Between(0, 400);
 
-        let bomb:Phaser.Physics.Arcade.Image = this.bombs?.create(x, 16, "bomb");
+        let bomb: Phaser.Physics.Arcade.Image = this.bombs?.create(
+          x,
+          16,
+          "bomb"
+        );
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
