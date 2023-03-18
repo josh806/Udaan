@@ -1,0 +1,30 @@
+{
+  "name": "classZoom",
+  "version": "1.0.0",
+  "description": "hello",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:js": "eslint . --ext .js",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josh806/classzoom.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josh806/classzoom/issues"
+  },
+  "homepage": "https://github.com/josh806/classzoom#readme",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "husky": "^8.0.0"
+  },
+  "dependencies": {
+    "commitizen": "^4.3.0"
+  }
+}
