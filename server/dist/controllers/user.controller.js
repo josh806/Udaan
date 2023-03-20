@@ -12,25 +12,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Creating user');
     const { firstName, lastName, email, username, student, schoolId } = req.body;
-    try {
-        const newUser = yield database_1.prisma.user.create({
-            data: {
-                firstName,
-                lastName,
-                email,
-                username,
-                student,
-                schoolId
-            }
-        });
-        res.status(201);
-        res.send(newUser);
+    if (firstName && lastName && email && username && student && schoolId) {
+        try {
+            const newUser = yield database_1.prisma.user.create({
+                data: {
+                    firstName,
+                    lastName,
+                    email,
+                    username,
+                    student,
+                    schoolId
+                }
+            });
+            res.status(201);
+            res.send(newUser);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500);
+            res.send('Server problem');
+        }
     }
-    catch (error) {
-        console.log(error);
-        res.status(300);
+    else {
+        res.status(404);
+        res.send('Parameter missing to create a new user');
     }
 });
 exports.createUser = createUser;

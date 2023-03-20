@@ -8,6 +8,8 @@ router.post('/users', userController.createUser);
 
 //school routes
 router.post('/school', schoolController.createSchool);
+router.get('/school/:id', schoolController.getUsers);
+router.get('/school/:id/subjects', schoolController.getSubjects);
 
 //subject routes
 
