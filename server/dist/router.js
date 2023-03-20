@@ -29,6 +29,8 @@ const schoolController = __importStar(require("./controllers/school.controller")
 const router = (0, express_1.Router)();
 //user routes
 router.post('/users', userController.createUser);
+router.get('/users/:schoolId/:id', userController.getUser);
+router.put('/users/:id', userController.userUpdate);
 //school routes
 router.post('/school', schoolController.createSchool);
 router.get('/school/:id', schoolController.getUsers);
