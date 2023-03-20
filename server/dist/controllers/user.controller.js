@@ -14,8 +14,15 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const createUser = yield prisma.user.create({
+            data: req.body,
+        });
+        res.status(200);
+        res.send(createUser);
     }
     catch (error) {
+        console.log(error);
+        res.status(300);
     }
 });
 exports.createUser = createUser;

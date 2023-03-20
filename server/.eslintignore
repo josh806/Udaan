@@ -2,3 +2,4 @@ node_modules
 *.json
 dist
 migrations
+schema.prisma
