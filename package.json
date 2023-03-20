@@ -30,7 +30,8 @@
     "husky": "^8.0.0"
   },
   "dependencies": {
-    "commitizen": "^4.3.0"
+    "commitizen": "^4.3.0",
+    "dotenv": "^16.0.3"
   },
   "config": {
     "commitizen": {

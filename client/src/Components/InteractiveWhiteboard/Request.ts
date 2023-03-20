@@ -1,10 +1,11 @@
-import env from './.env';
+import process from "process";
 
 const options = {
   method: "POST",
   url: "https://api.netless.link/v5/rooms",
   headers: {
-    token: process.env.APP_SDKTOKEN,
+    token:
+      "NETLESSSDK_YWs9Y2d4Y1NTVG1rN25neGpkSSZub25jZT1mYzY1NGIwMC1jNzE5LTExZWQtYWM2OS1mOTc2YTcxOTk1OWUmcm9sZT0wJnNpZz1hMTU0ZWRkZTM3ODAwYjBlNjY5Mzk4NjBiZGQxZDY0ZDMyMzIyMDkzMjFhOGI3ZTNlODkzNGJjYmYzNzRmYTli",
     "Content-Type": "application/json",
     region: "us-sv",
   },
@@ -13,15 +14,21 @@ const options = {
   }),
 };
 
-fetch(options.url, {
-  method: options.method,
-  headers: options.headers,
-  body: options.body,
-}).then((res) => {
+function createRoom() {
+  fetch(options.url, {
+    method: options.method,
+    headers: {
+      token: options.headers.token,
+      "Content-Type": options.headers["Content-Type"],
+      region: options.headers.region,
+    },
+    body: options.body,
+  }).then((res) => {
     res.json().then((data) => {
-    return data as any;
+      console.log(data);
+      return data as any;
     });
-});    
-        
+  });
+}
 
-export default Request;
+export default createRoom;
