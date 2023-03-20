@@ -1,22 +1,18 @@
-import React from "react";
-import Phaser from "./Phaser/Phaser";
-import "./App.css";
-import { useState } from "react";
-import VideoChat from "./Components/VideoChat";
+import React from 'react';
+import './App.css';
+import { useState } from 'react';
+import VideoChat from './Components/VideoChat';
 
 function App() {
   // example of chat component on top of phaser
   // to be implemented with redux.
   const [chat, setChat] = useState(false);
-  const scene = Phaser;
-  let ui: JSX.Element;
-
   return (
     <>
       {chat ? (
         <VideoChat />
       ) : (
-        <button className="open_chat" onClick={() => setChat(!chat)}>
+        <button className='open_chat' onClick={() => setChat(!chat)}>
           Show chat
         </button>
       )}
