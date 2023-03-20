@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
@@ -138,7 +138,7 @@ const createSchool = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 //User controller: 
 const createUser = async (req: Request, res: Response) => {
@@ -149,9 +149,9 @@ const createUser = async (req: Request, res: Response) => {
     res.status(201);
     res.send(newUser);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 
 const updateUserAvatar = async (req: Request, res: Response) => {
   try {
@@ -160,21 +160,21 @@ const updateUserAvatar = async (req: Request, res: Response) => {
       data: {
         avatar: req.body.avatar
       }
-    })
+    });
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const userToDelete = await prisma.user.delete({
       where: { id: req.body.id}
-    })
+    });
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 //Subject controller
 const createSubject = async (req: Request, res: Response) => {
@@ -187,7 +187,7 @@ const createSubject = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 
 //Lessons controllers
@@ -201,4 +201,4 @@ const createLesson = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
