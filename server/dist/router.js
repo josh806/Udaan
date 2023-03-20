@@ -25,7 +25,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const userController = __importStar(require("./controllers/user.controller"));
+const schoolController = __importStar(require("./controllers/school.controller"));
 const router = (0, express_1.Router)();
 //user routes
-router.get('/users', userController.createUser);
+router.post('/users', userController.createUser);
+//school routes
+router.post('/school', schoolController.createSchool);
+//subject routes
+//lessons routes
 exports.default = router;

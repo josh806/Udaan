@@ -9,28 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
+exports.createSchool = void 0;
 const database_1 = require("../database");
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Creating user');
-    const { firstName, lastName, email, username, student, schoolId } = req.body;
+const createSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('Creating school');
+    const { name, email } = req.body;
     try {
-        const newUser = yield database_1.prisma.user.create({
+        const newSchool = yield database_1.prisma.school.create({
             data: {
-                firstName,
-                lastName,
-                email,
-                username,
-                student,
-                schoolId
+                name,
+                email
             }
         });
         res.status(201);
-        res.send(newUser);
+        res.send(newSchool);
     }
     catch (error) {
         console.log(error);
         res.status(300);
     }
 });
-exports.createUser = createUser;
+exports.createSchool = createSchool;

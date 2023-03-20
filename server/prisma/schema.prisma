@@ -22,7 +22,7 @@ model User {
   username  String   @unique
   avatar    String?
   student   Boolean
-  school    School  @relation(fields: [schoolId], references: [id])
+  school    School?  @relation(fields: [schoolId], references: [id])
   schoolId  Int
 }
 model Subject {
