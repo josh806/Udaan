@@ -23,3 +23,19 @@ Run lint checker on `/client`
 ```
 npm run lint:client
 ```
+
+##### Fix
+Fix linting issues `/server` and `/client`
+```
+npm run lint:fix
+```
+
+Fix linting issues on `/server`
+```
+npm run lint:fix:server
+```
+
+Fix linting issues on `/client`
+```
+npm run lint:fix:client
+```
