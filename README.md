@@ -8,6 +8,13 @@ Run linter followed by `git cz`
 ```
 npm run commit
 ```
+#### BackEnd
+In `/server`:
+```
+npm start
+```
+Runs `tsc -w` and `nodemon` at the same time.
+
 #### linter
 Run lint checker on `/server` and `/client`
 ```
