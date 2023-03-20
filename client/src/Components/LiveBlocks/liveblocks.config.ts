@@ -1,4 +1,4 @@
-import { createClient, LiveObject } from "@liveblocks/client";
+import { createClient, LiveList, LiveObject } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 
 const client = createClient({
@@ -11,8 +11,10 @@ type Presence = {
 };
 
 type Storage = {
-    student: LiveObject<{ firstName: string; lastName: string }>;
+    student: LiveObject<{ firstName: string; lastName: string, subjects: string }>;
   };
 
 export const { RoomProvider, useOthers, useUpdateMyPresence, useStorage, useMutation, useUndo, useRedo } =
   createRoomContext<Presence, Storage>(client);
+
+  
