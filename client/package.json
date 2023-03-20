@@ -14,7 +14,9 @@
     "dotenv": "^16.0.3",
     "phaser": "^3.55.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "white-react-sdk": "^2.16.41",
+    "white-web-sdk": "^2.16.41"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

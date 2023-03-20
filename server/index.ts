@@ -3,6 +3,9 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import router from './router';
+import { prisma } from './controllers/user.controller';
+
+
 
 const PORT = process.env.PORT || 3001;
 

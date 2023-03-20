@@ -3,39 +3,52 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:Kerdada1109@localhost:5432/test"
 }
+
 model School {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  users     User[]
-  subjects  Subject[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String
+  users    User[]
+  subjects Subject[]
 }
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String   @unique
-  username  String   @unique
+  email     String  @unique
+  username  String  @unique
   avatar    String?
   student   Boolean
   school    School  @relation(fields: [schoolId], references: [id])
   schoolId  Int
+  Whiteboard      Whiteboard?   @relation(fields: [lastName], references: [id])
+  roomId    Int?
 }
+
 model Subject {
-  id        Int       @id @default(autoincrement())
-  name      String
-  lessons   Lesson[]
-  school    School  @relation(fields: [schoolId], references: [id])
-  schoolId  Int
+  id       Int      @id @default(autoincrement())
+  name     String
+  lessons  Lesson[]
+  school   School   @relation(fields: [schoolId], references: [id])
+  schoolId Int
 }
+
 model Lesson {
-  id         Int       @id @default(autoincrement())
-  name       String
-  material   String?
-  subject    Subject   @relation(fields: [subjectId], references: [id])
-  subjectId  Int
+  id        Int     @id @default(autoincrement())
+  name      String
+  material  String?
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  subjectId Int
+}
+
+model Whiteboard {
+  id   String @unique
+  name  String
+  users User[]
 }
