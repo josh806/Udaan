@@ -3,19 +3,22 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model School {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  users     User[]
-  subjects  Subject[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String
+  users    User[]
+  subjects Subject[]
 }
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   firstName String
   lastName  String
   email     String   @unique
@@ -24,36 +27,38 @@ model User {
   student   Boolean
   school    School?  @relation(fields: [schoolId], references: [id])
   schoolId  Int
-  lesson    Lesson[]
+  lessons   Lesson[]
   library   Library?
 }
 
 model Subject {
-  id        Int       @id @default(autoincrement())
-  name      String
-  lessons   Lesson[]
-  school    School  @relation(fields: [schoolId], references: [id])
-  schoolId  Int
+  id       Int      @id @default(autoincrement())
+  name     String
+  lessons  Lesson[]
+  school   School   @relation(fields: [schoolId], references: [id])
+  schoolId Int
 }
 
 model Lesson {
   id        Int       @id @default(autoincrement())
   name      String
   material  String?
-  subject   Subject   @relation(fields: [subjectId], references: [id])
-  subjectId Int
-  User      User?     @relation(fields: [userId], references: [id])
-  userId    Int?
   date      DateTime
   recording Boolean
+  subject   Subject   @relation(fields: [subjectId], references: [id])
+  subjectId Int
   library   Library[]
+  user      User[]
 }
 
 model Library {
-  id       Int    @id @default(autoincrement())
-  lesson   Lesson @relation(fields: [lessonId], references: [id])
-  lessonId Int
-  notes    Bytes
-  user     User   @relation(fields: [userId], references: [id])
-  userId   Int    @unique
+  id      Int      @id @default(autoincrement())
+  lessons Lesson[]
+  notes   Bytes
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String   @unique
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
 }

@@ -29,7 +29,7 @@ const schoolController = __importStar(require("./controllers/school.controller")
 const router = (0, express_1.Router)();
 //user routes
 router.post('/users', userController.createUser);
-router.get('/users', userController.getUser);
+router.get('/user/:email', userController.getUserById);
 router.put('/users/:id', userController.userUpdate);
 //school routes
 router.post('/school', schoolController.createSchool);
@@ -37,4 +37,5 @@ router.get('/school/:id', schoolController.getUsers);
 router.get('/school/:id/subjects', schoolController.getSubjects);
 //subject routes
 //lessons routes
+// 
 exports.default = router;

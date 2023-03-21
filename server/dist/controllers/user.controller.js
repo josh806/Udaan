@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userUpdate = exports.getUser = exports.createUser = void 0;
+exports.userUpdate = exports.getUserById = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName, email, username, student, schoolId } = req.body;
+    console.log(req.body);
     if (firstName && lastName && email && username && student && schoolId) {
         try {
             const newUser = yield database_1.prisma.user.create({
@@ -29,23 +30,20 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             res.send(newUser);
         }
         catch (error) {
-            console.log(error);
-            res.status(500);
-            res.send('Server problem');
+            console.error(error);
+            res.status(500).send({ error: 'Server problem' });
         }
     }
     else {
-        res.status(404);
-        res.send('Parameter missing to create a new user');
+        res.status(400).send('Parameter missing to create a new user');
     }
 });
 exports.createUser = createUser;
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email } = req.body;
+const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield database_1.prisma.user.findMany({
             where: {
-                email: email,
+                id: req.params,
             },
             select: {
                 firstName: true,
@@ -62,17 +60,16 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error(error);
-        res.status(404);
-        res.send('User not found');
+        res.status(404).send({ error: 'User not found' });
     }
 });
-exports.getUser = getUser;
+exports.getUserById = getUserById;
 const userUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     console.log(req.body);
     try {
         const user = yield database_1.prisma.user.update({
-            where: { id: Number(id) },
+            where: { id: String(id) },
             data: req.body
         });
         // const user = await prisma.school.update({
@@ -93,8 +90,7 @@ const userUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (error) {
         console.error(error);
-        res.status(404);
-        res.send('User not found');
+        res.status(404).send({ error: 'User not found' });
     }
 });
 exports.userUpdate = userUpdate;

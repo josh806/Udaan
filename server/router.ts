@@ -5,7 +5,7 @@ const router = Router();
 
 //user routes
 router.post('/users', userController.createUser);
-router.get('/users', userController.getUser);
+router.get('/user/:email', userController.getUserById);
 router.put('/users/:id', userController.userUpdate);
 
 //school routes
@@ -17,6 +17,6 @@ router.get('/school/:id/subjects', schoolController.getSubjects);
 
 
 //lessons routes
-
+// 
 
 export default router;

@@ -3,6 +3,7 @@ import { prisma } from '../database';
 
 const createUser = async (req: Request, res: Response) => {
   const { firstName, lastName, email, username, student, schoolId } = req.body;
+  console.log(req.body);
   if (firstName && lastName && email && username && student && schoolId) {
     try {
       const newUser = await prisma.user.create({
@@ -18,22 +19,19 @@ const createUser = async (req: Request, res: Response) => {
       res.status(201);
       res.send(newUser);
     } catch (error) {
-      console.log(error);
-      res.status(500);
-      res.send('Server problem');
+      console.error(error);
+      res.status(500).send({ error: 'Server problem' });
     }
   } else {
-    res.status(404);
-    res.send('Parameter missing to create a new user');
+    res.status(400).send('Parameter missing to create a new user');
   }
 };
 
-const getUser = async (req: Request, res: Response) => {
-  const { email } = req.body;
+const getUserById = async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findMany({
       where: { 
-        email : email, 
+        id : req.params, 
       },
       select: {
         firstName: true, 
@@ -49,8 +47,7 @@ const getUser = async (req: Request, res: Response) => {
     res.send(user);
   } catch (error) {
     console.error(error);
-    res.status(404);
-    res.send('User not found');
+    res.status(404).send({ error: 'User not found' });
   }
 };
 
@@ -61,7 +58,7 @@ const userUpdate = async (req: Request, res: Response) => {
   console.log(req.body);
   try {
     const user = await prisma.user.update({
-      where: {id: Number(id)},
+      where: {id: String(id)},
       data: req.body
     });
     // const user = await prisma.school.update({
@@ -81,9 +78,8 @@ const userUpdate = async (req: Request, res: Response) => {
     res.send(user);
   } catch (error) {
     console.error(error);
-    res.status(404);
-    res.send('User not found');
+    res.status(404).send({ error: 'User not found' });
   }
 };
 
-export { createUser, getUser, userUpdate };
+export { createUser, getUserById, userUpdate };

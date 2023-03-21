@@ -26,8 +26,8 @@ const createSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         catch (error) {
             console.log(error);
-            res.status(500);
             res.send('Server problem');
+            res.status(500).send({ error: 'User not found' });
         }
     }
     else {
