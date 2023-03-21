@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "npx eslint '**'",
+    "lint": "npx eslint .",
     "lint:fix": "npx eslint '**' --fix",
     "start:ts": "tsc -w",
     "start:js": "nodemon dist/index.js",
