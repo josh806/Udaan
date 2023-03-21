@@ -41,18 +41,20 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createUser = createUser;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { schoolId, id } = req.params;
+    const { email } = req.body;
     try {
-        const user = yield database_1.prisma.school.findMany({
+        const user = yield database_1.prisma.user.findMany({
             where: {
-                id: Number(schoolId)
+                email: email,
             },
-            include: {
-                users: {
-                    where: {
-                        id: Number(id)
-                    }
-                }
+            select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+                username: true,
+                avatar: true,
+                student: true,
+                school: true
             }
         });
         res.status(200);

@@ -29,18 +29,20 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getUser = async (req: Request, res: Response) => {
-  const { schoolId, id } = req.params;
+  const { email } = req.body;
   try {
-    const user = await prisma.school.findMany({
-      where: {
-        id: Number(schoolId)
+    const user = await prisma.user.findMany({
+      where: { 
+        email : email, 
       },
-      include: {
-        users: {
-          where: {
-            id: Number(id)
-          }
-        }
+      select: {
+        firstName: true, 
+        lastName: true, 
+        email: true, 
+        username: true, 
+        avatar: true, 
+        student: true, 
+        school: true
       }
     });
     res.status(200);
@@ -51,6 +53,8 @@ const getUser = async (req: Request, res: Response) => {
     res.send('User not found');
   }
 };
+
+
 
 const userUpdate = async (req: Request, res: Response) => {
   const { id } = req.params;
