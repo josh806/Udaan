@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "npx eslint .",
-    "lint:fix": "npx eslint '**' --fix"
+    "lint:fix": "npx eslint . --fix"
   },
   "dependencies": {
     "react": "^18.2.0",
