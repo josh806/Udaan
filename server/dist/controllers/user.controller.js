@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userUpdate = exports.getUserById = exports.createUser = void 0;
+exports.userUpdate = exports.getUserByIdOrUsername = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName, email, username, student, schoolId } = req.body;
@@ -39,7 +39,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createUser = createUser;
-const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserByIdOrUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield database_1.prisma.user.findMany({
             where: {
@@ -63,7 +63,7 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(404).send({ error: 'User not found' });
     }
 });
-exports.getUserById = getUserById;
+exports.getUserByIdOrUsername = getUserByIdOrUsername;
 const userUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     console.log(req.body);

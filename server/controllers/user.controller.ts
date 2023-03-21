@@ -27,7 +27,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const getUserById = async (req: Request, res: Response) => {
+const getUserByIdOrUsername = async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findMany({
       where: { 
@@ -50,8 +50,6 @@ const getUserById = async (req: Request, res: Response) => {
     res.status(404).send({ error: 'User not found' });
   }
 };
-
-
 
 const userUpdate = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -82,4 +80,4 @@ const userUpdate = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser, getUserById, userUpdate };
+export { createUser, getUserByIdOrUsername, userUpdate };

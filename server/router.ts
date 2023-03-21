@@ -5,7 +5,7 @@ const router = Router();
 
 //user routes
 router.post('/users', userController.createUser);
-router.get('/user/:email', userController.getUserById);
+router.get('/user/:email', userController.getUserByIdOrUsername);
 router.put('/users/:id', userController.userUpdate);
 
 //school routes
