@@ -6,7 +6,7 @@ const router = Router();
 
 //user routes
 router.get('/users', userController.createUser);
-router.post('/room/create', createWhiteboard);
+router.post('/whiteboard/create', createWhiteboard);
 router.post('/room/join/f7ef7cb0c74d11ed85245975e226531a', joinWhiteboard);
 
 export default router;

@@ -29,6 +29,6 @@ const whiteboard_controller_1 = require("./controllers/whiteboard.controller");
 const router = (0, express_1.Router)();
 //user routes
 router.get('/users', userController.createUser);
-router.post('/room/create', whiteboard_controller_1.createWhiteboard);
+router.post('/whiteboard/create', whiteboard_controller_1.createWhiteboard);
 router.post('/room/join/f7ef7cb0c74d11ed85245975e226531a', whiteboard_controller_1.joinWhiteboard);
 exports.default = router;
