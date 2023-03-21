@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userUpdate = exports.getUserByIdOrUsername = exports.createUser = void 0;
+exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName, email, username, student, schoolId } = req.body;
@@ -60,8 +60,7 @@ const getUserByIdOrUsername = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.getUserByIdOrUsername = getUserByIdOrUsername;
-const userUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
+const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const key = Object.keys(req.body)[0];
@@ -83,4 +82,4 @@ const userUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(400).send({ error: 'Could not update the user' });
     }
 });
-exports.userUpdate = userUpdate;
+exports.updateUser = updateUser;

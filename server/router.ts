@@ -6,7 +6,7 @@ const router = Router();
 //user routes
 router.post('/users', userController.createUser);
 router.get('/user/:unique', userController.getUserByIdOrUsername);
-router.put('/user/:id', userController.userUpdate);
+router.put('/user/:id', userController.updateUser);
 
 //school routes
 router.post('/school', schoolController.createSchool);

@@ -45,8 +45,7 @@ const getUserByIdOrUsername = async (req: Request, res: Response) => {
   }
 };
 
-const userUpdate = async (req: Request, res: Response) => {
-  console.log(req.body);
+const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const key = Object.keys(req.body)[0];
@@ -67,4 +66,4 @@ const userUpdate = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser, getUserByIdOrUsername, userUpdate };
+export { createUser, getUserByIdOrUsername, updateUser };
