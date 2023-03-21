@@ -25,6 +25,25 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     schoolId
                 }
             });
+            const newLibrary = yield database_1.prisma.library.create({
+                data: {
+                    userId: newUser.id
+                }
+            });
+            yield database_1.prisma.$transaction(newUser.lessons.map((lesson) => {
+                return database_1.prisma.lesson.update({
+                    where: {
+                        id: lesson.id
+                    },
+                    data: {
+                        library: {
+                            connect: {
+                                id: newLibrary.id
+                            }
+                        }
+                    }
+                });
+            }));
             res.status(201);
             res.send(newUser);
         }
