@@ -3,7 +3,6 @@ import { prisma } from '../database';
 
 const createUser = async (req: Request, res: Response) => {
   const { firstName, lastName, email, username, student, schoolId } = req.body;
-  console.log(req.body);
   if (firstName && lastName && email && username && student && schoolId) {
     try {
       const newUser = await prisma.user.create({
@@ -29,54 +28,42 @@ const createUser = async (req: Request, res: Response) => {
 
 const getUserByIdOrUsername = async (req: Request, res: Response) => {
   try {
-    const user = await prisma.user.findMany({
-      where: { 
-        id : req.params, 
-      },
-      select: {
-        firstName: true, 
-        lastName: true, 
-        email: true, 
-        username: true, 
-        avatar: true, 
-        student: true, 
-        school: true
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { id: req.params.unique }, 
+          { username: req.params.unique }, 
+        ]
       }
     });
-    res.status(200);
+    if (!user) { throw new Error(); }
     res.send(user);
+    res.status(200);
   } catch (error) {
     console.error(error);
-    res.status(404).send({ error: 'User not found' });
+    res.status(400).send({ error: 'User not found' });
   }
 };
 
 const userUpdate = async (req: Request, res: Response) => {
-  const { id } = req.params;
   console.log(req.body);
   try {
-    const user = await prisma.user.update({
-      where: {id: String(id)},
-      data: req.body
-    });
-    // const user = await prisma.school.update({
-    //   where: {
-    //     id: Number(schoolId)
-    //   },
-    //   include: {
-    //     users: {
-    //       where: {
-    //         id: Number(id)
-    //       },
-    //       take: req.body
-    //     }
-    //   }
-    // });
-    res.status(200);
-    res.send(user);
+    const { id } = req.params;
+    const key = Object.keys(req.body)[0];
+    console.log(key);
+    if (key !== 'email' && key !== 'student' && key !== 'schoolId' ) {
+      const user = await prisma.user.update({
+        where: { id: String(id) },
+        data: req.body
+      });
+      res.status(200);
+      res.send(user);
+    } else {
+      res.status(401).send({ error: 'Cannot update this property' });
+    }
   } catch (error) {
     console.error(error);
-    res.status(404).send({ error: 'User not found' });
+    res.status(400).send({ error: 'Could not update the user' });
   }
 };
 
