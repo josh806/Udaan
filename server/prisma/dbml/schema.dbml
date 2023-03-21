@@ -26,7 +26,7 @@ Table User {
 
 Table Subject {
   id Int [pk, increment]
-  name String [not null]
+  name String [unique, not null]
   lessons Lesson [not null]
   school School [not null]
   schoolId Int [not null]

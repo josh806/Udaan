@@ -4,7 +4,7 @@ import { prisma } from '../database';
 
 const createUser = async (req: Request, res: Response) => {
   const { firstName, lastName, email, username, student, schoolId } = req.body;
-  if (firstName && lastName && email && username && student && schoolId) {
+  if (firstName && lastName && email && username && student !== undefined && schoolId) {
     try {
       const newUser = await prisma.user.create({
         data: {
@@ -17,40 +17,39 @@ const createUser = async (req: Request, res: Response) => {
         }
       });
 
-      const newLibrary = await prisma.library.create({
-        data: {
-          userId: newUser.id
-        }
-      });
+      // const newLibrary = await prisma.library.create({
+      //   data: {
+      //     userId: newUser.id
+      //   }
+      // });
 
-      await prisma.$transaction(
-        newUser.lessons.map((lesson) => {
-          return prisma.lesson.update({
-            where: {
-              id: lesson.id
-            },
-            data: {
-              library: {
-                connect: {
-                  id: newLibrary.id
-                }
-              }
-            }
-          });
-        })
-      );
+      // await prisma.$transaction(
+      //   newUser.lessons.map((lesson) => {
+      //     return prisma.lesson.update({
+      //       where: {
+      //         id: lesson.id
+      //       },
+      //       data: {
+      //         library: {
+      //           connect: {
+      //             id: newLibrary.id
+      //           }
+      //         }
+      //       }
+      //     });
+      //   })
+      // );
 
       res.status(201);
       res.send(newUser);
     } catch (error) {
       console.error(error);
-      res.status(500).send({ error: 'Server problem' });
+      res.status(500).send({ error: error });
     }
   } else {
     res.status(400).send('Parameter missing to create a new user');
   }
 };
-
 
 
 const getUserByIdOrUsername = async (req: Request, res: Response) => {
@@ -76,7 +75,6 @@ const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const key = Object.keys(req.body)[0];
-    console.log(key);
     if (key !== 'email' && key !== 'student' && key !== 'schoolId' ) {
       const user = await prisma.user.update({
         where: { id: String(id) },

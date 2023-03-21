@@ -30,7 +30,7 @@ const subjectController = __importStar(require("./controllers/subject.controller
 const lessonController = __importStar(require("./controllers/lesson.controller"));
 const router = (0, express_1.Router)();
 //user routes
-router.post('/users', userController.createUser);
+router.post('/user', userController.createUser);
 router.get('/user/:unique', userController.getUserByIdOrUsername);
 router.put('/user/:id', userController.updateUser);
 //school routes

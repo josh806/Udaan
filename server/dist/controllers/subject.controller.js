@@ -13,7 +13,6 @@ exports.createSubject = void 0;
 const database_1 = require("../database");
 const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, schoolId } = req.body;
-    console.log(req.body);
     if (name && schoolId) {
         try {
             const newSubject = yield database_1.prisma.subject.create({
@@ -27,7 +26,7 @@ const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         catch (error) {
             console.error(error);
-            res.status(500).send({ error: 'Server problem' });
+            res.status(500).send({ error: error });
         }
     }
     else {

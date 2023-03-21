@@ -14,7 +14,7 @@ const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, recording, subjectId } = req.body;
     console.log(req.body);
-    if (name && subjectId) {
+    if (name && subjectId && recording !== undefined) {
         try {
             const newLesson = yield database_1.prisma.lesson.create({
                 data: {
@@ -29,7 +29,7 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         catch (error) {
             console.error(error);
-            res.status(500).send({ error: 'Server problem' });
+            res.status(500).send({ error: error });
         }
     }
     else {

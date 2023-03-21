@@ -6,7 +6,7 @@ import * as lessonController from './controllers/lesson.controller';
 const router = Router();
 
 //user routes
-router.post('/users', userController.createUser);
+router.post('/user', userController.createUser);
 router.get('/user/:unique', userController.getUserByIdOrUsername);
 router.put('/user/:id', userController.updateUser);
 
@@ -17,7 +17,6 @@ router.get('/school/:id/subjects', schoolController.getSubjects);
 
 //subject routes
 router.post('/subject', subjectController.createSubject);
-
 
 //lessons routes
 router.post('/lesson', lessonController.createLesson);

@@ -13,7 +13,7 @@ exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName, email, username, student, schoolId } = req.body;
-    if (firstName && lastName && email && username && student && schoolId) {
+    if (firstName && lastName && email && username && student !== undefined && schoolId) {
         try {
             const newUser = yield database_1.prisma.user.create({
                 data: {
@@ -25,31 +25,33 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     schoolId
                 }
             });
-            const newLibrary = yield database_1.prisma.library.create({
-                data: {
-                    userId: newUser.id
-                }
-            });
-            yield database_1.prisma.$transaction(newUser.lessons.map((lesson) => {
-                return database_1.prisma.lesson.update({
-                    where: {
-                        id: lesson.id
-                    },
-                    data: {
-                        library: {
-                            connect: {
-                                id: newLibrary.id
-                            }
-                        }
-                    }
-                });
-            }));
+            // const newLibrary = await prisma.library.create({
+            //   data: {
+            //     userId: newUser.id
+            //   }
+            // });
+            // await prisma.$transaction(
+            //   newUser.lessons.map((lesson) => {
+            //     return prisma.lesson.update({
+            //       where: {
+            //         id: lesson.id
+            //       },
+            //       data: {
+            //         library: {
+            //           connect: {
+            //             id: newLibrary.id
+            //           }
+            //         }
+            //       }
+            //     });
+            //   })
+            // );
             res.status(201);
             res.send(newUser);
         }
         catch (error) {
             console.error(error);
-            res.status(500).send({ error: 'Server problem' });
+            res.status(500).send({ error: error });
         }
     }
     else {
@@ -83,7 +85,6 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { id } = req.params;
         const key = Object.keys(req.body)[0];
-        console.log(key);
         if (key !== 'email' && key !== 'student' && key !== 'schoolId') {
             const user = yield database_1.prisma.user.update({
                 where: { id: String(id) },
