@@ -8,13 +8,13 @@ const router = Router();
 
 //user routes
 router.post('/user/:id', userController.createUser);
-router.get('/userId/:id', userController.getUserById);
-router.get('/userUsername/:username', userController.getUserByUsername);
+router.get('/user/:id/id', userController.getUserById);
+router.get('/user/:username/username', userController.getUserByUsername);
 router.put('/user/:id', userController.updateUser);
 
 //school routes
 router.post('/school', schoolController.createSchool);
-router.get('/school/:id', schoolController.getUsers);
+router.get('/school/:id/users', schoolController.getUsers);
 router.get('/school/:id/subjects', schoolController.getSubjects);
 
 //subject routes

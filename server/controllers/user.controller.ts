@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 
@@ -35,7 +35,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 
-const getUserById = async (req: Request, res: Response, next: NextFunction) => {
+const getUserById = async (req: Request, res: Response) => {
   console.log(req.params);
   try {
     const user = await prisma.user.findUnique({
