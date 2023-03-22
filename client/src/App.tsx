@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import AuthLogin from './auth/AuthLoginBtn';
 import AuthLogoutBtn from './auth/AuthLogoutBtn';
 import * as pages from './pages';
 import './App.css';
-import Phaser from './Phaser/Phaser';
-
-const scene = Phaser;
+import PhaserRoot from './Phaser/Phaser';
 
 function App() {
   const { isAuthenticated } = useAuth0();
+  const [render, setRender] = useState(true);
 
   return (
     <>
+      {render ? (
+        <div className='hello'>
+          <div>
+            <button onClick={() => setRender(!render)}>Heloo there</button>
+          </div>
+          <div>All chat details goes</div>
+        </div>
+      ) : (
+        <PhaserRoot />
+      )}
       {/* <Routes>
         <Route
           path="/"
