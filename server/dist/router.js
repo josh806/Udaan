@@ -26,15 +26,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const userController = __importStar(require("./controllers/user.controller"));
 const schoolController = __importStar(require("./controllers/school.controller"));
+const subjectController = __importStar(require("./controllers/subject.controller"));
+const lessonController = __importStar(require("./controllers/lesson.controller"));
 const router = (0, express_1.Router)();
 //user routes
-router.post('/users', userController.createUser);
-router.get('/users', userController.getUser);
-router.put('/users/:id', userController.userUpdate);
+router.post('/user', userController.createUser);
+router.get('/user/:unique', userController.getUserByIdOrUsername);
+router.put('/user/:id', userController.updateUser);
+router.put('/user/:id/:lessonId', userController.addLessonId);
 //school routes
 router.post('/school', schoolController.createSchool);
 router.get('/school/:id', schoolController.getUsers);
 router.get('/school/:id/subjects', schoolController.getSubjects);
 //subject routes
+router.post('/subject', subjectController.createSubject);
 //lessons routes
+router.post('/lesson', lessonController.createLesson);
 exports.default = router;
+// const user = await prisma.user.findUnique({
+//   where: {
+//     email: 'eloise@prisma.io',
+//   },
+// })
+// if (user) {
+//   console.log(user.coinflips)
+//   user.coinflips.push(true, true, false)
+//   const updatedUser = await prisma.user.update({
+//     where: {
+//       email: 'eloise@prisma.io',
+//     },
+//     data: {
+//       coinflips: user.coinflips,
+//     },
+//   })
+//   console.log(updatedUser.coinflips)
+// }

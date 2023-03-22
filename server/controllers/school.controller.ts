@@ -15,8 +15,8 @@ const createSchool = async (req: Request, res: Response) => {
       res.send(newSchool);
     } catch (error) {
       console.log(error);
-      res.status(500);
       res.send('Server problem');
+      res.status(500).send({ error: 'User not found' });
     }
   } else {
     res.status(404);
@@ -39,8 +39,7 @@ const getUsers = async (req: Request, res: Response) => {
     res.send(users);
   } catch (error) {
     console.error(error);
-    res.status(404);
-    res.send('Cant find school ID');
+    res.status(404).send({ error: 'Cant find school ID' });
   }
 };
 
@@ -59,8 +58,7 @@ const getSubjects = async (req: Request, res: Response) => {
     res.send(subjects);
   } catch (error) {
     console.error(error);
-    res.status(404);
-    res.send('Cant find school ID');
+    res.status(404).send({ error: 'Cant find school ID' });
   }
 };
 
