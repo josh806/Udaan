@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import AuthRequired from './AuthRequired';
+
+import Profile from '../features/Profile';
+
 import VideoChat from '../components/VideoChat';
 import BasicModal from '../components/BasicModal';
 
@@ -32,7 +35,9 @@ const School = () => {
   return (
     <AuthRequired>
       <>
-        <BasicModal buttonLabel="My profile"></BasicModal>
+        <BasicModal buttonLabel="My profile">
+          <Profile />
+        </BasicModal>
         {chat ? (
           <VideoChat />
         ) : (

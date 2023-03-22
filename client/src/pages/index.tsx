@@ -1,5 +1,5 @@
 import Home from './Home';
-import Profile from './Profile';
+import Profile from '../features/Profile';
 import School from './School';
 import NotFound from './NotFound';
 

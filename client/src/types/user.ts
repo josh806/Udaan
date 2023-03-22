@@ -4,5 +4,6 @@ export type User = {
   email: string;
   username: string;
   student: boolean;
+  newUser?: boolean;
   schoolId?: number;
 };
