@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import { useAuth0 } from '@auth0/auth0-react';
 import AuthRequired from './AuthRequired';
 import VideoChat from '../components/VideoChat';
-
+import PhaserRoot from '../Phaser/Phaser';
 const School = () => {
   /* 
   IF user doesn't exist, 
@@ -13,18 +13,20 @@ const School = () => {
 
   const [chat, setChat] = useState(false);
   return (
-    <AuthRequired>
-      {chat ? (
-        <VideoChat />
-      ) : (
-        <button
-          className="open_chat"
-          onClick={() => setChat(!chat)}
-        >
-          Show chat
-        </button>
-      )}
-    </AuthRequired>
+    <>
+      <AuthRequired>
+        {chat ? (
+          <VideoChat />
+        ) : (
+          <>
+            <button className='open_chat' onClick={() => setChat(!chat)}>
+              Show chat
+            </button>
+            <PhaserRoot />
+          </>
+        )}
+      </AuthRequired>
+    </>
   );
 };
 
