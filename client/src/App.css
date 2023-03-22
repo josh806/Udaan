@@ -11,3 +11,10 @@
   position: absolute;
   top: 100px;
 }
+
+._form {
+    padding: 1rem;
+}
+._form__field{
+  width: 100%;
+}
