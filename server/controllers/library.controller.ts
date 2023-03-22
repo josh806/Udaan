@@ -2,11 +2,10 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const addLessonId = async (req: Request, res: Response) => {
-  console.log(req.params);
   try {
     const library = await prisma.library.findUnique({
       where: {
-        id: req.params.id,
+        id: +req.params.libraryId,
       },
       select: {
         lessons: true,
@@ -15,9 +14,9 @@ const addLessonId = async (req: Request, res: Response) => {
     if (!library) { throw new Error(); }
     console.log(library);
     const lessonIds = library.lessons.map(el => ({ id: el.id }));
-    const updatedLibrary = await prisma.user.update({
+    const updatedLibrary = await prisma.library.update({
       where: {
-        id: req.params.id,
+        id: +req.params.libraryId,
       },
       data: {
         lessons: {
@@ -25,7 +24,6 @@ const addLessonId = async (req: Request, res: Response) => {
         }
       }
     });
-    console.log(updatedLibrary);
     res.send(updatedLibrary);
     res.status(200);
   } catch (error) {

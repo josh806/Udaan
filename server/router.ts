@@ -23,38 +23,6 @@ router.post('/subject', subjectController.createSubject);
 router.post('/lesson', lessonController.createLesson);
 
 //library routes
-router.put('/user/:id/:lessonId', libraryController.addLessonId);
+router.put('/library/:libraryId/:lessonId', libraryController.addLessonId);
 
 export default router;
-
-
-
-
-
-
-
-
-
-
-// const user = await prisma.user.findUnique({
-//   where: {
-//     email: 'eloise@prisma.io',
-//   },
-// })
-
-// if (user) {
-//   console.log(user.coinflips)
-
-//   user.coinflips.push(true, true, false)
-
-//   const updatedUser = await prisma.user.update({
-//     where: {
-//       email: 'eloise@prisma.io',
-//     },
-//     data: {
-//       coinflips: user.coinflips,
-//     },
-//   })
-
-//   console.log(updatedUser.coinflips)
-// }

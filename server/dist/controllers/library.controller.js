@@ -12,11 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params);
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
-                id: req.params.id,
+                id: +req.params.libraryId,
             },
             select: {
                 lessons: true,
@@ -27,9 +26,9 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
         console.log(library);
         const lessonIds = library.lessons.map(el => ({ id: el.id }));
-        const updatedLibrary = yield database_1.prisma.user.update({
+        const updatedLibrary = yield database_1.prisma.library.update({
             where: {
-                id: req.params.id,
+                id: +req.params.libraryId,
             },
             data: {
                 lessons: {
@@ -37,7 +36,6 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 }
             }
         });
-        console.log(updatedLibrary);
         res.send(updatedLibrary);
         res.status(200);
     }
