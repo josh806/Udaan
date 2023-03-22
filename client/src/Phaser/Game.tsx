@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
+import { store } from '../redux/store';
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -9,6 +10,7 @@ export default class Game extends Phaser.Scene {
   private textBox!: Phaser.GameObjects.Rectangle;
   private collisionCounter = 0;
   private checkCollisions = false;
+  private userName!: string;
 
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
@@ -36,6 +38,8 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
+    const user = store.getState();
+    this.userName = user.users.name;
     this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
@@ -91,10 +95,15 @@ export default class Game extends Phaser.Scene {
 
           this.cameras.main.startFollow(this.currentPlayer);
           this.playerName = this.add
-            .text(this.currentPlayer.x + 8, this.currentPlayer.y + 32, 'josh', {
-              fontFamily: 'Arial',
-              color: '#fff',
-            })
+            .text(
+              this.currentPlayer.x + 8,
+              this.currentPlayer.y + 32,
+              this.userName,
+              {
+                fontFamily: 'Arial',
+                color: '#fff',
+              }
+            )
             .setVisible(true)
             .setOrigin(0.5)
             .setFontSize(16);

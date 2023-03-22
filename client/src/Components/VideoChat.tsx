@@ -2,7 +2,7 @@ import React from 'react';
 const VideoChat = () => {
   return (
     <>
-      <div className="hello">
+      <div className='hello'>
         <div>
           <button>Heloo there</button>
         </div>
