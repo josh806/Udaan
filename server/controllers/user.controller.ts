@@ -3,11 +3,13 @@ import { prisma } from '../database';
 
 
 const createUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
   const { firstName, lastName, email, username, student, schoolId } = req.body;
   if (firstName && lastName && email && username && student !== undefined && schoolId) {
     try {
       const newUser = await prisma.user.create({
         data: {
+          id,
           firstName, 
           lastName,
           email,
@@ -16,30 +18,10 @@ const createUser = async (req: Request, res: Response) => {
           schoolId,
         }
       });
-
-      // const newLibrary = await prisma.library.create({
-      //   data: {
-      //     userId: newUser.id
-      //   }
-      // });
-
-      // await prisma.$transaction(
-      //   newUser.lessons.map((lesson) => {
-      //     return prisma.lesson.update({
-      //       where: {
-      //         id: lesson.id
-      //       },
-      //       data: {
-      //         library: {
-      //           connect: {
-      //             id: newLibrary.id
-      //           }
-      //         }
-      //       }
-      //     });
-      //   })
-      // );
-
+      const library = {
+        userId: newUser?.id
+      };
+      await prisma.library.create({ data : library });
       res.status(201);
       res.send(newUser);
     } catch (error) {
@@ -91,38 +73,5 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-const addLessonId = async (req: Request, res: Response) => {
-  console.log(req.params);
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: req.params.id,
-      },
-      select: {
-        lessons: true,
-      }
-    });
-    if (!user) { throw new Error(); }
-    console.log(user);
-    const lessonIds = user.lessons.map(el => ({ id: el.id }));
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: req.params.id,
-      },
-      data: {
-        lessons: {
-          set : [...lessonIds, {id: +req.params.lessonId}]
-        }
-      }
-    });
-    console.log(updatedUser);
-    res.send(updatedUser);
-    res.status(200);
-  } catch (error) {
-    console.error(error);
-    res.status(400).send({ error: error });
-  }
-};
 
-
-export { createUser, getUserByIdOrUsername, updateUser, addLessonId };
+export { createUser, getUserByIdOrUsername, updateUser };

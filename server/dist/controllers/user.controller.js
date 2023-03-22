@@ -9,14 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addLessonId = exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0;
+exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
     const { firstName, lastName, email, username, student, schoolId } = req.body;
     if (firstName && lastName && email && username && student !== undefined && schoolId) {
         try {
             const newUser = yield database_1.prisma.user.create({
                 data: {
+                    id,
                     firstName,
                     lastName,
                     email,
@@ -25,27 +27,10 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     schoolId,
                 }
             });
-            // const newLibrary = await prisma.library.create({
-            //   data: {
-            //     userId: newUser.id
-            //   }
-            // });
-            // await prisma.$transaction(
-            //   newUser.lessons.map((lesson) => {
-            //     return prisma.lesson.update({
-            //       where: {
-            //         id: lesson.id
-            //       },
-            //       data: {
-            //         library: {
-            //           connect: {
-            //             id: newLibrary.id
-            //           }
-            //         }
-            //       }
-            //     });
-            //   })
-            // );
+            const library = {
+                userId: newUser === null || newUser === void 0 ? void 0 : newUser.id
+            };
+            yield database_1.prisma.library.create({ data: library });
             res.status(201);
             res.send(newUser);
         }
@@ -103,39 +88,3 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateUser = updateUser;
-const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params);
-    try {
-        const user = yield database_1.prisma.user.findUnique({
-            where: {
-                id: req.params.id,
-            },
-            select: {
-                lessons: true,
-            }
-        });
-        if (!user) {
-            throw new Error();
-        }
-        console.log(user);
-        const lessonIds = user.lessons.map(el => ({ id: el.id }));
-        const updatedUser = yield database_1.prisma.user.update({
-            where: {
-                id: req.params.id,
-            },
-            data: {
-                lessons: {
-                    set: [...lessonIds, { id: +req.params.lessonId }]
-                }
-            }
-        });
-        console.log(updatedUser);
-        res.send(updatedUser);
-        res.status(200);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(400).send({ error: error });
-    }
-});
-exports.addLessonId = addLessonId;

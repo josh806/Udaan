@@ -57,6 +57,12 @@ CREATE TABLE "_LessonToLibrary" (
     "B" INTEGER NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "_LessonToUser" (
+    "A" INTEGER NOT NULL,
+    "B" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -75,6 +81,12 @@ CREATE UNIQUE INDEX "_LessonToLibrary_AB_unique" ON "_LessonToLibrary"("A", "B")
 -- CreateIndex
 CREATE INDEX "_LessonToLibrary_B_index" ON "_LessonToLibrary"("B");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "_LessonToUser_AB_unique" ON "_LessonToUser"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_LessonToUser_B_index" ON "_LessonToUser"("B");
+
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "School"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -92,3 +104,9 @@ ALTER TABLE "_LessonToLibrary" ADD CONSTRAINT "_LessonToLibrary_A_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "_LessonToLibrary" ADD CONSTRAINT "_LessonToLibrary_B_fkey" FOREIGN KEY ("B") REFERENCES "Library"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_LessonToUser" ADD CONSTRAINT "_LessonToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Lesson"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_LessonToUser" ADD CONSTRAINT "_LessonToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

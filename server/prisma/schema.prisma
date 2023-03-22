@@ -27,6 +27,7 @@ model User {
   student   Boolean
   school    School?  @relation(fields: [schoolId], references: [id])
   schoolId  Int
+  lessons   Lesson[]
   library   Library?
 }
 
@@ -47,6 +48,7 @@ model Lesson {
   subject   Subject   @relation(fields: [subjectId], references: [id])
   subjectId Int
   library   Library[]
+  user      User[]
 }
 
 model Library {

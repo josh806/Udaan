@@ -20,6 +20,7 @@ Table User {
   student Boolean [not null]
   school School
   schoolId Int [not null]
+  lessons Lesson [not null]
   library Library
 }
 
@@ -40,6 +41,7 @@ Table Lesson {
   subject Subject [not null]
   subjectId Int [not null]
   library Library [not null]
+  user User [not null]
 }
 
 Table Library {
