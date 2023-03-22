@@ -14,6 +14,9 @@ const createUser = async (req: Request, res: Response) => {
           username,
           student, 
           schoolId,
+          // lessons: {
+          //   create: [],
+          // }
         }
       });
 
@@ -94,38 +97,38 @@ const updateUser = async (req: Request, res: Response) => {
 const addLessonId = async (req: Request, res: Response) => {
   console.log(req.params);
   try {
-    const user = await prisma.user.update({
-    // const user = await prisma.user.findUnique({
+    // const user = await prisma.user.update({
+    const user = await prisma.user.findUnique({
 
       where: {
         id: req.params.id,
       },
-      data: {
-        lessons: {
-          push: 1223,
-        },
-      },
-      // select: {
-      //   lessons: true,
-      // }
+      // data: {
+      //   lessons: { upsert: {id: 3}},
+      // },
+      select: {
+        lessons: true,
+      }
     });
     if (!user) { throw new Error(); }
     // if (user) {
     console.log(user);
+    const lessonIds = user.lessons.map(el => ({ id: el.id }));
     //   // user.lesson.push(req.params.lessonId);
-    //   const updatedUser = await prisma.user.update({
-    //     data: {
-    //       lessons: {
-    //         set : [...user.lessons, req.params]
-    //       }
-    //     },
-    //     where: {
-    //       id: req.params.id,
-    //     },
-    //   });
+    const updatedUser = await prisma.user.update({
+      data: {
+        lessons: {
+          set : [...lessonIds, {id: +req.params.lessonId}]
+        }
+      },
+      where: {
+        id: req.params.id,
+      },
+    });
     //   // console.log(updatedUser);
     //   res.send(updatedUser);
     // }
+    res.send(updatedUser);
     res.status(200);
   } catch (error) {
     console.error(error);
