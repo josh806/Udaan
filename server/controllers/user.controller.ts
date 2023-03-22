@@ -3,11 +3,14 @@ import { prisma } from '../database';
 
 
 const createUser = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, username, student, schoolId } = req.body;
+  const { id } = req.params;
+  const { firstName, lastName, email, student, schoolId } = req.body;
+  const username = req.body.username.toLowerCase().trim();
   if (firstName && lastName && email && username && student !== undefined && schoolId) {
     try {
       const newUser = await prisma.user.create({
         data: {
+          id,
           firstName, 
           lastName,
           email,
@@ -16,30 +19,10 @@ const createUser = async (req: Request, res: Response) => {
           schoolId,
         }
       });
-
-      // const newLibrary = await prisma.library.create({
-      //   data: {
-      //     userId: newUser.id
-      //   }
-      // });
-
-      // await prisma.$transaction(
-      //   newUser.lessons.map((lesson) => {
-      //     return prisma.lesson.update({
-      //       where: {
-      //         id: lesson.id
-      //       },
-      //       data: {
-      //         library: {
-      //           connect: {
-      //             id: newLibrary.id
-      //           }
-      //         }
-      //       }
-      //     });
-      //   })
-      // );
-
+      const library = {
+        userId: newUser?.id
+      };
+      await prisma.library.create({ data : library });
       res.status(201);
       res.send(newUser);
     } catch (error) {
@@ -63,7 +46,13 @@ const getUserByIdOrUsername = async (req: Request, res: Response) => {
       }
     });
     if (!user) { throw new Error(); }
-    res.send(user);
+    console.log(req.params);
+    if (Object.keys(req.params)[0] == 'id') {
+      res.send(user);
+    } else if (Object.keys(req.params)[0] == 'username') {
+      res.send('username exists');
+    }
+    res.send('ok');
     res.status(200);
   } catch (error) {
     console.error(error);
@@ -91,48 +80,5 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-const addLessonId = async (req: Request, res: Response) => {
-  console.log(req.params);
-  try {
-    const user = await prisma.user.update({
-    // const user = await prisma.user.findUnique({
 
-      where: {
-        id: req.params.id,
-      },
-      data: {
-        lessons: {
-          push: 1223,
-        },
-      },
-      // select: {
-      //   lessons: true,
-      // }
-    });
-    if (!user) { throw new Error(); }
-    // if (user) {
-    console.log(user);
-    //   // user.lesson.push(req.params.lessonId);
-    //   const updatedUser = await prisma.user.update({
-    //     data: {
-    //       lessons: {
-    //         set : [...user.lessons, req.params]
-    //       }
-    //     },
-    //     where: {
-    //       id: req.params.id,
-    //     },
-    //   });
-    //   // console.log(updatedUser);
-    //   res.send(updatedUser);
-    // }
-    res.status(200);
-  } catch (error) {
-    console.error(error);
-    res.status(400).send({ error: error });
-  }
-};
-// router.put('/user/:id/:lessonId', userController.addLessonId);
-
-
-export { createUser, getUserByIdOrUsername, updateUser, addLessonId };
+export { createUser, getUserByIdOrUsername, updateUser };

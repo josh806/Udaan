@@ -12,8 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSubjects = exports.getUsers = exports.createSchool = void 0;
 const database_1 = require("../database");
 const createSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const name = req.body.name.toLowerCase().trim();
-    const email = req.body.email;
+    const { name, email } = req.body;
     if (name && email) {
         try {
             const newSchool = yield database_1.prisma.school.create({
@@ -27,6 +26,7 @@ const createSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         catch (error) {
             console.log(error);
+            res.send('Server problem');
             res.status(500).send({ error: 'User not found' });
         }
     }
