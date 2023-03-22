@@ -4,8 +4,8 @@
 
 Table School {
   id Int [pk, increment]
-  name String [not null]
-  email String [not null]
+  name String [unique, not null]
+  email String [unique, not null]
   users User [not null]
   subjects Subject [not null]
 }
