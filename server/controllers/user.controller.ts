@@ -30,13 +30,13 @@ const createUser = async (req: Request, res: Response) => {
       res.status(500).send({ error: error });
     }
   } else {
-    res.status(400).send('Parameter missing to create a new user');
+    console.log('parameter missing');
+    res.status(400).send({ error: 'Submitting form wrong' });
   }
 };
 
 
 const getUserById = async (req: Request, res: Response) => {
-  console.log(req.params);
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -60,7 +60,7 @@ const getUserByUsername = async (req: Request, res: Response) => {
       }, 
     });
     if (!user) { throw new Error(); }
-    res.send(user);
+    res.send({username: req.params.username});
     res.status(200);
   } catch (error) {
     console.error(error);
@@ -71,17 +71,19 @@ const getUserByUsername = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const key = Object.keys(req.body)[0];
-    if (key !== 'email' && key !== 'student' && key !== 'schoolId' ) {
-      const user = await prisma.user.update({
-        where: { id: String(id) },
-        data: req.body
-      });
-      res.status(200);
-      res.send(user);
-    } else {
-      res.status(401).send({ error: 'Cannot update this property' });
-    }
+    const data = req.body;
+    delete data['email'];
+    delete data['id'];
+    delete data['schoolId'];
+    delete data['student'];
+
+    const user = await prisma.user.update({
+      where: { id: String(id) },
+      data: data
+    });
+    res.status(200);
+    res.send(user);
+
   } catch (error) {
     console.error(error);
     res.status(400).send({ error: 'Could not update the user' });
