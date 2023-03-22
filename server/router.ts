@@ -8,7 +8,8 @@ const router = Router();
 
 //user routes
 router.post('/user/:id', userController.createUser);
-router.get('/user/:unique', userController.getUserByIdOrUsername);
+router.get('/userId/:id', userController.getUserById);
+router.get('/userUsername/:username', userController.getUserByUsername);
 router.put('/user/:id', userController.updateUser);
 
 //school routes

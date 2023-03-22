@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { prisma } from '../database';
 
 
@@ -35,24 +35,32 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 
-const getUserByIdOrUsername = async (req: Request, res: Response) => {
+const getUserById = async (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.params);
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
-        OR: [
-          { id: req.params.unique }, 
-          { username: req.params.unique }, 
-        ]
-      }
+        id: req.params.id
+      }, 
     });
     if (!user) { throw new Error(); }
-    console.log(req.params);
-    if (Object.keys(req.params)[0] == 'id') {
-      res.send(user);
-    } else if (Object.keys(req.params)[0] == 'username') {
-      res.send('username exists');
-    }
-    res.send('ok');
+    res.send(user);
+    res.status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ error: 'User not found' });
+  }
+};
+
+const getUserByUsername = async (req: Request, res: Response) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: req.params.username
+      }, 
+    });
+    if (!user) { throw new Error(); }
+    res.send(user);
     res.status(200);
   } catch (error) {
     console.error(error);
@@ -81,4 +89,4 @@ const updateUser = async (req: Request, res: Response) => {
 };
 
 
-export { createUser, getUserByIdOrUsername, updateUser };
+export { createUser, getUserById, getUserByUsername, updateUser };
