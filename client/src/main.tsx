@@ -7,17 +7,17 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Auth0Provider
+    {/* <Auth0Provider
       domain={import.meta.env.VITE_AUTH0_DOMAIN}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
         redirect_uri:
           window.location.origin + import.meta.env.VITE_AUTH0_RETURN_URL,
       }}
-    >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Auth0Provider>
+    > */}
+    {/* <BrowserRouter> */}
+    <App />
+    {/* </BrowserRouter> */}
+    {/* </Auth0Provider> */}
   </React.StrictMode>
 );

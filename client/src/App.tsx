@@ -5,13 +5,16 @@ import AuthLogin from './auth/AuthLoginBtn';
 import AuthLogoutBtn from './auth/AuthLogoutBtn';
 import * as pages from './pages';
 import './App.css';
+import Phaser from './Phaser/Phaser';
+
+const scene = Phaser;
 
 function App() {
   const { isAuthenticated } = useAuth0();
 
   return (
     <>
-      <Routes>
+      {/* <Routes>
         <Route
           path="/"
           element={<pages.Home />}
@@ -37,7 +40,7 @@ function App() {
           <NavLink to="/school">School</NavLink>
           {!isAuthenticated ? <AuthLogin /> : <AuthLogoutBtn />}
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
