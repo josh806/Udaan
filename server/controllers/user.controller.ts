@@ -13,7 +13,7 @@ const createUser = async (req: Request, res: Response) => {
           email,
           username,
           student, 
-          schoolId
+          schoolId,
         }
       });
 
@@ -91,4 +91,48 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser, getUserByIdOrUsername, updateUser };
+const addLessonId = async (req: Request, res: Response) => {
+  console.log(req.params);
+  try {
+    const user = await prisma.user.update({
+    // const user = await prisma.user.findUnique({
+
+      where: {
+        id: req.params.id,
+      },
+      data: {
+        lessons: {
+          push: 1223,
+        },
+      },
+      // select: {
+      //   lessons: true,
+      // }
+    });
+    if (!user) { throw new Error(); }
+    // if (user) {
+      console.log(user);
+    //   // user.lesson.push(req.params.lessonId);
+    //   const updatedUser = await prisma.user.update({
+    //     data: {
+    //       lessons: {
+    //         set : [...user.lessons, req.params]
+    //       }
+    //     },
+    //     where: {
+    //       id: req.params.id,
+    //     },
+    //   });
+    //   // console.log(updatedUser);
+    //   res.send(updatedUser);
+    // }
+    res.status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ error: error });
+  }
+};
+// router.put('/user/:id/:lessonId', userController.addLessonId);
+
+
+export { createUser, getUserByIdOrUsername, updateUser, addLessonId };

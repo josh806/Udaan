@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0;
+exports.addLessonId = exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName, email, username, student, schoolId } = req.body;
@@ -22,7 +22,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     email,
                     username,
                     student,
-                    schoolId
+                    schoolId,
                 }
             });
             // const newLibrary = await prisma.library.create({
@@ -103,3 +103,47 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateUser = updateUser;
+const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.params);
+    try {
+        const user = yield database_1.prisma.user.update({
+            // const user = await prisma.user.findUnique({
+            where: {
+                id: req.params.id,
+            },
+            data: {
+                lessons: {
+                    push: 1223,
+                },
+            },
+            // select: {
+            //   lessons: true,
+            // }
+        });
+        if (!user) {
+            throw new Error();
+        }
+        // if (user) {
+        console.log(user);
+        //   // user.lesson.push(req.params.lessonId);
+        //   const updatedUser = await prisma.user.update({
+        //     data: {
+        //       lessons: {
+        //         set : [...user.lessons, req.params]
+        //       }
+        //     },
+        //     where: {
+        //       id: req.params.id,
+        //     },
+        //   });
+        //   // console.log(updatedUser);
+        //   res.send(updatedUser);
+        // }
+        res.status(200);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).send({ error: error });
+    }
+});
+exports.addLessonId = addLessonId;
