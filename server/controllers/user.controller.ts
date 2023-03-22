@@ -111,7 +111,7 @@ const addLessonId = async (req: Request, res: Response) => {
     });
     if (!user) { throw new Error(); }
     // if (user) {
-      console.log(user);
+    console.log(user);
     //   // user.lesson.push(req.params.lessonId);
     //   const updatedUser = await prisma.user.update({
     //     data: {
