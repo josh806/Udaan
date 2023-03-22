@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { prisma } from '../database';
 
-const createSubject = async (req: Request, res: Response) => {
-  const { name, schoolId } = req.body;
-  console.log(req.body);
+const createSubject = async (req: Request, res: Response) => { 
+  const name = req.body.name.toLowerCase().trim();
+  const schoolId  = req.body.schoolId;
   if (name && schoolId) {
     try {
       const newSubject = await prisma.subject.create({

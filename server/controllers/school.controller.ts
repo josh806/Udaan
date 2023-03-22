@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const createSchool = async (req: Request, res: Response) => {
-  const { name, email } = req.body;
+  const name = req.body.name.toLowerCase().trim();
+  const email = req.body.email;
   if (name && email) {
     try {
       const newSchool = await prisma.school.create({
@@ -15,7 +16,6 @@ const createSchool = async (req: Request, res: Response) => {
       res.send(newSchool);
     } catch (error) {
       console.log(error);
-      res.send('Server problem');
       res.status(500).send({ error: 'User not found' });
     }
   } else {

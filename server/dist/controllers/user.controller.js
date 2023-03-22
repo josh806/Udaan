@@ -13,7 +13,8 @@ exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { firstName, lastName, email, username, student, schoolId } = req.body;
+    const { firstName, lastName, email, student, schoolId } = req.body;
+    const username = req.body.username.toLowerCase().trim();
     if (firstName && lastName && email && username && student !== undefined && schoolId) {
         try {
             const newUser = yield database_1.prisma.user.create({
