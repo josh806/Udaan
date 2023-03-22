@@ -11,12 +11,12 @@
     "lint:fix": "npx eslint '**' --fix"
   },
   "dependencies": {
+    "agora-classroom-sdk": "^1.1.5",
+    "agora-rtm-sdk": "^1.6.0-205",
     "dotenv": "^16.0.3",
     "phaser": "^3.55.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "white-react-sdk": "^2.16.41",
-    "white-web-sdk": "^2.16.41"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

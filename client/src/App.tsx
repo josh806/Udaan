@@ -4,6 +4,7 @@ import './App.css';
 import { useState } from 'react';
 import VideoChat from './Components/VideoChat/VideoChat';
 import InteractiveWhiteboard from './Components/InteractiveWhiteboard/InteractiveWhiteboard';
+import InteractiveTool from './Components/ClassRoomTools/ClassRoom';
 
 
 
@@ -19,7 +20,8 @@ function App() {
 
   return (
     <>
-     <InteractiveWhiteboard />
+    <InteractiveTool/>
+     {/* <InteractiveWhiteboard /> */}
       {/* {chat ? (
         <VideoChat />
       ) : (

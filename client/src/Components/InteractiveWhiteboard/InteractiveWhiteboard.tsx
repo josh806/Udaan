@@ -63,7 +63,6 @@ const InteractiveWhiteboard = () => {
         .catch(function (err) {
           console.error(err);
         });
-     
     } catch (err) {
       console.error(err);
     }
@@ -73,14 +72,12 @@ const InteractiveWhiteboard = () => {
     <div>
       <button onClick={createRoomAndJoin}>Create Room and Join</button>
       {room && (
-          <RoomWhiteboard
-            room={room}
-            style={{ width: "1000vh", height: "100vh", background: "white" }}
-          />
-        ) }
-     <div id="toolbar" style={{ background: "black" }}>
-
-     </div>
+        <RoomWhiteboard
+          room={room}
+          style={{ width: "1000vh", height: "100vh", background: "white" }}
+        />
+      )}
+      <div id="toolbar" style={{ background: "black" }}></div>
     </div>
   );
 };
