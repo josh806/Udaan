@@ -28,12 +28,12 @@ const userController = __importStar(require("./controllers/user.controller"));
 const schoolController = __importStar(require("./controllers/school.controller"));
 const subjectController = __importStar(require("./controllers/subject.controller"));
 const lessonController = __importStar(require("./controllers/lesson.controller"));
+const libraryController = __importStar(require("./controllers/library.controller"));
 const router = (0, express_1.Router)();
 //user routes
-router.post('/user', userController.createUser);
+router.post('/user/:id', userController.createUser);
 router.get('/user/:unique', userController.getUserByIdOrUsername);
 router.put('/user/:id', userController.updateUser);
-router.put('/user/:id/:lessonId', userController.addLessonId);
 //school routes
 router.post('/school', schoolController.createSchool);
 router.get('/school/:id', schoolController.getUsers);
@@ -42,6 +42,8 @@ router.get('/school/:id/subjects', schoolController.getSubjects);
 router.post('/subject', subjectController.createSubject);
 //lessons routes
 router.post('/lesson', lessonController.createLesson);
+//library routes
+router.put('/user/:id/:lessonId', libraryController.addLessonId);
 exports.default = router;
 // const user = await prisma.user.findUnique({
 //   where: {

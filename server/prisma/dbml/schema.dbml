@@ -4,8 +4,8 @@
 
 Table School {
   id Int [pk, increment]
-  name String [not null]
-  email String [not null]
+  name String [unique, not null]
+  email String [unique, not null]
   users User [not null]
   subjects Subject [not null]
 }
@@ -47,7 +47,7 @@ Table Lesson {
 Table Library {
   id Int [pk, increment]
   lessons Lesson [not null]
-  notes Bytes [not null]
+  notes Bytes
   user User [not null]
   userId String [unique, not null]
 }
