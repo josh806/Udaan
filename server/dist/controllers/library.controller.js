@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addLessonId = void 0;
+exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.params);
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
-                id: req.params.id,
+                userId: String(req.params.id),
             },
             select: {
                 lessons: true,
@@ -27,7 +27,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
         console.log(library);
         const lessonIds = library.lessons.map(el => ({ id: el.id }));
-        const updatedLibrary = yield database_1.prisma.user.update({
+        yield database_1.prisma.user.update({
             where: {
                 id: req.params.id,
             },
@@ -37,9 +37,17 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 }
             }
         });
-        console.log(updatedLibrary);
-        res.send(updatedLibrary);
-        res.status(200);
+        const updatedLibrary = yield database_1.prisma.library.update({
+            where: {
+                userId: String(req.params.id),
+            },
+            data: {
+                lessons: {
+                    set: [...lessonIds, { id: +req.params.lessonId }]
+                }
+            }
+        });
+        res.status(201).send(updatedLibrary);
     }
     catch (error) {
         console.error(error);
@@ -47,3 +55,39 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.addLessonId = addLessonId;
+const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const library = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: String(req.params.id),
+            },
+            include: {
+                lessons: true
+            }
+        });
+        res.status(200).send(library === null || library === void 0 ? void 0 : library.lessons);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Library doesnt find');
+    }
+});
+exports.getLessons = getLessons;
+const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const library = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: String(req.params.id),
+            },
+            select: {
+                notes: true,
+            }
+        });
+        res.status(200).send(library);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Library not found');
+    }
+});
+exports.getNotes = getNotes;

@@ -44,6 +44,8 @@ router.post('/subject', subjectController.createSubject);
 router.post('/lesson', lessonController.createLesson);
 //library routes
 router.put('/user/:id/:lessonId', libraryController.addLessonId);
+router.get('/user/:id/library', libraryController.getLessons);
+router.get('/user/:id/notes', libraryController.getNotes);
 exports.default = router;
 // const user = await prisma.user.findUnique({
 //   where: {

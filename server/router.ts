@@ -24,6 +24,9 @@ router.post('/lesson', lessonController.createLesson);
 
 //library routes
 router.put('/user/:id/:lessonId', libraryController.addLessonId);
+router.get('/user/:id/library', libraryController.getLessons);
+router.get('/user/:id/notes', libraryController.getNotes);
+
 
 export default router;
 
