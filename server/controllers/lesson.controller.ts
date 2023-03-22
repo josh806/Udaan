@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const createLesson = async (req: Request, res: Response) => {
-  const { name, recording, subjectId } = req.body;
+  const name = req.body.name.toLowerCase().trim();
+  const { recording, subjectId } = req.body;
   console.log(req.body);
   if (name && subjectId && recording !== undefined) {
     try {

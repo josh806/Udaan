@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createLesson = void 0;
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, recording, subjectId } = req.body;
+    const name = req.body.name.toLowerCase().trim();
+    const { recording, subjectId } = req.body;
     console.log(req.body);
     if (name && subjectId && recording !== undefined) {
         try {
