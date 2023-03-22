@@ -23,9 +23,6 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     username,
                     student,
                     schoolId,
-                    // lessons: {
-                    //   create: [],
-                    // }
                 }
             });
             // const newLibrary = await prisma.library.create({
@@ -109,14 +106,10 @@ exports.updateUser = updateUser;
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.params);
     try {
-        // const user = await prisma.user.update({
         const user = yield database_1.prisma.user.findUnique({
             where: {
                 id: req.params.id,
             },
-            // data: {
-            //   lessons: { upsert: {id: 3}},
-            // },
             select: {
                 lessons: true,
             }
@@ -124,23 +117,19 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!user) {
             throw new Error();
         }
-        // if (user) {
         console.log(user);
         const lessonIds = user.lessons.map(el => ({ id: el.id }));
-        //   // user.lesson.push(req.params.lessonId);
         const updatedUser = yield database_1.prisma.user.update({
+            where: {
+                id: req.params.id,
+            },
             data: {
                 lessons: {
                     set: [...lessonIds, { id: +req.params.lessonId }]
                 }
-            },
-            where: {
-                id: req.params.id,
-            },
+            }
         });
-        //   // console.log(updatedUser);
-        //   res.send(updatedUser);
-        // }
+        console.log(updatedUser);
         res.send(updatedUser);
         res.status(200);
     }

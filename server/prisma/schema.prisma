@@ -27,7 +27,6 @@ model User {
   student   Boolean
   school    School?  @relation(fields: [schoolId], references: [id])
   schoolId  Int
-  lessons   Lesson[]
   library   Library?
 }
 
@@ -48,13 +47,12 @@ model Lesson {
   subject   Subject   @relation(fields: [subjectId], references: [id])
   subjectId Int
   library   Library[]
-  user      User[]
 }
 
 model Library {
   id      Int      @id @default(autoincrement())
   lessons Lesson[]
-  notes   Bytes
+  notes   Bytes?
   user    User     @relation(fields: [userId], references: [id])
   userId  String   @unique
 }

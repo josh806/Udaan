@@ -14,9 +14,6 @@ const createUser = async (req: Request, res: Response) => {
           username,
           student, 
           schoolId,
-          // lessons: {
-          //   create: [],
-          // }
         }
       });
 
@@ -97,37 +94,28 @@ const updateUser = async (req: Request, res: Response) => {
 const addLessonId = async (req: Request, res: Response) => {
   console.log(req.params);
   try {
-    // const user = await prisma.user.update({
     const user = await prisma.user.findUnique({
-
       where: {
         id: req.params.id,
       },
-      // data: {
-      //   lessons: { upsert: {id: 3}},
-      // },
       select: {
         lessons: true,
       }
     });
     if (!user) { throw new Error(); }
-    // if (user) {
     console.log(user);
     const lessonIds = user.lessons.map(el => ({ id: el.id }));
-    //   // user.lesson.push(req.params.lessonId);
     const updatedUser = await prisma.user.update({
+      where: {
+        id: req.params.id,
+      },
       data: {
         lessons: {
           set : [...lessonIds, {id: +req.params.lessonId}]
         }
-      },
-      where: {
-        id: req.params.id,
-      },
+      }
     });
-    //   // console.log(updatedUser);
-    //   res.send(updatedUser);
-    // }
+    console.log(updatedUser);
     res.send(updatedUser);
     res.status(200);
   } catch (error) {
@@ -135,7 +123,6 @@ const addLessonId = async (req: Request, res: Response) => {
     res.status(400).send({ error: error });
   }
 };
-// router.put('/user/:id/:lessonId', userController.addLessonId);
 
 
 export { createUser, getUserByIdOrUsername, updateUser, addLessonId };
