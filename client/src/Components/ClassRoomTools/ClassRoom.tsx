@@ -15,7 +15,7 @@ const InteractiveTool: React.FC = () => {
 
     // Launch Flexible Classroom
     if (div) {
-      AgoraEduSDK.launch(div, {
+    const room = await  AgoraEduSDK.launch(div, {
         rtmToken: "007eJxSYPB+tifermRrpPvl511sDtxxTaqdfidD134/cTgr3MTn3WcFBksLIzMzs5TUJKPEJBOTVPNE48QkS1NTU1MDc7MkCzOTaF7plOiN66w+neJnYGRgYmBkYGQA8RkZDAABAAD//8/hH7I=",
         userUuid: "test",
         userName: "teacher",
@@ -38,7 +38,10 @@ const InteractiveTool: React.FC = () => {
         .catch((e) => {
           console.error("failed to launch", e);
         });
+        return room
     }
+
+    
   }
 
   return (
