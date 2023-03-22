@@ -1,0 +1,61 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table School {
+  id Int [pk, increment]
+  name String [not null]
+  email String [not null]
+  users User [not null]
+  subjects Subject [not null]
+}
+
+Table User {
+  id String [pk]
+  firstName String [not null]
+  lastName String [not null]
+  email String [unique, not null]
+  username String [unique, not null]
+  avatar String
+  student Boolean [not null]
+  school School
+  schoolId Int [not null]
+  lessons Lesson [not null]
+  library Library
+}
+
+Table Subject {
+  id Int [pk, increment]
+  name String [unique, not null]
+  lessons Lesson [not null]
+  school School [not null]
+  schoolId Int [not null]
+}
+
+Table Lesson {
+  id Int [pk, increment]
+  name String [not null]
+  material String
+  date DateTime [not null]
+  recording Boolean [not null]
+  subject Subject [not null]
+  subjectId Int [not null]
+  library Library [not null]
+  user User [not null]
+}
+
+Table Library {
+  id Int [pk, increment]
+  lessons Lesson [not null]
+  notes Bytes [not null]
+  user User [not null]
+  userId String [unique, not null]
+}
+
+Ref: User.schoolId > School.id
+
+Ref: Subject.schoolId > School.id
+
+Ref: Lesson.subjectId > Subject.id
+
+Ref: Library.userId - User.id
