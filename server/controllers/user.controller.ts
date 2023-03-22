@@ -45,7 +45,13 @@ const getUserByIdOrUsername = async (req: Request, res: Response) => {
       }
     });
     if (!user) { throw new Error(); }
-    res.send(user);
+    console.log(req.params);
+    if (Object.keys(req.params)[0] == 'id') {
+      res.send(user);
+    } else if (Object.keys(req.params)[0] == 'username') {
+      res.send('username exists');
+    }
+    res.send('ok');
     res.status(200);
   } catch (error) {
     console.error(error);
