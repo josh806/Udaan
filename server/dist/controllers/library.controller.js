@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
+exports.deleteLesson = exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.params);
@@ -91,3 +91,36 @@ const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getNotes = getNotes;
+const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const library = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: String(req.params.id),
+            },
+            include: {
+                lessons: true
+            },
+        });
+        if (!library) {
+            res.status(404).send(`Library with ID ${req.params.id} not found`);
+        }
+        const updatedLibrary = yield database_1.prisma.library.update({
+            where: {
+                userId: String(req.params.id)
+            },
+            data: {
+                lessons: {
+                    disconnect: {
+                        id: Number(req.params.lessonId)
+                    }
+                }
+            }
+        });
+        res.status(200).send(updatedLibrary);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Server problem');
+    }
+});
+exports.deleteLesson = deleteLesson;
