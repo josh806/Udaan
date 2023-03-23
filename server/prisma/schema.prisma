@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:Kerdada1109@localhost:5432/test"
 }
 
 model School {
@@ -21,8 +21,8 @@ model User {
   id        String   @id @default(uuid())
   firstName String
   lastName  String
-  email     String   @unique
-  username  String   @unique
+  email     String  @unique
+  username  String  @unique
   avatar    String?
   student   Boolean
   school    School?  @relation(fields: [schoolId], references: [id])
@@ -30,7 +30,6 @@ model User {
   lessons   Lesson[]
   library   Library?
 }
-
 model Subject {
   id       Int      @id @default(autoincrement())
   name     String   @unique
@@ -61,4 +60,6 @@ model Library {
 
 generator dbml {
   provider = "prisma-dbml-generator"
+  Whiteboard      Whiteboard?   @relation(fields: [lastName], references: [id])
+  roomId    Int?
 }

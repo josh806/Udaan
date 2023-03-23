@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const userController = __importStar(require("./controllers/user.controller"));
+<<<<<<< HEAD
 const schoolController = __importStar(require("./controllers/school.controller"));
 const subjectController = __importStar(require("./controllers/subject.controller"));
 const lessonController = __importStar(require("./controllers/lesson.controller"));
@@ -50,4 +51,12 @@ router.put('/user/:id/:lessonId', libraryController.addLessonId);
 router.get('/user/:id/library', libraryController.getLessons);
 router.get('/user/:id/notes', libraryController.getNotes);
 router.delete('/user/:id/library/:lessonId', libraryController.deleteLesson);
+=======
+const whiteboard_controller_1 = require("./controllers/whiteboard.controller");
+const router = (0, express_1.Router)();
+//user routes
+router.get('/users', userController.createUser);
+router.post('/whiteboard/create', whiteboard_controller_1.createWhiteboard);
+router.post('/room/join/f7ef7cb0c74d11ed85245975e226531a', whiteboard_controller_1.joinWhiteboard);
+>>>>>>> collabExperience
 exports.default = router;

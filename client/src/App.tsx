@@ -5,6 +5,15 @@ import AuthLogin from './auth/AuthLoginBtn';
 import AuthLogoutBtn from './auth/AuthLogoutBtn';
 import * as pages from './pages';
 import './App.css';
+import { useState } from 'react';
+import VideoChat from './Components/VideoChat/VideoChat';
+import InteractiveWhiteboard from './Components/InteractiveWhiteboard/InteractiveWhiteboard';
+
+
+
+
+
+
 
 function App() {
   const { isAuthenticated } = useAuth0();

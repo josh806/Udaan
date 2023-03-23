@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 exports.updateUser = exports.getUserByUsername = exports.getUserById = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,6 +40,18 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             console.error(error);
             res.status(500).send({ error: error });
         }
+=======
+exports.createUser = exports.prisma = void 0;
+const client_1 = require("@prisma/client");
+exports.prisma = new client_1.PrismaClient();
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const createUser = yield exports.prisma.user.create({
+            data: req.body,
+        });
+        res.status(200);
+        res.send(createUser);
+>>>>>>> collabExperience
     }
     else {
         console.log('parameter missing');
