@@ -1,3 +1,5 @@
 node_modules
 *.json
 vite.config.ts
+agora-rtm-sdk-1.5.1.js
+agora-rtm-sdk.d.ts
