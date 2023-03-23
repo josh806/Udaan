@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteLessonFromLibrary = exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params);
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
