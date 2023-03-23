@@ -13,14 +13,13 @@ exports.getLesson = exports.deleteLesson = exports.createLesson = void 0;
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
-    const { recording, subjectId } = req.body;
+    const { subjectId } = req.body;
     console.log(req.body);
-    if (name && subjectId && recording !== undefined) {
+    if (name && subjectId) {
         try {
             const newLesson = yield database_1.prisma.lesson.create({
                 data: {
                     name,
-                    date: new Date(),
                     subjectId
                 }
             });

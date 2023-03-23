@@ -3,14 +3,13 @@ import { prisma } from '../database';
 
 const createLesson = async (req: Request, res: Response) => {
   const name = req.body.name.toLowerCase().trim();
-  const { recording, subjectId } = req.body;
+  const { subjectId } = req.body;
   console.log(req.body);
-  if (name && subjectId && recording !== undefined) {
+  if (name && subjectId) {
     try {
       const newLesson = await prisma.lesson.create({
         data: {
           name,
-          date: new Date(),
           subjectId
         }
       });
