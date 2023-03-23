@@ -4,8 +4,8 @@ import AuthRequired from './AuthRequired';
 
 import Profile from '../features/Profile';
 
-import VideoChat from '../Components/VideoChat';
-import BasicModal from '../Components/BasicModal';
+import VideoChat from '../components/VideoChat/VideoChat';
+import BasicModal from '../components/BasicModal';
 
 import PhaserRoot from '../Phaser/Phaser';
 const School = () => {
@@ -36,14 +36,17 @@ const School = () => {
   return (
     <AuthRequired>
       <>
-        <BasicModal buttonLabel='My profile'>
+        <BasicModal buttonLabel="My profile">
           <Profile />
         </BasicModal>
         {chat ? (
           <VideoChat />
         ) : (
           <>
-            <button className='open_chat' onClick={() => setChat(!chat)}>
+            <button
+              className="open_chat"
+              onClick={() => setChat(!chat)}
+            >
               Show chat
             </button>
             <PhaserRoot />
