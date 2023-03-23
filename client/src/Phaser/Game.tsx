@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
 import { store } from '../redux/store';
+import { enterVideoCall } from '../redux/user';
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -299,7 +300,7 @@ export default class Game extends Phaser.Scene {
       if (this.collisionCounter === 2) {
         this.textBox.setVisible(false);
         this.text.setVisible(false);
-
+        store.dispatch(enterVideoCall());
         this.currentPlayer.x = this.chairPosition[0];
         this.currentPlayer.y = this.chairPosition[1];
         this.currentPlayer.setPosition(
@@ -311,8 +312,6 @@ export default class Game extends Phaser.Scene {
       }
 
       // to be removed: dispatch to redux
-      // store.dispatch(updateName('josh'));
-      // this.userName = store.getState().users.name;
     } else {
       this.currentPlayer.x += 0;
       this.currentPlayer.setVelocityX(0);

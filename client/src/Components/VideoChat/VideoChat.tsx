@@ -1,4 +1,6 @@
 import React, { useEffect, useState, FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { endVideoCall } from '../../redux/user';
 import './VideoChat.css';
 import {
   ClientConfig,
@@ -11,6 +13,7 @@ import {
   createClient,
   createMicrophoneAndCameraTracks,
 } from 'agora-rtc-react';
+import { RootState } from '../../redux/store';
 
 const config: ClientConfig = {
   mode: 'rtc',
@@ -18,16 +21,14 @@ const config: ClientConfig = {
 };
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
-const token: string | null = '007eJxTYDDoVxHmPO/Wdk5yUXDOR/6Nj9bt0X+dvmTrP84f75wCHYwVGCwtjMzMzFJSk4wSk0xMUs0TjROTLE2BwMDcLMnCzEReXSalIZCRYUNWBSsjAwSC+DwMIanFJeGZJRle+cUZDAwAFaEhPA==';
+const token: string | null =
+  '007eJxTYDDoVxHmPO/Wdk5yUXDOR/6Nj9bt0X+dvmTrP84f75wCHYwVGCwtjMzMzFJSk4wSk0xMUs0TjROTLE2BwMDcLMnCzEReXSalIZCRYUNWBSsjAwSC+DwMIanFJeGZJRle+cUZDAwAFaEhPA==';
 const useClient = createClient(config);
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
 //VideoComponent for the video call
-const VideoCall = (props: {
-  setInCall: React.Dispatch<React.SetStateAction<boolean>>;
-  channelName: string;
-}) => {
-  const { setInCall, channelName } = props;
+const VideoCall = (props: { channelName: string }) => {
+  const { channelName } = props;
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
   const [start, setStart] = useState<boolean>(false);
   const client = useClient();
@@ -81,9 +82,7 @@ const VideoCall = (props: {
 
   return (
     <div>
-      {ready && tracks && (
-        <Controls tracks={tracks} setInCall={setInCall} setStart={setStart} />
-      )}
+      {ready && tracks && <Controls tracks={tracks} setStart={setStart} />}
       {start && tracks && <Videos users={remoteUsers} tracks={tracks} />}
     </div>
   );
@@ -96,14 +95,14 @@ const Videos = (props: {
   const { users, tracks } = props;
   return (
     <div>
-      <div id="videos">
-        <AgoraVideoPlayer className="vid" videoTrack={tracks[1]} />
+      <div id='videos'>
+        <AgoraVideoPlayer className='vid' videoTrack={tracks[1]} />
         {users.length > 0 &&
           users.map((user) => {
             if (user.videoTrack) {
               return (
                 <AgoraVideoPlayer
-                  className="vid"
+                  className='vid'
                   videoTrack={user.videoTrack}
                   key={user.uid}
                 />
@@ -115,13 +114,10 @@ const Videos = (props: {
   );
 };
 
-export const Controls = (props: {
-  tracks: any;
-  setStart: any;
-  setInCall: any;
-}) => {
+export const Controls = (props: { tracks: any; setStart: any }) => {
+  const dispatch = useDispatch();
   const client = useClient();
-  const { tracks, setStart, setInCall } = props;
+  const { tracks, setStart } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
 
   const mute = async (type: 'audio' | 'video') => {
@@ -140,11 +136,11 @@ export const Controls = (props: {
     tracks[0].close();
     tracks[1].close();
     setStart(false);
-    setInCall(false);
+    dispatch(endVideoCall());
   };
 
   return (
-    <div className="controls">
+    <div className='controls'>
       <p
         className={trackState.audio ? 'mute' : 'unmute'}
         onClick={() => mute('audio')}
@@ -155,9 +151,9 @@ export const Controls = (props: {
         className={trackState.video ? 'mute' : 'unmute'}
         onClick={() => mute('video')}
       >
-        {trackState.video ? 'Mute' : 'Unmute'}
+        {trackState.video ? 'Hide video' : 'Turn video on'}
       </p>
-      <p className="leave" onClick={leaveChannel}>
+      <p className='leave' onClick={leaveChannel}>
         Leave
       </p>
     </div>
@@ -165,44 +161,36 @@ export const Controls = (props: {
 };
 
 //Form to enter the channel name
-const ChannelForm = (props: {
-  setInCall: React.Dispatch<React.SetStateAction<boolean>>;
-  setChannelName: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-  const { setInCall, setChannelName } = props;
-  return (
-    <form className="join">
-      {appId === '' ? (
-        <p style={{ color: 'red' }}>Please enter your Student ID</p>
-      ) : null}
-      <input
-        type="text"
-        placeholder="Enter Channel Name"
-        onChange={(e) => setChannelName(e.target.value)}
-      />
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setInCall(true);
-        }}
-      >
-        Join
-      </button>
-    </form>
-  );
-};
+// const ChannelForm = (props: {
+//   setInCall: React.Dispatch<React.SetStateAction<boolean>>;
+//   setChannelName: React.Dispatch<React.SetStateAction<string>>;
+// }) => {
+//   const { setInCall, setChannelName } = props;
+//   return (
+//     <form className="join">
+//       {appId === '' ? (
+//         <p style={{ color: 'red' }}>Please enter your Student ID</p>
+//       ) : null}
+//       <input
+//         type="text"
+//         placeholder="Enter Channel Name"
+//         onChange={(e) => setChannelName(e.target.value)}
+//       />
+//       <button
+//         onClick={(e) => {
+//           e.preventDefault();
+//           setInCall(true);
+//         }}
+//       >
+//         Join
+//       </button>
+//     </form>
+//   );
+// };
 
 const VideoChat: React.FC = () => {
-  const [inCall, setInCall] = useState(false);
-  const [channelName, setChannelName] = useState('');
-  return (
-    <>
-      {inCall ? (
-        <VideoCall setInCall={setInCall} channelName={channelName} />
-      ) : (
-        <ChannelForm setInCall={setInCall} setChannelName={setChannelName} />
-      )}
-    </>
-  );
+  const { inCall } = useSelector((state: RootState) => state.users);
+  // const [inCall, setInCall] = useState(true);
+  return <>{inCall && <VideoCall channelName='TestWithJosh' />}</>;
 };
 export default VideoChat;

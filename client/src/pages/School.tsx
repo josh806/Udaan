@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import AuthRequired from './AuthRequired';
+import { useSelector } from 'react-redux';
 
 import Profile from '../features/Profile';
-
-import VideoChat from '../Components/VideoChat';
+import VideoChat from '../Components/VideoChat/VideoChat';
 import BasicModal from '../Components/BasicModal';
 
 import PhaserRoot from '../Phaser/Phaser';
+import { RootState } from '../redux/store';
 const School = () => {
   /*
   Flow:
@@ -24,7 +25,8 @@ const School = () => {
 
   */
   const { user } = useAuth0();
-
+  const inCall = useSelector((state: RootState) => state.users.inCall);
+  console.log(inCall);
   useEffect(() => {
     // User exists
     // OR
@@ -39,16 +41,14 @@ const School = () => {
         <BasicModal buttonLabel='My profile'>
           <Profile />
         </BasicModal>
-        {chat ? (
-          <VideoChat />
-        ) : (
-          <>
+        <>
+          {chat && (
             <button className='open_chat' onClick={() => setChat(!chat)}>
               Show chat
             </button>
-            <PhaserRoot />
-          </>
-        )}
+          )}
+          {inCall ? <VideoChat /> : <PhaserRoot />}
+        </>
       </>
     </AuthRequired>
   );
