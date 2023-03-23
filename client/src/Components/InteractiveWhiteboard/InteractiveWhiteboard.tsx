@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { WhiteWebSdk, RoomWhiteboard } from "white-react-sdk";
-import { createRoom, getRoomToken } from "./Request";
+import React, { useEffect, useState } from 'react';
+import { WhiteWebSdk, RoomWhiteboard } from 'white-react-sdk';
+import { createRoom, getRoomToken } from './Request';
 
 const InteractiveWhiteboard = () => {
   const [room, setRoom] = useState(null);
@@ -10,46 +10,46 @@ const InteractiveWhiteboard = () => {
       const roomJSON = await createRoom();
       const roomToken = await getRoomToken(roomJSON.uuid);
       const whiteWebSdk = new WhiteWebSdk({
-        appIdentifier: "F32XkMcZEe2safl2pxmVng/oPm-ru64AhNC1g",
-        region: "us-sv",
+        appIdentifier: 'F32XkMcZEe2safl2pxmVng/oPm-ru64AhNC1g',
+        region: 'us-sv',
       });
       const room = await whiteWebSdk
         .joinRoom({
           uuid: roomJSON.uuid,
-          uid: "123",
+          uid: '123',
           roomToken: roomToken,
         })
         .then((room) => {
-          var toolbar = document.getElementById("toolbar");
+          const toolbar = document.getElementById('toolbar');
           console.log(toolbar);
-          var toolNames = [
-            "clicker",
-            "selector",
-            "rectangle",
-            "eraser",
-            "text",
-            "arrow",
-            "ellipse",
-            "hand",
-            "laserPointer",
-            "shape",
-            "straight",
+          const toolNames = [
+            'clicker',
+            'selector',
+            'rectangle',
+            'eraser',
+            'text',
+            'arrow',
+            'ellipse',
+            'hand',
+            'laserPointer',
+            'shape',
+            'straight',
           ];
 
-          for (var idx in toolNames) {
-            var toolName = toolNames[idx];
-            var btn = document.createElement("BUTTON");
-            btn.setAttribute("id", "btn" + toolName);
-            var t = document.createTextNode(toolName);
+          for (const idx in toolNames) {
+            const toolName = toolNames[idx];
+            const btn = document.createElement('BUTTON');
+            btn.setAttribute('id', 'btn' + toolName);
+            const t = document.createTextNode(toolName);
             btn.appendChild(t);
 
             // Listen for the event of clicking a button.
-            btn.addEventListener("click", function (obj) {
-              var ele = obj.target;
+            btn.addEventListener('click', function (obj) {
+              const ele = obj.target;
               // Call the setMemberState method to set the whiteboard tool.
               room.setMemberState({
-                currentApplianceName: ele.getAttribute("id").substring(3),
-                shapeType: "pentagram",
+                currentApplianceName: ele.getAttribute('id').substring(3),
+                shapeType: 'pentagram',
                 strokeColor: [255, 182, 200],
                 strokeWidth: 12,
                 textSize: 40,
@@ -57,7 +57,7 @@ const InteractiveWhiteboard = () => {
             });
             if (toolbar) toolbar.appendChild(btn);
             
-            console.log(btn.getAttribute("id"));
+            console.log(btn.getAttribute('id'));
           }
           setRoom(room);
         })
@@ -75,10 +75,10 @@ const InteractiveWhiteboard = () => {
       {room && (
         <RoomWhiteboard
           room={room}
-          style={{ width: "1000vh", height: "100vh", background: "white" }}
+          style={{ width: '1000vh', height: '100vh', background: 'white' }}
         />
       )}
-      <div id="toolbar" style={{ background: "black" }}></div>
+      <div id="toolbar" style={{ background: 'black' }}></div>
     </div>
   );
 };

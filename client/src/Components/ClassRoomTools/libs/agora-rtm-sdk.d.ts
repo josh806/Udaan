@@ -1,85 +1,85 @@
 declare namespace RtmStatusCode {
     enum ConnectionChangeReason {
-        LOGIN = "LOGIN",
-        LOGIN_SUCCESS = "LOGIN_SUCCESS",
-        LOGIN_FAILURE = "LOGIN_FAILURE",
-        LOGIN_TIMEOUT = "LOGIN_TIMEOUT",
-        INTERRUPTED = "INTERRUPTED",
-        LOGOUT = "LOGOUT",
-        BANNED_BY_SERVER = "BANNED_BY_SERVER",
-        REMOTE_LOGIN = "REMOTE_LOGIN",
-        TOKEN_EXPIRED = "TOKEN_EXPIRED"
+        LOGIN = 'LOGIN',
+        LOGIN_SUCCESS = 'LOGIN_SUCCESS',
+        LOGIN_FAILURE = 'LOGIN_FAILURE',
+        LOGIN_TIMEOUT = 'LOGIN_TIMEOUT',
+        INTERRUPTED = 'INTERRUPTED',
+        LOGOUT = 'LOGOUT',
+        BANNED_BY_SERVER = 'BANNED_BY_SERVER',
+        REMOTE_LOGIN = 'REMOTE_LOGIN',
+        TOKEN_EXPIRED = 'TOKEN_EXPIRED'
     }
     enum ConnectionState {
-        DISCONNECTED = "DISCONNECTED",
-        CONNECTING = "CONNECTING",
-        CONNECTED = "CONNECTED",
-        RECONNECTING = "RECONNECTING",
-        ABORTED = "ABORTED"
+        DISCONNECTED = 'DISCONNECTED',
+        CONNECTING = 'CONNECTING',
+        CONNECTED = 'CONNECTED',
+        RECONNECTING = 'RECONNECTING',
+        ABORTED = 'ABORTED'
     }
     enum LocalInvitationState {
-        IDLE = "IDLE",
-        SENT_TO_REMOTE = "SENT_TO_REMOTE",
-        RECEIVED_BY_REMOTE = "RECEIVED_BY_REMOTE",
-        ACCEPTED_BY_REMOTE = "ACCEPTED_BY_REMOTE",
-        REFUSED_BY_REMOTE = "REFUSED_BY_REMOTE",
-        CANCELED = "CANCELED",
-        FAILURE = "FAILURE"
+        IDLE = 'IDLE',
+        SENT_TO_REMOTE = 'SENT_TO_REMOTE',
+        RECEIVED_BY_REMOTE = 'RECEIVED_BY_REMOTE',
+        ACCEPTED_BY_REMOTE = 'ACCEPTED_BY_REMOTE',
+        REFUSED_BY_REMOTE = 'REFUSED_BY_REMOTE',
+        CANCELED = 'CANCELED',
+        FAILURE = 'FAILURE'
     }
     enum RemoteInvitationState {
-        INVITATION_RECEIVED = "INVITATION_RECEIVED",
-        ACCEPT_SENT_TO_LOCAL = "ACCEPT_SENT_TO_LOCAL",
-        REFUSED = "REFUSED",
-        ACCEPTED = "ACCEPTED",
-        CANCELED = "CANCELED",
-        FAILURE = "FAILURE"
+        INVITATION_RECEIVED = 'INVITATION_RECEIVED',
+        ACCEPT_SENT_TO_LOCAL = 'ACCEPT_SENT_TO_LOCAL',
+        REFUSED = 'REFUSED',
+        ACCEPTED = 'ACCEPTED',
+        CANCELED = 'CANCELED',
+        FAILURE = 'FAILURE'
     }
     enum LocalInvitationFailureReason {
-        UNKNOWN = "UNKNOWN",
-        PEER_NO_RESPONSE = "PEER_NO_RESPONSE",
-        INVITATION_EXPIRE = "INVITATION_EXPIRE",
-        PEER_OFFLINE = "PEER_OFFLINE",
-        NOT_LOGGEDIN = "NOT_LOGGEDIN"
+        UNKNOWN = 'UNKNOWN',
+        PEER_NO_RESPONSE = 'PEER_NO_RESPONSE',
+        INVITATION_EXPIRE = 'INVITATION_EXPIRE',
+        PEER_OFFLINE = 'PEER_OFFLINE',
+        NOT_LOGGEDIN = 'NOT_LOGGEDIN'
     }
     enum RemoteInvitationFailureReason {
-        UNKNOWN = "UNKNOWN",
-        PEER_OFFLINE = "PEER_OFFLINE",
-        ACCEPT_FAILURE = "ACCEPT_FAILURE",
-        INVITATION_EXPIRE = "INVITATION_EXPIRE"
+        UNKNOWN = 'UNKNOWN',
+        PEER_OFFLINE = 'PEER_OFFLINE',
+        ACCEPT_FAILURE = 'ACCEPT_FAILURE',
+        INVITATION_EXPIRE = 'INVITATION_EXPIRE'
     }
     enum PeerOnlineState {
-        ONLINE = "ONLINE",
-        UNREACHABLE = "UNREACHABLE",
-        OFFLINE = "OFFLINE"
+        ONLINE = 'ONLINE',
+        UNREACHABLE = 'UNREACHABLE',
+        OFFLINE = 'OFFLINE'
     }
     enum PeerSubscriptionOption {
-        ONLINE_STATUS = "ONLINE_STATUS"
+        ONLINE_STATUS = 'ONLINE_STATUS'
     }
     enum MessageType {
-        TEXT = "TEXT",
-        RAW = "RAW"
+        TEXT = 'TEXT',
+        RAW = 'RAW'
     }
     enum LegacyAreaCode {
-        CN = "CN",
-        NA = "NA",
-        EU = "EU",
-        AS = "AS",
-        JP = "JP",
-        IN = "IN",
-        GLOB = "GLOB",
-        OC = "OC",
-        SA = "SA",
-        AF = "AF",
-        OVS = "OVS"
+        CN = 'CN',
+        NA = 'NA',
+        EU = 'EU',
+        AS = 'AS',
+        JP = 'JP',
+        IN = 'IN',
+        GLOB = 'GLOB',
+        OC = 'OC',
+        SA = 'SA',
+        AF = 'AF',
+        OVS = 'OVS'
     }
     enum AreaCode {
-        GLOBAL = "GLOBAL",
-        INDIA = "INDIA",
-        JAPAN = "JAPAN",
-        ASIA = "ASIA",
-        EUROPE = "EUROPE",
-        CHINA = "CHINA",
-        NORTH_AMERICA = "NORTH_AMERICA"
+        GLOBAL = 'GLOBAL',
+        INDIA = 'INDIA',
+        JAPAN = 'JAPAN',
+        ASIA = 'ASIA',
+        EUROPE = 'EUROPE',
+        CHINA = 'CHINA',
+        NORTH_AMERICA = 'NORTH_AMERICA'
     }
 }
 

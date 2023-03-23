@@ -18,7 +18,7 @@ const config: ClientConfig = {
 };
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
-const token: string | null = null;
+const token: string | null = '007eJxTYDDoVxHmPO/Wdk5yUXDOR/6Nj9bt0X+dvmTrP84f75wCHYwVGCwtjMzMzFJSk4wSk0xMUs0TjROTLE2BwMDcLMnCzEReXSalIZCRYUNWBSsjAwSC+DwMIanFJeGZJRle+cUZDAwAFaEhPA==';
 const useClient = createClient(config);
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
