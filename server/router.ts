@@ -4,6 +4,7 @@ import * as schoolController from './controllers/school.controller';
 import * as subjectController from './controllers/subject.controller';
 import * as lessonController from './controllers/lesson.controller';
 import * as libraryController from './controllers/library.controller';
+import * as noteBookController from './controllers/noteBook.controller';
 const router = Router();
 
 //user routes
@@ -28,11 +29,15 @@ router.get('/lesson/:id', lessonController.getLesson);
 router.put('/lesson/:id', lessonController.updateLesson);
 
 //library routes
-router.put('/user/:id/:lessonId', libraryController.addLessonId);
-router.get('/user/:id/library', libraryController.getLessons);
-// router.get('/user/:id/notes', libraryController.getNotes);
-router.delete('/user/:id/library/:lessonId', libraryController.deleteLessonFromLibrary);
+router.put('/library/:userId/:lessonId', libraryController.addLessonId);
+router.get('/library/:userId/library', libraryController.getLessons);
+// router.get('/library/:id/notes', libraryController.getNotes);
+router.delete('/library/:userId/library/:lessonId', libraryController.deleteLessonFromLibrary);
 router.get('/user/:id/library/:lessonId', libraryController.getLesson);
+
+//noteBook routes
+router.post('/noteBook', noteBookController.createNote);
+
 
 
 export default router;

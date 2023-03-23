@@ -9,17 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateLesson = exports.getLesson = exports.deleteLesson = exports.createLesson = void 0;
+exports.getLesson = exports.deleteLesson = exports.createLesson = void 0;
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
-    const { subjectId } = req.body;
+    const { recording, subjectId } = req.body;
     console.log(req.body);
-    if (name && subjectId) {
+    if (name && subjectId && recording !== undefined) {
         try {
             const newLesson = yield database_1.prisma.lesson.create({
                 data: {
                     name,
+                    date: new Date(),
                     subjectId
                 }
             });
@@ -61,17 +62,3 @@ const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).send(lesson);
 });
 exports.getLesson = getLesson;
-const updateLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
-    const updatedLesson = yield database_1.prisma.lesson.updateMany({
-        where: {
-            id: req.params.id,
-        },
-        data: {
-            video: req.body.video,
-            drawing: req.body.drawing
-        }
-    });
-    res.status(201).send(updatedLesson);
-});
-exports.updateLesson = updateLesson;
