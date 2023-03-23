@@ -1,4 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
 .hello {
   position: absolute;
   /* z-index: 1; */
@@ -11,44 +10,11 @@
 .open_chat {
   position: absolute;
   top: 100px;
-=========
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
 ._form {
-    padding: 1rem;
+  padding: 1rem;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
->>>>>>>>> Temporary merge branch 2
+._form__field {
+  width: 100%;
 }
