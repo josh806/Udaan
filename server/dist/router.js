@@ -33,9 +33,9 @@ const noteBookController = __importStar(require("./controllers/noteBook.controll
 const router = (0, express_1.Router)();
 //user routes
 router.post('/user', userController.createUser);
-router.get('/user/:userId/id', userController.getUserById);
+router.get('/user/id', userController.getUserById);
 router.get('/user/:username/username', userController.getUserByUsername);
-router.put('/user/:userId', userController.updateUser);
+router.put('/user', userController.updateUser);
 //school routes
 router.post('/school', schoolController.createSchool);
 router.get('/school/:schoolId/users', schoolController.getUsers);
