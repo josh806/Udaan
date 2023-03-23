@@ -3,39 +3,62 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model School {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  users     User[]
-  subjects  Subject[]
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  email    String    @unique
+  users    User[]
+  subjects Subject[]
 }
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   firstName String
   lastName  String
   email     String   @unique
   username  String   @unique
   avatar    String?
   student   Boolean
-  school    School  @relation(fields: [schoolId], references: [id])
+  school    School?  @relation(fields: [schoolId], references: [id])
   schoolId  Int
-}
-model Subject {
-  id        Int       @id @default(autoincrement())
-  name      String
   lessons   Lesson[]
-  school    School  @relation(fields: [schoolId], references: [id])
-  schoolId  Int
+  library   Library?
 }
+
+model Subject {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  lessons  Lesson[]
+  school   School   @relation(fields: [schoolId], references: [id])
+  schoolId Int
+}
+
 model Lesson {
-  id         Int       @id @default(autoincrement())
-  name       String
-  material   String?
-  subject    Subject   @relation(fields: [subjectId], references: [id])
-  subjectId  Int
+  id        Int       @id @default(autoincrement())
+  name      String    @unique 
+  material  String?
+  date      DateTime
+  recording Boolean
+  subject   Subject   @relation(fields: [subjectId], references: [id])
+  subjectId Int
+  library   Library[]
+  user      User[]
+}
+
+model Library {
+  id      Int      @id @default(autoincrement())
+  lessons Lesson[]
+  notes   Bytes?
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String   @unique
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
 }

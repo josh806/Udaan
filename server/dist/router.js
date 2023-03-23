@@ -25,7 +25,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const userController = __importStar(require("./controllers/user.controller"));
+const schoolController = __importStar(require("./controllers/school.controller"));
+const subjectController = __importStar(require("./controllers/subject.controller"));
+const lessonController = __importStar(require("./controllers/lesson.controller"));
+const libraryController = __importStar(require("./controllers/library.controller"));
 const router = (0, express_1.Router)();
 //user routes
-router.get('/users', userController.createUser);
+router.post('/user/:id', userController.createUser);
+router.get('/user/:id/id', userController.getUserById);
+router.get('/user/:username/username', userController.getUserByUsername);
+router.put('/user/:id', userController.updateUser);
+//school routes
+router.post('/school', schoolController.createSchool);
+router.get('/school/:id/users', schoolController.getUsers);
+router.get('/school/:id/subjects', schoolController.getSubjects);
+//subject routes
+router.post('/subject', subjectController.createSubject);
+router.delete('/subject/:id', subjectController.deleteSubject);
+//lessons routes
+router.post('/lesson', lessonController.createLesson);
+router.delete('/lesson/:id', lessonController.deleteLesson);
+//library routes
+router.put('/user/:id/:lessonId', libraryController.addLessonId);
+router.get('/user/:id/library', libraryController.getLessons);
+router.get('/user/:id/notes', libraryController.getNotes);
+router.delete('/user/:id/library/:lessonId', libraryController.deleteLesson);
 exports.default = router;
