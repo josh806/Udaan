@@ -34,7 +34,7 @@ Table Subject {
 
 Table Lesson {
   id Int [pk, increment]
-  name String [not null]
+  name String [unique, not null]
   material String
   date DateTime [not null]
   recording Boolean [not null]

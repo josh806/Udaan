@@ -23,4 +23,20 @@ const createSubject = async (req: Request, res: Response) => {
   }
 };
 
-export { createSubject };
+const deleteSubject = async (req: Request, res: Response) => {
+  const subjectId = req.params.id;
+  console.log(req.params.id);
+  try {
+    const subject = await prisma.subject.delete({
+      where: {
+        id: Number(subjectId),
+      },
+    });
+    res.status(200).send(subject);
+  } catch (error) {
+    console.error(error);
+    res.status(404).send('Subject not found');
+  }
+};
+
+export { createSubject, deleteSubject };

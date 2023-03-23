@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const createLesson = async (req: Request, res: Response) => {
-  const { name, recording, subjectId } = req.body;
+  const name = req.body.name.toLowerCase().trim();
+  const { recording, subjectId } = req.body;
   console.log(req.body);
   if (name && subjectId && recording !== undefined) {
     try {
@@ -25,4 +26,20 @@ const createLesson = async (req: Request, res: Response) => {
   }
 };
 
-export { createLesson };
+const deleteLesson = async (req: Request, res: Response) => {
+  const lessonId = req.params.id;
+  try {
+    const lesson = await prisma.lesson.delete({
+      where: {
+        id: Number(lessonId),
+      },
+    });
+    res.status(200).send(lesson);
+  } catch (error) {
+    console.error(error);
+    res.status(404).send('Lesson not found');
+  }
+  
+};
+
+export { createLesson, deleteLesson};

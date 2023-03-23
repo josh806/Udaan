@@ -16,7 +16,8 @@ const createSchool = async (req: Request, res: Response) => {
       res.send(newSchool);
     } catch (error) {
       console.log(error);
-      res.status(500).send({ error: 'User not found' });
+      res.status(500).send({
+        error: error  });
     }
   } else {
     res.status(404);

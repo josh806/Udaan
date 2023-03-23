@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getUserByIdOrUsername = exports.createUser = void 0;
+exports.updateUser = exports.getUserByUsername = exports.getUserById = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
@@ -41,31 +41,22 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
     }
     else {
-        res.status(400).send('Parameter missing to create a new user');
+        console.log('parameter missing');
+        res.status(400).send({ error: 'Submitting form wrong' });
     }
 });
 exports.createUser = createUser;
-const getUserByIdOrUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield database_1.prisma.user.findFirst({
+        const user = yield database_1.prisma.user.findUnique({
             where: {
-                OR: [
-                    { id: req.params.unique },
-                    { username: req.params.unique },
-                ]
-            }
+                id: req.params.id
+            },
         });
         if (!user) {
             throw new Error();
         }
-        console.log(req.params);
-        if (Object.keys(req.params)[0] == 'id') {
-            res.send(user);
-        }
-        else if (Object.keys(req.params)[0] == 'username') {
-            res.send('username exists');
-        }
-        res.send('ok');
+        res.send(user);
         res.status(200);
     }
     catch (error) {
@@ -73,22 +64,40 @@ const getUserByIdOrUsername = (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(400).send({ error: 'User not found' });
     }
 });
-exports.getUserByIdOrUsername = getUserByIdOrUsername;
+exports.getUserById = getUserById;
+const getUserByUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield database_1.prisma.user.findUnique({
+            where: {
+                username: req.params.username
+            },
+        });
+        if (!user) {
+            throw new Error();
+        }
+        res.send({ username: req.params.username });
+        res.status(200);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).send({ error: 'User not found' });
+    }
+});
+exports.getUserByUsername = getUserByUsername;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const key = Object.keys(req.body)[0];
-        if (key !== 'email' && key !== 'student' && key !== 'schoolId') {
-            const user = yield database_1.prisma.user.update({
-                where: { id: String(id) },
-                data: req.body
-            });
-            res.status(200);
-            res.send(user);
-        }
-        else {
-            res.status(401).send({ error: 'Cannot update this property' });
-        }
+        const data = req.body;
+        delete data['email'];
+        delete data['id'];
+        delete data['schoolId'];
+        delete data['student'];
+        const user = yield database_1.prisma.user.update({
+            where: { id: String(id) },
+            data: data
+        });
+        res.status(200);
+        res.send(user);
     }
     catch (error) {
         console.error(error);
