@@ -15,7 +15,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
-                userId: String(req.params.userId),
+                userId: req.params.userId,
             },
             select: {
                 lessons: true,
@@ -24,7 +24,10 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!library) {
             throw new Error();
         }
-        console.log(library);
+        const filterLessons = library.lessons.filter(lesson => lesson.id === req.params.lessonId);
+        if (filterLessons.length) {
+            throw new Error('lesson already exists');
+        }
         const lessonIds = library.lessons.map(el => ({ id: el.id }));
         yield database_1.prisma.user.update({
             where: {
@@ -38,7 +41,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
-                userId: String(req.params.userId),
+                userId: req.params.userId,
             },
             data: {
                 lessons: {
@@ -49,8 +52,8 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(201).send(updatedLibrary);
     }
     catch (error) {
-        console.error(error);
-        res.status(400).send({ error: error });
+        console.log(error);
+        res.status(400).send(`${error}`);
     }
 });
 exports.addLessonId = addLessonId;
@@ -58,7 +61,7 @@ const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
-                userId: String(req.params.userId),
+                userId: req.params.userId,
             },
             include: {
                 lessons: true
@@ -92,7 +95,7 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
-                userId: String(req.params.userId),
+                userId: req.params.userId,
             },
             include: {
                 lessons: true
@@ -103,7 +106,7 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
         }
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
-                userId: String(req.params.userId)
+                userId: req.params.userId
             },
             data: {
                 lessons: {

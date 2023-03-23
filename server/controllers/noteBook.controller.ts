@@ -7,12 +7,17 @@ const createNote = async (req: Request, res: Response) => {
     where: {
       userId: userId,
     },
-    select: {
-      id:true
+    include: {
+      lessons:true
     }
   });
-  if (!library) { throw new Error(); }
+
+  console.log(library);
   try {
+    if (!library) { throw new Error(); }
+    const hasLesson = library.lessons.some(lesson => lesson.id === lessonId);
+    console.log(hasLesson);
+    if (!hasLesson) { throw new Error('user doesnt have this lesson'); }
     const newNote = await prisma.noteBook.create({
       data: {
         libraryId: library.id,
@@ -24,8 +29,8 @@ const createNote = async (req: Request, res: Response) => {
     res.status(201);
     res.send(newNote);
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error });
+    console.error(error, 'hello');
+    res.status(500).send( `${ error }` );
   }
 };
 
