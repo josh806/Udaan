@@ -33,15 +33,16 @@ model User {
 
 model Subject {
   id       String   @id @default(uuid())
-  name     String   @unique
+  name     String   
   lessons  Lesson[]
   school   School   @relation(fields: [schoolId], references: [id])
   schoolId String
+  @@unique([name, schoolId])
 }
 
 model Lesson {
   id        String     @id @default(uuid())
-  name      String     @unique
+  name      String     
   date      DateTime
   video     String?
   drawing   String?
@@ -50,6 +51,7 @@ model Lesson {
   librarys  Library[]
   users     User[]
   notes     NoteBook[]
+  @@unique([name, subjectId])
 }
 
 model Library {
@@ -62,7 +64,7 @@ model Library {
 
 model NoteBook {
   id        String    @id @default(uuid())
-  name      String    @unique
+  name      String    
   createdAt DateTime
   updatedAt DateTime?
   note      String?
@@ -70,6 +72,7 @@ model NoteBook {
   libraryId String
   Lesson    Lesson    @relation(fields: [lessonId], references: [id])
   lessonId  String
+  @@unique([name, libraryId])
 }
 
 generator dbml {
