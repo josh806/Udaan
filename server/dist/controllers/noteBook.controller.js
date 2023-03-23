@@ -10,20 +10,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createNote = void 0;
+const database_1 = require("../database");
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(req.body);
-    const data = req.body;
-    console.log(data);
+    const { userId, lessonId, name, note } = req.body;
+    console.log(userId);
+    const library = yield database_1.prisma.library.findUnique({
+        where: {
+            userId: userId,
+        }
+    });
+    console.log(library);
     // try {
-    //   const newPost = await prisma.noteBook.create({
+    //   const newNote = await prisma.noteBook.create({
     //     data: {
+    //       // libraryId,
+    //       lessonId,
     //       name,
-    //       date: new Date(),
-    //       subjectId
+    //       note
     //     }
     //   });
     //   res.status(201);
-    //   res.send(newPost);
+    //   res.send(newNote);
     // } catch (error) {
     //   console.error(error);
     //   res.status(500).send({ error: error });

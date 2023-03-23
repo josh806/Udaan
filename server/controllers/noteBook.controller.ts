@@ -3,18 +3,27 @@ import { prisma } from '../database';
 
 const createNote = async (req: Request, res: Response) => {
   // console.log(req.body);
-  const data = req.body;
-  console.log(data);
+  const { userId, lessonId, name, note } = req.body;
+  console.log(userId);
+
+
+  const library = await prisma.library.findUnique({
+    where: {
+      userId: userId,
+    }
+  });
+  console.log(library);
   // try {
-  //   const newPost = await prisma.noteBook.create({
+  //   const newNote = await prisma.noteBook.create({
   //     data: {
+  //       // libraryId,
+  //       lessonId,
   //       name,
-  //       date: new Date(),
-  //       subjectId
+  //       note
   //     }
   //   });
   //   res.status(201);
-  //   res.send(newPost);
+  //   res.send(newNote);
   // } catch (error) {
   //   console.error(error);
   //   res.status(500).send({ error: error });

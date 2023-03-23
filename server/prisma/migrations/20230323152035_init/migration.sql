@@ -54,8 +54,8 @@ CREATE TABLE "Library" (
 CREATE TABLE "NoteBook" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
-    "updatedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "note" TEXT,
     "libraryId" TEXT NOT NULL,
     "lessonId" TEXT NOT NULL,
@@ -88,16 +88,19 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Subject_name_key" ON "Subject"("name");
+CREATE UNIQUE INDEX "Subject_name_schoolId_key" ON "Subject"("name", "schoolId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Lesson_name_key" ON "Lesson"("name");
+CREATE UNIQUE INDEX "Lesson_name_subjectId_key" ON "Lesson"("name", "subjectId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Library_userId_key" ON "Library"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "NoteBook_name_key" ON "NoteBook"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "NoteBook_name_libraryId_key" ON "NoteBook"("name", "libraryId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_LessonToLibrary_AB_unique" ON "_LessonToLibrary"("A", "B");
