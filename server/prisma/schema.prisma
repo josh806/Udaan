@@ -41,7 +41,7 @@ model Subject {
 
 model Lesson {
   id        Int       @id @default(autoincrement())
-  name      String    @unique
+  name      String    @unique 
   material  String?
   date      DateTime
   recording Boolean

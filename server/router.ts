@@ -18,11 +18,18 @@ router.get('/school/:id/subjects', schoolController.getSubjects);
 
 //subject routes
 router.post('/subject', subjectController.createSubject);
+router.delete('/subject/:id', subjectController.deleteSubject);
 
 //lessons routes
 router.post('/lesson', lessonController.createLesson);
+router.delete('/lesson/:id', lessonController.deleteLesson);
 
 //library routes
-router.put('/library/:libraryId/:lessonId', libraryController.addLessonId);
+router.put('/user/:id/:lessonId', libraryController.addLessonId);
+router.get('/user/:id/library', libraryController.getLessons);
+router.get('/user/:id/notes', libraryController.getNotes);
+router.delete('/user/:id/library/:lessonId', libraryController.deleteLesson);
+
+
 
 export default router;
