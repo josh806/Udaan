@@ -49,7 +49,7 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const user = yield database_1.prisma.user.findUnique({
             where: {
-                id: req.params.id
+                id: req.body
             },
         });
         if (!user) {
@@ -85,7 +85,7 @@ const getUserByUsername = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.getUserByUsername = getUserByUsername;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = req.params;
+        const { id } = req.body.id;
         const data = req.body;
         delete data['email'];
         delete data['id'];
