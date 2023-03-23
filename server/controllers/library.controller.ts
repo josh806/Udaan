@@ -111,4 +111,4 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   }
 };
 
-export { addLessonId, getLessons, deleteLesson };
+export { addLessonId, getLessons, deleteLessonFromLibrary };

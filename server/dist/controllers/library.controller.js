@@ -9,8 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteLesson = exports.getLessons = exports.addLessonId = void 0;
-exports.deleteLessonFromLibrary = exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
+exports.deleteLessonFromLibrary = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -121,4 +120,4 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(500).send('Server problem');
     }
 });
-exports.deleteLesson = deleteLesson;
+exports.deleteLessonFromLibrary = deleteLessonFromLibrary;
