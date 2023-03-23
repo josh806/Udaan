@@ -29,7 +29,7 @@ const deleteSubject = async (req: Request, res: Response) => {
   try {
     await prisma.lesson.deleteMany({
       where: {
-        subjectId: Number(subjectId),
+        subjectId: subjectId,
       }
     });
     const deletedSubject = await prisma.subject.delete({
