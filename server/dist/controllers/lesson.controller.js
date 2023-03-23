@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteLesson = exports.createLesson = void 0;
+exports.getLesson = exports.deleteLesson = exports.createLesson = void 0;
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
@@ -54,3 +54,12 @@ const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.deleteLesson = deleteLesson;
+const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lesson = yield database_1.prisma.lesson.findUnique({
+        where: {
+            id: Number(req.params.id),
+        },
+    });
+    res.status(200).send(lesson);
+});
+exports.getLesson = getLesson;
