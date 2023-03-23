@@ -39,12 +39,17 @@ const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const subjectId = req.params.id;
     console.log(req.params.id);
     try {
-        const subject = yield database_1.prisma.subject.delete({
+        yield database_1.prisma.lesson.deleteMany({
+            where: {
+                subjectId: Number(subjectId),
+            }
+        });
+        const deletedSubject = yield database_1.prisma.subject.delete({
             where: {
                 id: Number(subjectId),
-            },
+            }
         });
-        res.status(200).send(subject);
+        res.status(200).send(deletedSubject);
     }
     catch (error) {
         console.error(error);

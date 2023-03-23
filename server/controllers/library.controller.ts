@@ -79,7 +79,7 @@ const getNotes = async (req: Request, res: Response) => {
   }
 };
 
-const deleteLesson = async (req: Request, res: Response) => {
+const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
@@ -112,4 +112,4 @@ const deleteLesson = async (req: Request, res: Response) => {
   }
 };
 
-export { addLessonId, getLessons, getNotes, deleteLesson };
+export { addLessonId, getLessons, getNotes, deleteLessonFromLibrary };

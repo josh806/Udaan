@@ -39,7 +39,15 @@ const deleteLesson = async (req: Request, res: Response) => {
     console.error(error);
     res.status(404).send('Lesson not found');
   }
-  
 };
 
-export { createLesson, deleteLesson};
+const getLesson = async (req: Request, res: Response) => {
+  const lesson = await prisma.lesson.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.status(200).send(lesson);
+};
+
+export { createLesson, deleteLesson, getLesson};
