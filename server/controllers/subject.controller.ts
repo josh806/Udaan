@@ -34,8 +34,8 @@ const deleteSubject = async (req: Request, res: Response) => {
     });
     const deletedSubject = await prisma.subject.delete({
       where: {
-        id: Number(subjectId),
-      }
+        id: subjectId,
+      },
     });
     res.status(200).send(deletedSubject);
   } catch (error) {

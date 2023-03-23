@@ -20,7 +20,7 @@ const addLessonId = async (req: Request, res: Response) => {
       },
       data: {
         lessons: {
-          set : [...lessonIds, {id: +req.params.lessonId}]
+          set : [...lessonIds, {id: req.params.lessonId}]
         }
       }
     });
@@ -30,7 +30,7 @@ const addLessonId = async (req: Request, res: Response) => {
       },
       data: {
         lessons: {
-          set: [...lessonIds, {id: +req.params.lessonId}]
+          set: [...lessonIds, {id: req.params.lessonId}]
         }
       }
     });
@@ -61,22 +61,22 @@ const getLessons = async (req:Request, res:Response) => {
 };
 
 
-const getNotes = async (req: Request, res: Response) => {
-  try {
-    const library = await prisma.library.findUnique({
-      where: {
-        userId: String(req.params.id),
-      },
-      select: {
-        notes: true,
-      }
-    });
-    res.status(200).send(library);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Library not found');
-  }
-};
+// const getNotes = async (req: Request, res: Response) => {
+//   try {
+//     const library = await prisma.library.findUnique({
+//       where: {
+//         userId: String(req.params.id),
+//       },
+//       select: {
+//         notes: true,
+//       }
+//     });
+//     res.status(200).send(library);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Library not found');
+//   }
+// };
 
 const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   try {
@@ -99,7 +99,7 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
       data: {
         lessons: {
           disconnect: {
-            id: Number(req.params.lessonId)
+            id: req.params.lessonId
           }
         }
       }
@@ -111,4 +111,4 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   }
 };
 
-export { addLessonId, getLessons, getNotes, deleteLessonFromLibrary };
+export { addLessonId, getLessons, deleteLesson };

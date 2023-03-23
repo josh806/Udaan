@@ -29,7 +29,7 @@ router.get('/lesson/:id', lessonController.getLesson);
 //library routes
 router.put('/user/:id/:lessonId', libraryController.addLessonId);
 router.get('/user/:id/library', libraryController.getLessons);
-router.get('/user/:id/notes', libraryController.getNotes);
+// router.get('/user/:id/notes', libraryController.getNotes);
 router.delete('/user/:id/library/:lessonId', libraryController.deleteLessonFromLibrary);
 
 

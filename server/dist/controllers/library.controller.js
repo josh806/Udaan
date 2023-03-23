@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteLesson = exports.getLessons = exports.addLessonId = void 0;
 exports.deleteLessonFromLibrary = exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,7 +33,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             },
             data: {
                 lessons: {
-                    set: [...lessonIds, { id: +req.params.lessonId }]
+                    set: [...lessonIds, { id: req.params.lessonId }]
                 }
             }
         });
@@ -42,7 +43,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             },
             data: {
                 lessons: {
-                    set: [...lessonIds, { id: +req.params.lessonId }]
+                    set: [...lessonIds, { id: req.params.lessonId }]
                 }
             }
         });
@@ -72,24 +73,22 @@ const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getLessons = getLessons;
-const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const library = yield database_1.prisma.library.findUnique({
-            where: {
-                userId: String(req.params.id),
-            },
-            select: {
-                notes: true,
-            }
-        });
-        res.status(200).send(library);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).send('Library not found');
-    }
-});
-exports.getNotes = getNotes;
+// const getNotes = async (req: Request, res: Response) => {
+//   try {
+//     const library = await prisma.library.findUnique({
+//       where: {
+//         userId: String(req.params.id),
+//       },
+//       select: {
+//         notes: true,
+//       }
+//     });
+//     res.status(200).send(library);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Library not found');
+//   }
+// };
 const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const library = yield database_1.prisma.library.findUnique({
@@ -110,7 +109,7 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
             data: {
                 lessons: {
                     disconnect: {
-                        id: Number(req.params.lessonId)
+                        id: req.params.lessonId
                     }
                 }
             }
@@ -122,4 +121,4 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(500).send('Server problem');
     }
 });
-exports.deleteLessonFromLibrary = deleteLessonFromLibrary;
+exports.deleteLesson = deleteLesson;

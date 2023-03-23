@@ -46,8 +46,8 @@ const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
         const deletedSubject = yield database_1.prisma.subject.delete({
             where: {
-                id: Number(subjectId),
-            }
+                id: subjectId,
+            },
         });
         res.status(200).send(deletedSubject);
     }

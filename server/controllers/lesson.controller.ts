@@ -11,7 +11,6 @@ const createLesson = async (req: Request, res: Response) => {
         data: {
           name,
           date: new Date(),
-          recording,
           subjectId
         }
       });
@@ -31,7 +30,7 @@ const deleteLesson = async (req: Request, res: Response) => {
   try {
     const lesson = await prisma.lesson.delete({
       where: {
-        id: Number(lessonId),
+        id: lessonId,
       },
     });
     res.status(200).send(lesson);

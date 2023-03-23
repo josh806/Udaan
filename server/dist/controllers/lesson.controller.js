@@ -21,7 +21,6 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 data: {
                     name,
                     date: new Date(),
-                    recording,
                     subjectId
                 }
             });
@@ -43,7 +42,7 @@ const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const lesson = yield database_1.prisma.lesson.delete({
             where: {
-                id: Number(lessonId),
+                id: lessonId,
             },
         });
         res.status(200).send(lesson);
