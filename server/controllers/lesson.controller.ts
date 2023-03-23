@@ -43,7 +43,7 @@ const deleteLesson = async (req: Request, res: Response) => {
 const getLesson = async (req: Request, res: Response) => {
   const lesson = await prisma.lesson.findUnique({
     where: {
-      id: Number(req.params.id),
+      id: req.params.id,
     },
   });
   res.status(200).send(lesson);

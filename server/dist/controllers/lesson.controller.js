@@ -56,7 +56,7 @@ exports.deleteLesson = deleteLesson;
 const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lesson = yield database_1.prisma.lesson.findUnique({
         where: {
-            id: Number(req.params.id),
+            id: req.params.id,
         },
     });
     res.status(200).send(lesson);
