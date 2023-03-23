@@ -49,4 +49,18 @@ const getLesson = async (req: Request, res: Response) => {
   res.status(200).send(lesson);
 };
 
-export { createLesson, deleteLesson, getLesson};
+const updateLesson = async (req: Request, res: Response) => {
+  console.log(req.body);
+  const updatedLesson = await prisma.lesson.updateMany({
+    where: {
+      id: req.params.id,
+    },
+    data: {
+      video: req.body.video,
+      drawing: req.body.drawing
+    }
+  });
+  res.status(201).send(updatedLesson);
+};
+
+export { createLesson, deleteLesson, getLesson, updateLesson};
