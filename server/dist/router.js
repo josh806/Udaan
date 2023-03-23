@@ -49,5 +49,4 @@ router.put('/user/:id/:lessonId', libraryController.addLessonId);
 router.get('/user/:id/library', libraryController.getLessons);
 router.get('/user/:id/notes', libraryController.getNotes);
 router.delete('/user/:id/library/:lessonId', libraryController.deleteLesson);
-
 exports.default = router;

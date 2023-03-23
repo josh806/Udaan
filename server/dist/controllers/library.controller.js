@@ -28,7 +28,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const lessonIds = library.lessons.map(el => ({ id: el.id }));
         yield database_1.prisma.user.update({
             where: {
-                id: +req.params.libraryId,
+                id: req.params.id,
             },
             data: {
                 lessons: {
@@ -36,7 +36,6 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 }
             }
         });
-
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
                 userId: String(req.params.id),
