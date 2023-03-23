@@ -60,6 +60,4 @@ model Library {
 
 generator dbml {
   provider = "prisma-dbml-generator"
-  Whiteboard      Whiteboard?   @relation(fields: [lastName], references: [id])
-  roomId    Int?
 }
