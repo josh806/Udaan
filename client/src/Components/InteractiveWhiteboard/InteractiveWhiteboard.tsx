@@ -55,7 +55,8 @@ const InteractiveWhiteboard = () => {
                 textSize: 40,
               });
             });
-            toolbar.appendChild(btn);
+            if (toolbar) toolbar.appendChild(btn);
+            
             console.log(btn.getAttribute("id"));
           }
           setRoom(room);
