@@ -26,15 +26,19 @@ Table User {
 
 Table Subject {
   id String [pk]
-  name String [unique, not null]
+  name String [not null]
   lessons Lesson [not null]
   school School [not null]
   schoolId String [not null]
+
+  indexes {
+    (name, schoolId) [unique]
+  }
 }
 
 Table Lesson {
   id String [pk]
-  name String [unique, not null]
+  name String [not null]
   date DateTime [not null]
   video String
   drawing String
@@ -43,6 +47,10 @@ Table Lesson {
   librarys Library [not null]
   users User [not null]
   notes NoteBook [not null]
+
+  indexes {
+    (name, subjectId) [unique]
+  }
 }
 
 Table Library {
@@ -55,7 +63,7 @@ Table Library {
 
 Table NoteBook {
   id String [pk]
-  name String [unique, not null]
+  name String [not null]
   createdAt DateTime [not null]
   updatedAt DateTime
   note String
@@ -63,6 +71,10 @@ Table NoteBook {
   libraryId String [not null]
   Lesson Lesson [not null]
   lessonId String [not null]
+
+  indexes {
+    (name, libraryId) [unique]
+  }
 }
 
 Ref: User.schoolId > School.id
