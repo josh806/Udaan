@@ -5,7 +5,7 @@ const addLessonId = async (req: Request, res: Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       select: {
         lessons: true,
@@ -16,7 +16,7 @@ const addLessonId = async (req: Request, res: Response) => {
     const lessonIds = library.lessons.map(el => ({ id: el.id }));
     await prisma.user.update({
       where: {
-        id: req.params.id,
+        id: req.params.userId,
       },
       data: {
         lessons: {
@@ -26,7 +26,7 @@ const addLessonId = async (req: Request, res: Response) => {
     });
     const updatedLibrary = await prisma.library.update({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       data: {
         lessons: {
@@ -45,7 +45,7 @@ const getLessons = async (req:Request, res:Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       include: {
         lessons: true
@@ -82,7 +82,7 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       include: {
         lessons: true
@@ -90,11 +90,11 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
     });
   
     if (!library) {
-      res.status(404).send(`Library with ID ${req.params.id} not found`);
+      res.status(404).send(`Library with ID ${req.params.userId} not found`);
     }
     const updatedLibrary = await prisma.library.update({
       where: {
-        userId: String(req.params.id)
+        userId: String(req.params.userId)
       },
       data: {
         lessons: {

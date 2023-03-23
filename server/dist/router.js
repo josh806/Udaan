@@ -29,6 +29,7 @@ const schoolController = __importStar(require("./controllers/school.controller")
 const subjectController = __importStar(require("./controllers/subject.controller"));
 const lessonController = __importStar(require("./controllers/lesson.controller"));
 const libraryController = __importStar(require("./controllers/library.controller"));
+const noteBookController = __importStar(require("./controllers/noteBook.controller"));
 const router = (0, express_1.Router)();
 //user routes
 router.post('/user/:id', userController.createUser);
@@ -47,8 +48,10 @@ router.post('/lesson', lessonController.createLesson);
 router.delete('/lesson/:id', lessonController.deleteLesson);
 router.get('/lesson/:id', lessonController.getLesson);
 //library routes
-router.put('/user/:id/:lessonId', libraryController.addLessonId);
-router.get('/user/:id/library', libraryController.getLessons);
-// router.get('/user/:id/notes', libraryController.getNotes);
-router.delete('/user/:id/library/:lessonId', libraryController.deleteLessonFromLibrary);
+router.put('/library/:userId/:lessonId', libraryController.addLessonId);
+router.get('/library/:userId/library', libraryController.getLessons);
+// router.get('/library/:id/notes', libraryController.getNotes);
+router.delete('/library/:userId/library/:lessonId', libraryController.deleteLessonFromLibrary);
+//noteBook routes
+router.post('/noteBook', noteBookController.createNote);
 exports.default = router;
