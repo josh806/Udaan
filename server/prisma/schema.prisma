@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:Kerdada1109@localhost:5432/test"
 }
 
 model School {
@@ -21,8 +21,8 @@ model User {
   id        String   @id @default(uuid())
   firstName String
   lastName  String
-  email     String   @unique
-  username  String   @unique
+  email     String  @unique
+  username  String  @unique
   avatar    String?
   student   Boolean
   school    School?  @relation(fields: [schoolId], references: [id])
