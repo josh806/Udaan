@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
 import { store } from '../redux/store';
-import { updateName } from '../redux/user';
+
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -12,12 +12,15 @@ export default class Game extends Phaser.Scene {
   private collisionCounter = 0;
   private checkCollisions = false;
   private userName!: string;
+  private spacebar!: Phaser.Input.Keyboard.Key;
+  private sitting = false;
+  private chairPosition = [0, 0];
 
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
 
   // private client = new Client(import.meta.env.VITE_PHASER);
-  private client = new Client('ws://192.168.0.180:4001');
+  private client = new Client('ws://192.168.0.239:4001');
   private room!: Room;
 
   private playerEntities: {
@@ -31,7 +34,9 @@ export default class Game extends Phaser.Scene {
     up: [false, 'moveup'],
     down: [false, 'movedown'],
     idle: [false, 'idle'],
+    sit: [false, 'sit'],
     collider: false,
+    chairPosition: this.chairPosition,
   };
 
   constructor() {
@@ -142,46 +147,57 @@ export default class Game extends Phaser.Scene {
         entity.anims.create({
           key: 'moveright',
           frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'right',
+            prefix: 'right-walk-',
             end: 5,
-            zeroPad: 2,
+            zeroPad: 1,
           }),
           repeat: -1,
         });
         entity.anims.create({
           key: 'moveup',
           frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'up',
+            prefix: 'up-walk-',
             end: 5,
-            zeroPad: 2,
+            zeroPad: 1,
           }),
           repeat: -1,
         });
         entity.anims.create({
           key: 'moveleft',
           frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'left',
+            prefix: 'left-walk-',
             end: 5,
-            zeroPad: 2,
+            zeroPad: 1,
           }),
           repeat: -1,
         });
         entity.anims.create({
           key: 'movedown',
           frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'down',
-            end: 3,
-            zeroPad: 2,
+            prefix: 'down-walk-',
+            end: 5,
+            zeroPad: 1,
           }),
           repeat: -1,
         });
         entity.anims.create({
           key: 'idle',
           frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'down',
-            end: 0,
-            zeroPad: 2,
+            prefix: 'down-idle-',
+            end: 5,
+            zeroPad: 1,
           }),
+          frameRate: 8,
+          repeat: -1,
+        });
+        entity.anims.create({
+          key: 'sit',
+          frames: entity.anims.generateFrameNames('bob', {
+            prefix: 'right-sitting-',
+            end: 5,
+            zeroPad: 1,
+          }),
+          frameRate: 8,
           repeat: -1,
         });
       });
@@ -199,13 +215,26 @@ export default class Game extends Phaser.Scene {
     } catch (error) {
       console.log(error);
     }
+    this.spacebar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
   }
 
   public checkCollision() {
     this.checkCollisions = true;
   }
 
-  private enterVideoClass() {
+  private enterVideoClass(
+    p: Phaser.GameObjects.GameObject,c: Phaser.GameObjects.GameObject
+  ) {
+    const player = p as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    const chair = c as unknown as Phaser.Tilemaps.Tile;
+    this.chairPosition[0] = chair.pixelX + chair.width / 2;
+    this.chairPosition[1] = chair.pixelY - chair.height / 2;
+    console.log(`chair x position${chair.pixelX + chair.width / 2}`);
+    console.log(`chair y position${chair.pixelY + chair.height / 2}`);
+    console.log(`player position x ${player.x}`);
+    console.log(`player position y ${player.y}`);
     this.checkCollisions = true;
     if (this.collisionCounter === 0) {
       const screenCenterX = this.cameras.main.worldView.centerX;
@@ -242,6 +271,7 @@ export default class Game extends Phaser.Scene {
       this.inputPayload.right[0] = this.cursorKeys.right.isDown;
       this.inputPayload.up[0] = this.cursorKeys.up.isDown;
       this.inputPayload.down[0] = this.cursorKeys.down.isDown;
+      this.inputPayload.sit[0] = Phaser.Input.Keyboard.JustDown(this.spacebar);
       this.room.send('move', this.inputPayload);
     } else {
       this.inputPayload.left[0] = this.cursorKeys.left.isDown;
@@ -267,10 +297,24 @@ export default class Game extends Phaser.Scene {
       this.currentPlayer.y += velocity;
       this.currentPlayer.setVelocityY(velocity);
       this.currentPlayer.anims.play('movedown', true);
-    } else if (this.cursorKeys.space.isDown) {
-      this.collisionCounter = 0;
-      this.textBox.setVisible(false);
-      this.text.setVisible(false);
+    } else if (this.inputPayload.sit[0] && this.collisionCounter > 0) {
+      this.sitting = !this.sitting;
+      this.collisionCounter++;
+      console.log(this.collisionCounter);
+      if (this.collisionCounter === 2) {
+        this.textBox.setVisible(false);
+        this.text.setVisible(false);
+
+        this.currentPlayer.x = this.chairPosition[0];
+        this.currentPlayer.y = this.chairPosition[1];
+        this.currentPlayer.setPosition(
+          this.chairPosition[0],
+          this.chairPosition[1]
+        );
+      } else {
+        this.collisionCounter = 0;
+      }
+
       // to be removed: dispatch to redux
       // store.dispatch(updateName('josh'));
       // this.userName = store.getState().users.name;
@@ -279,7 +323,15 @@ export default class Game extends Phaser.Scene {
       this.currentPlayer.setVelocityX(0);
       this.currentPlayer.y += 0;
       this.currentPlayer.setVelocityY(0);
-      this.currentPlayer.anims.play('idle');
+      if (!this.sitting) {
+        this.currentPlayer.anims.play('idle');
+        this.inputPayload.sit[0] = false;
+        this.room.send('move', this.inputPayload);
+      } else {
+        this.currentPlayer.anims.play('sit');
+        this.inputPayload.sit[0] = true;
+        this.room.send('move', this.inputPayload);
+      }
     }
 
     for (const sessionId in this.playerEntities) {

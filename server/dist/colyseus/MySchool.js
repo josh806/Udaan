@@ -26,10 +26,15 @@ class MySchool extends colyseus_1.Room {
                     player.y += velocity;
                     player.animation = input.down[1];
                 }
+                else if (input.sit[0]) {
+                    player.x = input.chairPosition[0];
+                    player.y = input.chairPosition[1];
+                    player.animation = input.sit[1];
+                }
                 else {
                     player.x += 0;
                     player.y += 0;
-                    player.animation = 'idle';
+                    player.animation = input.idle[1];
                 }
             }
         });
