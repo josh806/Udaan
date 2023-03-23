@@ -47,11 +47,15 @@ router.delete('/subject/:id', subjectController.deleteSubject);
 router.post('/lesson', lessonController.createLesson);
 router.delete('/lesson/:id', lessonController.deleteLesson);
 router.get('/lesson/:id', lessonController.getLesson);
+router.put('/lesson/:id', lessonController.updateLesson);
 //library routes
+
 router.put('/library/:userId/:lessonId', libraryController.addLessonId);
 router.get('/library/:userId/library', libraryController.getLessons);
 // router.get('/library/:id/notes', libraryController.getNotes);
 router.delete('/library/:userId/library/:lessonId', libraryController.deleteLessonFromLibrary);
+router.get('/user/:id/library/:lessonId', libraryController.getLesson);
 //noteBook routes
 router.post('/noteBook', noteBookController.createNote);
+
 exports.default = router;
