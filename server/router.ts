@@ -31,36 +31,5 @@ router.get('/user/:id/notes', libraryController.getNotes);
 router.delete('/user/:id/library/:lessonId', libraryController.deleteLesson);
 
 
+
 export default router;
-
-
-
-
-
-
-
-
-
-
-// const user = await prisma.user.findUnique({
-//   where: {
-//     email: 'eloise@prisma.io',
-//   },
-// })
-
-// if (user) {
-//   console.log(user.coinflips)
-
-//   user.coinflips.push(true, true, false)
-
-//   const updatedUser = await prisma.user.update({
-//     where: {
-//       email: 'eloise@prisma.io',
-//     },
-//     data: {
-//       coinflips: user.coinflips,
-//     },
-//   })
-
-//   console.log(updatedUser.coinflips)
-// }

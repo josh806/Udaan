@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const addLessonId = async (req: Request, res: Response) => {
-  console.log(req.params);
   try {
     const library = await prisma.library.findUnique({
       where: {

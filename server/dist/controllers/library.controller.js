@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteLesson = exports.getNotes = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params);
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
@@ -29,7 +28,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const lessonIds = library.lessons.map(el => ({ id: el.id }));
         yield database_1.prisma.user.update({
             where: {
-                id: req.params.id,
+                id: +req.params.libraryId,
             },
             data: {
                 lessons: {
@@ -37,6 +36,7 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 }
             }
         });
+
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
                 userId: String(req.params.id),
