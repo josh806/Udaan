@@ -4,7 +4,7 @@ import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
 
 import Profile from '../features/Profile';
-import VideoChat from '../Components/VideoChat/VideoChat';
+import VideoCall from '../Components/VideoChat/VideoCall';
 import BasicModal from '../Components/BasicModal';
 
 import PhaserRoot from '../Phaser/Phaser';
@@ -47,7 +47,8 @@ const School = () => {
               Show chat
             </button>
           )}
-          {inCall ? <VideoChat /> : <PhaserRoot />}
+          <PhaserRoot />
+          {inCall && <VideoCall />}
         </>
       </>
     </AuthRequired>

@@ -1,19 +1,9 @@
-import React, { useEffect, useState, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { endVideoCall } from '../../redux/user';
-import './VideoChat.css';
-import {
-  ClientConfig,
-  IAgoraRTCRemoteUser,
-  ICameraVideoTrack,
-  IMicrophoneAudioTrack,
-} from 'agora-rtc-sdk-ng';
-import {
-  AgoraVideoPlayer,
-  createClient,
-  createMicrophoneAndCameraTracks,
-} from 'agora-rtc-react';
-import { RootState } from '../../redux/store';
+import React, { useEffect, useState} from 'react';
+import Controls from './Controls';
+import Videos from './Videos';
+import './VideoCall.css';
+import { ClientConfig, IAgoraRTCRemoteUser } from 'agora-rtc-sdk-ng';
+import { createClient, createMicrophoneAndCameraTracks } from 'agora-rtc-react';
 
 const config: ClientConfig = {
   mode: 'rtc',
@@ -27,8 +17,8 @@ const useClient = createClient(config);
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
 //VideoComponent for the video call
-const VideoCall = (props: { channelName: string }) => {
-  const { channelName } = props;
+const VideoCall = () => {
+  const channelName = 'TestWithJosh';
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
   const [start, setStart] = useState<boolean>(false);
   const client = useClient();
@@ -82,85 +72,16 @@ const VideoCall = (props: { channelName: string }) => {
 
   return (
     <div>
-      {ready && tracks && <Controls tracks={tracks} setStart={setStart} />}
+      {ready && tracks && (
+        <Controls client={client} tracks={tracks} setStart={setStart} />
+      )}
       {start && tracks && <Videos users={remoteUsers} tracks={tracks} />}
     </div>
   );
 };
 
-const Videos = (props: {
-  users: IAgoraRTCRemoteUser[];
-  tracks: [IMicrophoneAudioTrack, ICameraVideoTrack];
-}) => {
-  const { users, tracks } = props;
-  return (
-    <div>
-      <div id='videos'>
-        <AgoraVideoPlayer className='vid' videoTrack={tracks[1]} />
-        {users.length > 0 &&
-          users.map((user) => {
-            if (user.videoTrack) {
-              return (
-                <AgoraVideoPlayer
-                  className='vid'
-                  videoTrack={user.videoTrack}
-                  key={user.uid}
-                />
-              );
-            } else return null;
-          })}
-      </div>
-    </div>
-  );
-};
-
-export const Controls = (props: { tracks: any; setStart: any }) => {
-  const dispatch = useDispatch();
-  const client = useClient();
-  const { tracks, setStart } = props;
-  const [trackState, setTrackState] = useState({ video: true, audio: true });
-
-  const mute = async (type: 'audio' | 'video') => {
-    if (type === 'audio') {
-      await tracks[0].setEnabled(!trackState.audio);
-      setTrackState({ ...trackState, audio: !trackState.audio });
-    } else {
-      await tracks[1].setEnabled(!trackState.video);
-      setTrackState({ ...trackState, video: !trackState.video });
-    }
-  };
-
-  const leaveChannel = async () => {
-    await client.leave();
-    client.removeAllListeners();
-    tracks[0].close();
-    tracks[1].close();
-    setStart(false);
-    dispatch(endVideoCall());
-  };
-
-  return (
-    <div className='controls'>
-      <p
-        className={trackState.audio ? 'mute' : 'unmute'}
-        onClick={() => mute('audio')}
-      >
-        {trackState.audio ? 'Mute' : 'Unmute'}
-      </p>
-      <p
-        className={trackState.video ? 'mute' : 'unmute'}
-        onClick={() => mute('video')}
-      >
-        {trackState.video ? 'Hide video' : 'Turn video on'}
-      </p>
-      <p className='leave' onClick={leaveChannel}>
-        Leave
-      </p>
-    </div>
-  );
-};
-
-//Form to enter the channel name
+//Form to enter the channel name, to be used for teachers to create class.
+// right now it is for entering the class. need to be refactored
 // const ChannelForm = (props: {
 //   setInCall: React.Dispatch<React.SetStateAction<boolean>>;
 //   setChannelName: React.Dispatch<React.SetStateAction<string>>;
@@ -187,10 +108,4 @@ export const Controls = (props: { tracks: any; setStart: any }) => {
 //     </form>
 //   );
 // };
-
-const VideoChat: React.FC = () => {
-  const { inCall } = useSelector((state: RootState) => state.users);
-  // const [inCall, setInCall] = useState(true);
-  return <>{inCall && <VideoCall channelName='TestWithJosh' />}</>;
-};
-export default VideoChat;
+export default VideoCall;
