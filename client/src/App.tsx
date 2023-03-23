@@ -12,29 +12,17 @@ function App() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={<pages.Home />}
-        />
-        <Route
-          path="/profile"
-          element={<pages.Profile />}
-        />
-        <Route
-          path="/school"
-          element={<pages.School />}
-        />
-        <Route
-          path="*"
-          element={<pages.NotFound />}
-        />
+        <Route path='/' element={<pages.Home />} />
+        <Route path='/profile' element={<pages.Profile />} />
+        <Route path='/school' element={<pages.School />} />
+        <Route path='*' element={<pages.NotFound />} />
       </Routes>
 
-      <div className="App">
-        <div className="navbar">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-          <NavLink to="/school">School</NavLink>
+      <div className='App'>
+        <div className='navbar'>
+          <NavLink to='/'>Home</NavLink>
+          <NavLink to='/profile'>Profile</NavLink>
+          <NavLink to='/school'>School</NavLink>
           {!isAuthenticated ? <AuthLogin /> : <AuthLogoutBtn />}
         </div>
       </div>
