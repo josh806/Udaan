@@ -14,6 +14,7 @@ export default class Game extends Phaser.Scene {
   private userName!: string;
   private spacebar!: Phaser.Input.Keyboard.Key;
   private sitting = false;
+  private inCall = false;
   private chairPosition = [0, 0];
 
   private localRef!: Phaser.GameObjects.Rectangle;
@@ -35,6 +36,7 @@ export default class Game extends Phaser.Scene {
     down: [false, 'movedown'],
     idle: [false, 'idle'],
     sit: [false, 'sit'],
+    inCall: this.inCall,
     collider: false,
     chairPosition: this.chairPosition,
   };
@@ -261,14 +263,14 @@ export default class Game extends Phaser.Scene {
     if (!this.currentPlayer) {
       return;
     }
+    const user = store.getState();
+    this.inCall = user.users.inCall;
 
-    const velocity = 2;
     if (!this.checkCollisions) {
       this.inputPayload.left[0] = this.cursorKeys.left.isDown;
       this.inputPayload.right[0] = this.cursorKeys.right.isDown;
       this.inputPayload.up[0] = this.cursorKeys.up.isDown;
       this.inputPayload.down[0] = this.cursorKeys.down.isDown;
-      this.inputPayload.sit[0] = Phaser.Input.Keyboard.JustDown(this.spacebar);
       this.room.send('move', this.inputPayload);
     } else {
       this.inputPayload.left[0] = this.cursorKeys.left.isDown;
@@ -278,6 +280,7 @@ export default class Game extends Phaser.Scene {
       this.room.send('stop', this.inputPayload);
     }
 
+    const velocity = 2;
     if (this.inputPayload.left[0]) {
       this.currentPlayer.x -= velocity;
       this.currentPlayer.setVelocityX(-velocity);
@@ -294,9 +297,10 @@ export default class Game extends Phaser.Scene {
       this.currentPlayer.y += velocity;
       this.currentPlayer.setVelocityY(velocity);
       this.currentPlayer.anims.play('movedown', true);
-    } else if (this.inputPayload.sit[0] && this.collisionCounter > 0) {
-      this.sitting = !this.sitting;
+    } else if (Phaser.Input.Keyboard.JustDown(this.spacebar) && this.collisionCounter > 0) {
+      this.sitting = true;
       this.collisionCounter++;
+      console.log(this.collisionCounter);
       if (this.collisionCounter === 2) {
         this.textBox.setVisible(false);
         this.text.setVisible(false);
@@ -307,23 +311,19 @@ export default class Game extends Phaser.Scene {
           this.chairPosition[0],
           this.chairPosition[1]
         );
-      } else {
+        this.currentPlayer.anims.play('sit', true);
+        this.inputPayload.sit[0] = true;
+        this.room.send('move', this.inputPayload);
         this.collisionCounter = 0;
       }
-
-      // to be removed: dispatch to redux
     } else {
       this.currentPlayer.x += 0;
       this.currentPlayer.setVelocityX(0);
       this.currentPlayer.y += 0;
       this.currentPlayer.setVelocityY(0);
-      if (!this.sitting) {
+      if (!this.sitting || !this.inCall) {
         this.currentPlayer.anims.play('idle');
         this.inputPayload.sit[0] = false;
-        this.room.send('move', this.inputPayload);
-      } else {
-        this.currentPlayer.anims.play('sit');
-        this.inputPayload.sit[0] = true;
         this.room.send('move', this.inputPayload);
       }
     }
