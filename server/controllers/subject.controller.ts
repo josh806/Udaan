@@ -24,7 +24,7 @@ const createSubject = async (req: Request, res: Response) => {
 };
 
 const deleteSubject = async (req: Request, res: Response) => {
-  const subjectId = req.params.id;
+  const subjectId = req.params.subjectId;
   console.log(req.params.id);
   try {
     await prisma.lesson.deleteMany({
