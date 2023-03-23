@@ -7,24 +7,7 @@ import { User } from '../types/user';
 import Field from '../components/Field';
 
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import { Button, Grid, Typography } from '@mui/material';
-
-// export type User = {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   username: string;
-//   student: boolean;
-//   schoolId?: number;
-// };
-
-/*
-First name
-Last name
-Set nickname (unique)
-email (blocked)
-*/
 
 const initialUser = {
   firstName: '',
@@ -32,13 +15,7 @@ const initialUser = {
   email: '',
   username: '',
   student: true,
-};
-const mockUser = {
-  firstName: 'Josh',
-  lastName: 'Smith',
-  email: 'hello@helloworld.com',
-  username: 'jsmith',
-  student: true,
+  schoolId: 1,
 };
 
 const Profile = () => {
@@ -47,41 +24,50 @@ const Profile = () => {
   const [currUser, setCurrUser] = useState<User>(initialUser);
   const [usernameChanged, setUsernameChanged] = useState(false);
   const [content, setContent] = useState('');
+  const [usernameProps, setUsernameProps] = useState({
+    name: 'username',
+    label: 'Username',
+    isRequired: true,
+    isError: false,
+    helperText: '',
+  });
 
   useEffect(() => {
-    console.log(user);
-    if (user) {
-      userService
-        .getUser(user.sub)
-        .then((response) => {
-          console.log(response);
+    (async () => {
+      if (user && user.sub) {
+        try {
+          const response = await userService.getUser(user.sub);
           setCurrUser(response);
+
           if ('error' in response) {
-            console.log('--- Create user ---');
-            if (user.email)
-              setCurrUser({ ...currUser, email: user.email, newUser: true });
+            // New user
+            if (user.email) {
+              setCurrUser({
+                ...currUser,
+                id: user.sub,
+                email: user.email,
+                newUser: true,
+              });
+            }
             setContent('Please fill out your information');
           } else {
-            console.log('--- Update user ---');
-            setCurrUser(mockUser);
+            // Existing user
             setContent('Update your information');
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.log('--- Error occured ---'); //------------- handle error
           console.log(error);
-        });
-    }
+        }
+      }
+    })();
   }, [user]);
 
   const usernameExists = async (username: string) => {
-    return await userService.getUser(username).then((response) => {
-      console.log(response);
-      return !('error' in response);
-    });
+    const result = await userService.getUserByUsername(username);
+    return !('error' in result);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const updateCurrUser = { ...currUser };
     const userKey = e.target.name as 'firstName' | 'lastName' | 'username';
     updateCurrUser[userKey] = e.target.value;
@@ -89,29 +75,50 @@ const Profile = () => {
     if (userKey === 'username') setUsernameChanged(true);
 
     setCurrUser(updateCurrUser);
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (usernameChanged && (await usernameExists(currUser.username))) {
+      // Username already exists
       console.log('--- username already exists ---');
+      setUsernameProps({
+        ...usernameProps,
+        isError: true,
+        helperText: 'Username already in use',
+      });
     } else {
+      // Reset username error
+      setUsernameProps({
+        ...usernameProps,
+        isError: false,
+        helperText: '',
+      });
+
       if (currUser.newUser) {
-        // create user
-        userService.createUser(currUser);
-        console.log(currUser);
-        // firstName,
-        //   lastName,
-        //   email,
-        //   username,
-        //   student,
-        //   schoolId,
+        // Create user
+        console.log('--- user info ---');
+        const newUser = await userService.createUser(currUser);
+
+        // set redux user-------------------
+        // Message: Successfully created
       } else {
-        // update user
+        // Update user
+        const updatedUser = await userService.updateUser(currUser);
+
+        // set redux user-------------------
+        // Message: Successfully updated
       }
     }
-    console.log(currUser);
   };
+
+  function getCommonInputProps() {
+    return {
+      handleChange: handleChange,
+      isRequired: true,
+    };
+  }
 
   return (
     <AuthRequired>
@@ -148,11 +155,10 @@ const Profile = () => {
                   xs={6}
                 >
                   <Field
+                    {...getCommonInputProps()}
                     name="firstName"
                     label="First name"
                     value={currUser.firstName}
-                    handleChange={handleChange}
-                    isRequired={true}
                   />
                 </Grid>
                 <Grid
@@ -160,11 +166,10 @@ const Profile = () => {
                   xs={6}
                 >
                   <Field
+                    {...getCommonInputProps()}
                     name="lastName"
                     label="Last name"
                     value={currUser.lastName}
-                    handleChange={handleChange}
-                    isRequired={true}
                   />
                 </Grid>
                 <Grid
@@ -172,11 +177,9 @@ const Profile = () => {
                   xs={6}
                 >
                   <Field
-                    name="username"
-                    label="Username"
+                    {...usernameProps}
                     value={currUser.username}
                     handleChange={handleChange}
-                    isRequired={true}
                   />
                 </Grid>
                 <Grid
@@ -184,11 +187,10 @@ const Profile = () => {
                   xs={6}
                 >
                   <Field
+                    {...getCommonInputProps()}
                     name="email"
                     label="Email"
                     value={currUser.email}
-                    handleChange={handleChange}
-                    isRequired={true}
                     isDisabled={true}
                     helperText="Contact administrator to change"
                   />

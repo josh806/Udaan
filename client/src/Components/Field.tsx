@@ -8,6 +8,7 @@ type Props = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
   isDisabled?: boolean;
+  isError?: boolean;
   helperText?: string;
 };
 
@@ -18,6 +19,7 @@ function Field({
   handleChange,
   isRequired = false,
   isDisabled = false,
+  isError = false,
   helperText,
 }: Props) {
   return (
@@ -31,6 +33,7 @@ function Field({
       required={isRequired}
       disabled={isDisabled}
       helperText={helperText}
+      error={isError}
     />
   );
 }
