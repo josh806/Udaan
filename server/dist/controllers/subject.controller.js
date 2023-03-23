@@ -36,7 +36,7 @@ const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createSubject = createSubject;
 const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subjectId = req.params.id;
+    const subjectId = req.params.subjectId;
     console.log(req.params.id);
     try {
         yield database_1.prisma.lesson.deleteMany({

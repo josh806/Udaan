@@ -12,8 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUser = exports.getUserByUsername = exports.getUserById = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const { firstName, lastName, email, student, schoolId } = req.body;
+    const { id, firstName, lastName, email, student, schoolId } = req.body;
     const username = req.body.username.toLowerCase().trim();
     if (firstName && lastName && email && username && student !== undefined && schoolId) {
         try {
