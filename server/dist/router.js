@@ -32,11 +32,12 @@ const libraryController = __importStar(require("./controllers/library.controller
 const router = (0, express_1.Router)();
 //user routes
 router.post('/user/:id', userController.createUser);
-router.get('/user/:unique', userController.getUserByIdOrUsername);
+router.get('/user/:id/id', userController.getUserById);
+router.get('/user/:username/username', userController.getUserByUsername);
 router.put('/user/:id', userController.updateUser);
 //school routes
 router.post('/school', schoolController.createSchool);
-router.get('/school/:id', schoolController.getUsers);
+router.get('/school/:id/users', schoolController.getUsers);
 router.get('/school/:id/subjects', schoolController.getSubjects);
 //subject routes
 router.post('/subject', subjectController.createSubject);

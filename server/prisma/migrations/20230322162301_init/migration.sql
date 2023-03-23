@@ -64,6 +64,12 @@ CREATE TABLE "_LessonToUser" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "School_name_key" ON "School"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "School_email_key" ON "School"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
@@ -71,6 +77,9 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Subject_name_key" ON "Subject"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Lesson_name_key" ON "Lesson"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Library_userId_key" ON "Library"("userId");

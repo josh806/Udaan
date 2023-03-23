@@ -30,29 +30,37 @@ const createUser = async (req: Request, res: Response) => {
       res.status(500).send({ error: error });
     }
   } else {
-    res.status(400).send('Parameter missing to create a new user');
+    console.log('parameter missing');
+    res.status(400).send({ error: 'Submitting form wrong' });
   }
 };
 
 
-const getUserByIdOrUsername = async (req: Request, res: Response) => {
+const getUserById = async (req: Request, res: Response) => {
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
-        OR: [
-          { id: req.params.unique }, 
-          { username: req.params.unique }, 
-        ]
-      }
+        id: req.params.id
+      }, 
     });
     if (!user) { throw new Error(); }
-    console.log(req.params);
-    if (Object.keys(req.params)[0] == 'id') {
-      res.send(user);
-    } else if (Object.keys(req.params)[0] == 'username') {
-      res.send('username exists');
-    }
-    res.send('ok');
+    res.send(user);
+    res.status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ error: 'User not found' });
+  }
+};
+
+const getUserByUsername = async (req: Request, res: Response) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: req.params.username
+      }, 
+    });
+    if (!user) { throw new Error(); }
+    res.send({username: req.params.username});
     res.status(200);
   } catch (error) {
     console.error(error);
@@ -63,17 +71,19 @@ const getUserByIdOrUsername = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const key = Object.keys(req.body)[0];
-    if (key !== 'email' && key !== 'student' && key !== 'schoolId' ) {
-      const user = await prisma.user.update({
-        where: { id: String(id) },
-        data: req.body
-      });
-      res.status(200);
-      res.send(user);
-    } else {
-      res.status(401).send({ error: 'Cannot update this property' });
-    }
+    const data = req.body;
+    delete data['email'];
+    delete data['id'];
+    delete data['schoolId'];
+    delete data['student'];
+
+    const user = await prisma.user.update({
+      where: { id: String(id) },
+      data: data
+    });
+    res.status(200);
+    res.send(user);
+
   } catch (error) {
     console.error(error);
     res.status(400).send({ error: 'Could not update the user' });
@@ -81,4 +91,4 @@ const updateUser = async (req: Request, res: Response) => {
 };
 
 
-export { createUser, getUserByIdOrUsername, updateUser };
+export { createUser, getUserById, getUserByUsername, updateUser };
