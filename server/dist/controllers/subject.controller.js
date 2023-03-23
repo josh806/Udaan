@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSubject = void 0;
+exports.deleteSubject = exports.createSubject = void 0;
 const database_1 = require("../database");
 const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
@@ -35,3 +35,20 @@ const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.createSubject = createSubject;
+const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const subjectId = req.params.id;
+    console.log(req.params.id);
+    try {
+        const subject = yield database_1.prisma.subject.delete({
+            where: {
+                id: Number(subjectId),
+            },
+        });
+        res.status(200).send(subject);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(404).send('Subject not found');
+    }
+});
+exports.deleteSubject = deleteSubject;

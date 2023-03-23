@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createLesson = void 0;
+exports.deleteLesson = exports.createLesson = void 0;
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, recording, subjectId } = req.body;
+    const name = req.body.name.toLowerCase().trim();
+    const { recording, subjectId } = req.body;
     console.log(req.body);
     if (name && subjectId && recording !== undefined) {
         try {
@@ -37,3 +38,19 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.createLesson = createLesson;
+const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lessonId = req.params.id;
+    try {
+        const lesson = yield database_1.prisma.lesson.delete({
+            where: {
+                id: Number(lessonId),
+            },
+        });
+        res.status(200).send(lesson);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(404).send('Lesson not found');
+    }
+});
+exports.deleteLesson = deleteLesson;
