@@ -76,12 +76,10 @@ const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.getLessons = getLessons;
 const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params.id);
-    console.log(req.params.lessonId);
     try {
         const lessonInLibrary = yield database_1.prisma.library.findUnique({
             where: {
-                userId: req.params.id,
+                userId: req.params.userId,
             },
             include: {
                 lessons: {

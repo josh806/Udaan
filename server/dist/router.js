@@ -45,19 +45,18 @@ router.post('/subject', subjectController.createSubject);
 router.delete('/subject/:subjectId', subjectController.deleteSubject);
 //lessons routes
 router.post('/lesson', lessonController.createLesson);
-router.delete('/lesson/:lessonId', lessonController.deleteLesson);
 router.get('/lesson/:lessonId', lessonController.getLesson);
+router.delete('/lesson/:lessonId', lessonController.deleteLesson);
 router.put('/lesson/:lessonId', lessonController.updateLesson);
 //library routes
+router.get('/library/:userId', libraryController.getLessons);
+router.get('/library/:userId/:lessonId', libraryController.getLesson);
+router.delete('/library/:userId/:lessonId', libraryController.deleteLessonFromLibrary);
 router.put('/library/:userId/:lessonId', libraryController.addLessonId);
-router.get('/library/:userId/library', libraryController.getLessons);
-// router.get('/library/:id/notes', libraryController.getNotes);
-router.delete('/library/:userId/library/:lessonId', libraryController.deleteLessonFromLibrary);
-router.get('/user/:id/library/:lessonId', libraryController.getLesson);
 //noteBook routes
 router.post('/noteBook', noteBookController.createNote);
 router.get('/noteBook/:userId/:lessonId', noteBookController.getOneLessonNote);
-// router.get('/noteBook/:userId/:lessonId', noteBookController.getAllUserNotes);
-// router.delete('/noteBook', noteBookController.deleteNote);
-// router.put('/noteBook', noteBookController.updateNote);
+router.get('/noteBook/:userId', noteBookController.getAllUserNotes);
+router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
+router.put('/noteBook', noteBookController.updateNote);
 exports.default = router;

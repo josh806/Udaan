@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneLessonNote = exports.createNote = void 0;
+exports.updateNote = exports.deleteNote = exports.getAllUserNotes = exports.getOneLessonNote = exports.createNote = void 0;
 const database_1 = require("../database");
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, lessonId, name, note } = req.body;
@@ -25,8 +25,6 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!library) {
             throw new Error('library or user doesnt exist');
         }
-        console.log(library.id);
-        // console.log(lessonId);
         const hasLesson = library.lessons.some(noteBook => noteBook.id === lessonId);
         if (!hasLesson) {
             throw new Error('user doesnt have this lesson');
@@ -43,33 +41,124 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.send(newNote);
     }
     catch (error) {
-        console.error(error, 'hello');
+        console.error(error);
         res.status(500).send(`${error}`);
     }
 });
 exports.createNote = createNote;
-// router.get('/noteBook/:userId/:lessonId', noteBookController.getOneLessonNote);
 const getOneLessonNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params);
     const { userId, lessonId } = req.params;
-    const libraryId = yield database_1.prisma.library.findUnique({
-        where: {
-            userId: userId,
-        },
-        select: {
-            id: true
+    try {
+        const libraryId = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                id: true
+            }
+        });
+        if (!libraryId) {
+            throw new Error('no library found');
         }
-    });
-    console.log(typeof libraryId);
-    if (!libraryId) {
-        throw new Error();
+        const noteBook = yield database_1.prisma.noteBook.findUnique({
+            where: {
+                libraryId_lessonId: {
+                    libraryId: libraryId.id,
+                    lessonId: lessonId,
+                },
+            },
+        });
+        res.status(200).send(noteBook);
     }
-    // const noteBook = await prisma.noteBook.findUnique({
-    //   where: {
-    //     // id: '2d0d1dbb-986d-409e-a63a-a35249d5e1cd'
-    //     libraryId: 2,
-    //   },
-    // });
-    // res.status(200).send(noteBook);
+    catch (error) {
+        console.error(error);
+        res.status(500).send(`${error}`);
+    }
 });
 exports.getOneLessonNote = getOneLessonNote;
+const getAllUserNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    try {
+        const library = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                Notes: true
+            }
+        });
+        if (!library) {
+            throw new Error('no library found');
+        }
+        res.status(200).send(library);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(`${error}`);
+    }
+});
+exports.getAllUserNotes = getAllUserNotes;
+const deleteNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, lessonId } = req.params;
+    try {
+        const libraryId = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                id: true
+            }
+        });
+        if (!libraryId) {
+            throw new Error('no library found');
+        }
+        const noteBook = yield database_1.prisma.noteBook.delete({
+            where: {
+                libraryId_lessonId: {
+                    libraryId: libraryId.id,
+                    lessonId: lessonId,
+                },
+            },
+        });
+        res.status(200).send(noteBook);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(`${error}`);
+    }
+});
+exports.deleteNote = deleteNote;
+const updateNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, lessonId } = req.body;
+    const data = req.body;
+    delete data['userId'];
+    delete data['lessonId'];
+    try {
+        const libraryId = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                id: true
+            }
+        });
+        if (!libraryId) {
+            throw new Error('no library found');
+        }
+        const noteBook = yield database_1.prisma.noteBook.update({
+            where: {
+                libraryId_lessonId: {
+                    libraryId: libraryId.id,
+                    lessonId: lessonId,
+                },
+            },
+            data: data
+        });
+        res.status(200).send(noteBook);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(`${error}`);
+    }
+});
+exports.updateNote = updateNote;

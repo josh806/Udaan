@@ -62,12 +62,10 @@ const getLessons = async (req:Request, res:Response) => {
 };
 
 const getLesson = async (req: Request, res: Response) => {
-  console.log(req.params.id);
-  console.log(req.params.lessonId);
   try {
     const lessonInLibrary = await prisma.library.findUnique({
       where: {
-        userId: req.params.id,
+        userId: req.params.userId,
       },
       include: {
         lessons: {
