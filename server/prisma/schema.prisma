@@ -49,6 +49,7 @@ model Lesson {
   drawing   String?
   subject   Subject    @relation(fields: [subjectId], references: [id])
   subjectId String
+  scheduledDate String
   librarys  Library[]
   users     User[]
   notes     NoteBook[]
