@@ -11,6 +11,10 @@ npm run commit
 #### BackEnd
 In `/server`:
 ```
+npx ts-node dataGenerate.ts
+```
+Runs the file and create a mock data on database
+```
 npm start
 ```
 Runs `tsc -w` and `nodemon` at the same time.
