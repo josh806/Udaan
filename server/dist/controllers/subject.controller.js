@@ -36,15 +36,20 @@ const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createSubject = createSubject;
 const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subjectId = req.params.id;
+    const subjectId = req.params.subjectId;
     console.log(req.params.id);
     try {
-        const subject = yield database_1.prisma.subject.delete({
+        yield database_1.prisma.lesson.deleteMany({
             where: {
-                id: Number(subjectId),
+                subjectId: subjectId,
+            }
+        });
+        const deletedSubject = yield database_1.prisma.subject.delete({
+            where: {
+                id: subjectId,
             },
         });
-        res.status(200).send(subject);
+        res.status(200).send(deletedSubject);
     }
     catch (error) {
         console.error(error);

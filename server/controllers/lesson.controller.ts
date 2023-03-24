@@ -3,17 +3,15 @@ import { prisma } from '../database';
 
 const createLesson = async (req: Request, res: Response) => {
   const name = req.body.name.toLowerCase().trim();
-  const { recording, subjectId } = req.body;
+  const { subjectId } = req.body;
   console.log(req.body);
-  if (name && subjectId && recording !== undefined) {
+  if (name && subjectId) {
     try {
       const newLesson = await prisma.lesson.create({
         data: {
           name,
-          date: new Date(),
-          recording,
           subjectId
-        }
+        },
       });
       res.status(201);
       res.send(newLesson);
@@ -27,11 +25,11 @@ const createLesson = async (req: Request, res: Response) => {
 };
 
 const deleteLesson = async (req: Request, res: Response) => {
-  const lessonId = req.params.id;
+  const lessonId = req.params.lessonId;
   try {
     const lesson = await prisma.lesson.delete({
       where: {
-        id: Number(lessonId),
+        id: lessonId,
       },
     });
     res.status(200).send(lesson);
@@ -39,7 +37,29 @@ const deleteLesson = async (req: Request, res: Response) => {
     console.error(error);
     res.status(404).send('Lesson not found');
   }
-  
 };
 
-export { createLesson, deleteLesson};
+const getLesson = async (req: Request, res: Response) => {
+  const lesson = await prisma.lesson.findUnique({
+    where: {
+      id: req.params.lessonId,
+    },
+  });
+  res.status(200).send(lesson);
+};
+
+const updateLesson = async (req: Request, res: Response) => {
+  console.log(req.body);
+  const updatedLesson = await prisma.lesson.updateMany({
+    where: {
+      id: req.params.lessonId,
+    },
+    data: {
+      video: req.body.video,
+      drawing: req.body.drawing
+    }
+  });
+  res.status(201).send(updatedLesson);
+};
+
+export { createLesson, deleteLesson, getLesson, updateLesson};

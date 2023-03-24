@@ -30,7 +30,7 @@ const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await prisma.school.findMany({
       where: {
-        id: Number(id),
+        id: id,
       },
       include: {
         users: true
@@ -49,7 +49,7 @@ const getSubjects = async (req: Request, res: Response) => {
   try {
     const subjects = await prisma.school.findMany({
       where: {
-        id: Number(id),
+        id: id,
       },
       include: {
         subjects: true
