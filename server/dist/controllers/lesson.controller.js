@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLesson = exports.deleteLesson = exports.createLesson = void 0;
+exports.updateLesson = exports.getLesson = exports.deleteLesson = exports.createLesson = void 0;
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
@@ -21,7 +21,7 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 data: {
                     name,
                     subjectId
-                }
+                },
             });
             res.status(201);
             res.send(newLesson);
@@ -37,7 +37,7 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.createLesson = createLesson;
 const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const lessonId = req.params.id;
+    const lessonId = req.params.lessonId;
     try {
         const lesson = yield database_1.prisma.lesson.delete({
             where: {
@@ -55,9 +55,23 @@ exports.deleteLesson = deleteLesson;
 const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lesson = yield database_1.prisma.lesson.findUnique({
         where: {
-            id: req.params.id,
+            id: req.params.lessonId,
         },
     });
     res.status(200).send(lesson);
 });
 exports.getLesson = getLesson;
+const updateLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    const updatedLesson = yield database_1.prisma.lesson.updateMany({
+        where: {
+            id: req.params.lessonId,
+        },
+        data: {
+            video: req.body.video,
+            drawing: req.body.drawing
+        }
+    });
+    res.status(201).send(updatedLesson);
+});
+exports.updateLesson = updateLesson;

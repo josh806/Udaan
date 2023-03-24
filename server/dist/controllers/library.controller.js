@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteLessonFromLibrary = exports.getLessons = exports.addLessonId = void 0;
+exports.getLesson = exports.deleteLessonFromLibrary = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -75,6 +75,30 @@ const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getLessons = getLessons;
+const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.params.id);
+    console.log(req.params.lessonId);
+    try {
+        const lessonInLibrary = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: req.params.id,
+            },
+            include: {
+                lessons: {
+                    where: {
+                        id: req.params.lessonId
+                    },
+                },
+            },
+        });
+        res.status(200).send(lessonInLibrary);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(404).send('Lesson not found');
+    }
+});
+exports.getLesson = getLesson;
 // const getNotes = async (req: Request, res: Response) => {
 //   try {
 //     const library = await prisma.library.findUnique({

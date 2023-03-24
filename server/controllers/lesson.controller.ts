@@ -11,7 +11,7 @@ const createLesson = async (req: Request, res: Response) => {
         data: {
           name,
           subjectId
-        }
+        },
       });
       res.status(201);
       res.send(newLesson);
@@ -25,7 +25,7 @@ const createLesson = async (req: Request, res: Response) => {
 };
 
 const deleteLesson = async (req: Request, res: Response) => {
-  const lessonId = req.params.id;
+  const lessonId = req.params.lessonId;
   try {
     const lesson = await prisma.lesson.delete({
       where: {
@@ -42,10 +42,24 @@ const deleteLesson = async (req: Request, res: Response) => {
 const getLesson = async (req: Request, res: Response) => {
   const lesson = await prisma.lesson.findUnique({
     where: {
-      id: req.params.id,
+      id: req.params.lessonId,
     },
   });
   res.status(200).send(lesson);
 };
 
-export { createLesson, deleteLesson, getLesson};
+const updateLesson = async (req: Request, res: Response) => {
+  console.log(req.body);
+  const updatedLesson = await prisma.lesson.updateMany({
+    where: {
+      id: req.params.lessonId,
+    },
+    data: {
+      video: req.body.video,
+      drawing: req.body.drawing
+    }
+  });
+  res.status(201).send(updatedLesson);
+};
+
+export { createLesson, deleteLesson, getLesson, updateLesson};

@@ -61,6 +61,29 @@ const getLessons = async (req:Request, res:Response) => {
   }
 };
 
+const getLesson = async (req: Request, res: Response) => {
+  console.log(req.params.id);
+  console.log(req.params.lessonId);
+  try {
+    const lessonInLibrary = await prisma.library.findUnique({
+      where: {
+        userId: req.params.id,
+      },
+      include: {
+        lessons: {
+          where: {
+            id: req.params.lessonId
+          },
+        },
+      },
+    });
+    res.status(200).send(lessonInLibrary);
+  } catch (error) {
+    console.error(error);
+    res.status(404).send('Lesson not found');
+  }
+};
+
 
 // const getNotes = async (req: Request, res: Response) => {
 //   try {
@@ -112,4 +135,4 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   }
 };
 
-export { addLessonId, getLessons, deleteLessonFromLibrary };
+export { addLessonId, getLessons, deleteLessonFromLibrary, getLesson };
