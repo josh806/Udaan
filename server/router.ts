@@ -9,17 +9,17 @@ const router = Router();
 
 //user routes
 router.post('/user', userController.createUser);
-router.get('/user/id', userController.getUserById);
+router.get('/user/:userId/id', userController.getUserById);
 router.get('/user/:username/username', userController.getUserByUsername);
 router.put('/user', userController.updateUser);
 
 //school routes
 router.post('/school', schoolController.createSchool);
-router.get('/school/:schoolId/users', schoolController.getUsers);
-router.get('/school/:schoolId/subjects', schoolController.getSubjects);
+router.get('/school/:schoolId', schoolController.getSchool);
 
 //subject routes
 router.post('/subject', subjectController.createSubject);
+router.get('/subject/:schoolId', subjectController.getSubjects);
 router.delete('/subject/:subjectId', subjectController.deleteSubject);
 
 //lessons routes
@@ -28,7 +28,7 @@ router.get('/lesson/:lessonId', lessonController.getLesson);
 router.delete('/lesson/:lessonId', lessonController.deleteLesson);
 router.put('/lesson/:lessonId', lessonController.updateLesson);
 
-//library routes
+//library routes - post library automatically created when user is created
 router.get('/library/:userId', libraryController.getLessons);
 router.get('/library/:userId/:lessonId', libraryController.getLesson);
 router.delete('/library/:userId/:lessonId', libraryController.deleteLessonFromLibrary);
@@ -41,8 +41,7 @@ router.get('/noteBook/:userId', noteBookController.getAllUserNotes);
 router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 
-
-
-
+//whiteboard routes
+// router.post('/whiteboard', whiteboardController.createWhiteBoard)
 
 export default router;

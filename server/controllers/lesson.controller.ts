@@ -24,21 +24,6 @@ const createLesson = async (req: Request, res: Response) => {
   }
 };
 
-const deleteLesson = async (req: Request, res: Response) => {
-  const lessonId = req.params.lessonId;
-  try {
-    const lesson = await prisma.lesson.delete({
-      where: {
-        id: lessonId,
-      },
-    });
-    res.status(200).send(lesson);
-  } catch (error) {
-    console.error(error);
-    res.status(404).send('Lesson not found');
-  }
-};
-
 const getLesson = async (req: Request, res: Response) => {
   const lesson = await prisma.lesson.findUnique({
     where: {
@@ -46,6 +31,29 @@ const getLesson = async (req: Request, res: Response) => {
     },
   });
   res.status(200).send(lesson);
+};
+
+const deleteLesson = async (req: Request, res: Response) => {
+  const lessonId = req.params.lessonId;
+  try {
+    // const deleteNotes = prisma.noteBook.deleteMany({
+    //   where: {
+    //     lessonId: lessonId,
+    //   },
+    // });
+    // const deletedLesson = await prisma.lesson.delete({
+    //   where: {
+    //     id: lessonId,
+    //   },
+    // });
+
+    // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
+    // console.log(deletedLesson);
+    // res.status(200).send(deletedLesson);
+  } catch (error) {
+    console.error(error);
+    res.status(404).send('Lesson not found');
+  }
 };
 
 const updateLesson = async (req: Request, res: Response) => {
