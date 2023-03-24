@@ -13,14 +13,15 @@ exports.updateLesson = exports.getLesson = exports.deleteLesson = exports.create
 const database_1 = require("../database");
 const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
-    const { subjectId } = req.body;
+    const { subjectId, scheduledDate } = req.body;
     console.log(req.body);
-    if (name && subjectId) {
+    if (name && subjectId && scheduledDate) {
         try {
             const newLesson = yield database_1.prisma.lesson.create({
                 data: {
                     name,
-                    subjectId
+                    subjectId,
+                    scheduledDate
                 },
             });
             res.status(201);
@@ -36,22 +37,6 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.createLesson = createLesson;
-const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const lessonId = req.params.lessonId;
-    try {
-        const lesson = yield database_1.prisma.lesson.delete({
-            where: {
-                id: lessonId,
-            },
-        });
-        res.status(200).send(lesson);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(404).send('Lesson not found');
-    }
-});
-exports.deleteLesson = deleteLesson;
 const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lesson = yield database_1.prisma.lesson.findUnique({
         where: {
@@ -61,6 +46,29 @@ const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).send(lesson);
 });
 exports.getLesson = getLesson;
+const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lessonId = req.params.lessonId;
+    try {
+        // const deleteNotes = prisma.noteBook.deleteMany({
+        //   where: {
+        //     lessonId: lessonId,
+        //   },
+        // });
+        // const deletedLesson = await prisma.lesson.delete({
+        //   where: {
+        //     id: lessonId,
+        //   },
+        // });
+        // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
+        // console.log(deletedLesson);
+        // res.status(200).send(deletedLesson);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(404).send('Lesson not found');
+    }
+});
+exports.deleteLesson = deleteLesson;
 const updateLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const updatedLesson = yield database_1.prisma.lesson.updateMany({

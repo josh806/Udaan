@@ -1,59 +1,94 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-import { prisma } from './user.controller';
-
-
-const options = {
-  method: 'POST',
-  url: 'https://api.netless.link/v5/rooms',
-  headers: {
-    token:
-      'NETLESSSDK_YWs9Y2d4Y1NTVG1rN25neGpkSSZub25jZT1mYzY1NGIwMC1jNzE5LTExZWQtYWM2OS1mOTc2YTcxOTk1OWUmcm9sZT0wJnNpZz1hMTU0ZWRkZTM3ODAwYjBlNjY5Mzk4NjBiZGQxZDY0ZDMyMzIyMDkzMjFhOGI3ZTNlODkzNGJjYmYzNzRmYTli',
-    'Content-Type': 'application/json',
-    region: 'us-sv',
-  },
-  body: JSON.stringify({
-    isRecord: false,
-  }),
-};
-
+import { prisma } from '../database';
 
 
 const createWhiteboard = async (req: Request, res: Response) => {
+  const lessonId = req.params.lessonId;
+  const { uuid, teamUUID, appUUID, isBan, createdAt, limit } = req.body;
   try {
-    const room = req.body;
-    const id = room.uuid;
-    console.log(room);
-    const name = 'Name' + id;
-    const newWhiteboard = await prisma.whiteboard.create({
+    const newWhiteBoard = await prisma.whiteboard.create({
       data: {
-        id: id,
-        name: name,
-      },
+        uuid,
+        teamUUID,
+        appUUID,
+        isBan,
+        createdAt,
+        limit,
+        lessonId
+      }
     });
-    res.status(200);
-    res.send(newWhiteboard);
+    res.status(201);
+    res.send(newWhiteBoard);
   } catch (error) {
-    console.log(error);
-    res.status(300);
+    console.error(error);
+    res.status(500).send({ error: error });
   }
 };
 
-const joinWhiteboard = async (req: Request, res: Response) => {
+const addToken = async (req: Request, res: Response) => {
+  const lessonId = req.params.lessonId;
+  const { token } = req.body;
   try {
-    const  id = 'f7ef7cb0c74d11ed85245975e226531a';
-    const whiteboard = await prisma.whiteboard.findUnique({
+    const whiteboardId = await prisma.lesson.findUnique({
       where: {
-        id: id,
+        id: lessonId,
       },
+      select: {
+        whiteboard: {
+          select: {
+            uuid:true
+          }
+        }
+      }
+    });
+
+    const uuid = whiteboardId?.whiteboard?.uuid;
+
+    const newWhiteBoard = await prisma.whiteboard.update({
+      where: { uuid: uuid  },
+      data: {
+        token,
+      }
     });
     res.status(200);
-    res.send(whiteboard);
+    res.send(newWhiteBoard);
+
   } catch (error) {
-    console.log(error);
-    res.status(300);
+    console.error(error);
+    res.status(400).send({ error: 'Could not update the user' });
   }
 };
 
+// const getToken = async (req: Request, res: Response) => {
+//   const lessonId = req.params.lessonId;
+//   try {
+//     const whiteboardId = await prisma.lesson.findUnique({
+//       where: {
+//         id: lessonId,
+//       },
+//       select: {
+//         whiteboard: {
+//           select: {
+//             uuid:true
+//           }
+//         }
+//       }
+//     });
+    
+//     const uuid = whiteboardId?.whiteboard?.uuid;
 
-export = {createWhiteboard, joinWhiteboard};
+//     const newWhiteBoard = await prisma.whiteboard.findUnique({
+//       where: { uuid: uuid  },
+//       data: {
+//         token,
+//       }
+//     });
+//     res.status(200);
+//     res.send(newWhiteBoard);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(400).send({ error: 'User not found' });
+//   }
+// };
+
+export { createWhiteboard, addToken };

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSubjects = exports.getUsers = exports.createSchool = void 0;
+exports.getSchool = exports.createSchool = void 0;
 const database_1 = require("../database");
 const createSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
@@ -38,10 +38,10 @@ const createSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.createSchool = createSchool;
-const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const users = yield database_1.prisma.school.findMany({
+        const school = yield database_1.prisma.school.findUnique({
             where: {
                 id: id,
             },
@@ -50,31 +50,11 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             }
         });
         res.status(200);
-        res.send(users);
+        res.send(school);
     }
     catch (error) {
         console.error(error);
         res.status(404).send({ error: 'Cant find school ID' });
     }
 });
-exports.getUsers = getUsers;
-const getSubjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    try {
-        const subjects = yield database_1.prisma.school.findMany({
-            where: {
-                id: id,
-            },
-            include: {
-                subjects: true
-            }
-        });
-        res.status(200);
-        res.send(subjects);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(404).send({ error: 'Cant find school ID' });
-    }
-});
-exports.getSubjects = getSubjects;
+exports.getSchool = getSchool;
