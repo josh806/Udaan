@@ -25,42 +25,23 @@ const createSchool = async (req: Request, res: Response) => {
   }
 };
 
-const getUsers = async (req: Request, res: Response) => {
+const getSchool = async (req: Request, res: Response) => {
   const {id} = req.params;
   try {
-    const users = await prisma.school.findMany({
+    const school = await prisma.school.findUnique({
       where: {
         id: id,
       },
       include: {
         users: true
-      } 
+      }
     });
     res.status(200);
-    res.send(users);
+    res.send(school);
   } catch (error) {
     console.error(error);
     res.status(404).send({ error: 'Cant find school ID' });
   }
 };
 
-const getSubjects = async (req: Request, res: Response) => {
-  const {id} = req.params;
-  try {
-    const subjects = await prisma.school.findMany({
-      where: {
-        id: id,
-      },
-      include: {
-        subjects: true
-      } 
-    });
-    res.status(200);
-    res.send(subjects);
-  } catch (error) {
-    console.error(error);
-    res.status(404).send({ error: 'Cant find school ID' });
-  }
-};
-
-export { createSchool, getUsers, getSubjects };
+export { createSchool, getSchool };

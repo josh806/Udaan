@@ -23,6 +23,25 @@ const createSubject = async (req: Request, res: Response) => {
   }
 };
 
+const getSubjects = async (req: Request, res: Response) => {
+  const {id} = req.params;
+  try {
+    const subjects = await prisma.school.findMany({
+      where: {
+        id: id,
+      },
+      include: {
+        subjects: true
+      } 
+    });
+    res.status(200);
+    res.send(subjects);
+  } catch (error) {
+    console.error(error);
+    res.status(404).send({ error: 'Cant find school ID' });
+  }
+};
+
 const deleteSubject = async (req: Request, res: Response) => {
   const subjectId = req.params.subjectId;
   console.log(req.params.id);
@@ -44,4 +63,4 @@ const deleteSubject = async (req: Request, res: Response) => {
   }
 };
 
-export { createSubject, deleteSubject };
+export { createSubject, getSubjects, deleteSubject };
