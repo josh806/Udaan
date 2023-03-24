@@ -6,8 +6,8 @@ import { User } from '../types/user';
 
 const usersDomain = import.meta.env.VITE_SERVER_DOMAIN;
 
-export const getUser = async (searchValue: string) => {
-  const response = await fetch(`${usersDomain}/user/${searchValue}`, {
+export const getUser = async (userId: string) => {
+  const response = await fetch(`${usersDomain}/user/userId/${userId}`, {
     method: 'GET',
   });
   return response.json();
@@ -37,7 +37,7 @@ export const updateUser = async (user: User) => {
 
 export const getUserByUsername = async (username: string) => {
   try {
-    const response = await fetch(`${usersDomain}/user/${username}`, {
+    const response = await fetch(`${usersDomain}/user/username/${username}`, {
       method: 'GET',
     });
     return response.json();
