@@ -20,9 +20,15 @@ function App() {
 
       <div className='App'>
         <div className='navbar'>
-          <NavLink to='/'>Home</NavLink>
-          <NavLink to='/profile'>Profile</NavLink>
-          <NavLink to='/school'>School</NavLink>
+          <NavLink className='navbar-item' to='/'>
+            Home
+          </NavLink>
+          <NavLink className='navbar-item' to='/profile'>
+            Profile
+          </NavLink>
+          <NavLink className='navbar-item' to='/school'>
+            School
+          </NavLink>
           {!isAuthenticated ? <AuthLogin /> : <AuthLogoutBtn />}
         </div>
       </div>

@@ -6,7 +6,9 @@ import {
   IAgoraRTCClient,
   IMicrophoneAudioTrack,
 } from 'agora-rtc-sdk-ng';
-export const Controls = (props: {
+import Button from '@mui/material/Button';
+
+const Controls = (props: {
   tracks: [IMicrophoneAudioTrack, ICameraVideoTrack];
   setStart: React.Dispatch<React.SetStateAction<boolean>>;
   client: IAgoraRTCClient;
@@ -36,21 +38,30 @@ export const Controls = (props: {
 
   return (
     <div className='controls'>
-      <p
+      <Button
+        color='info'
+        variant='contained'
         className={trackState.audio ? 'mute' : 'unmute'}
         onClick={() => mute('audio')}
       >
         {trackState.audio ? 'Mute' : 'Unmute'}
-      </p>
-      <p
+      </Button>
+      <Button
+        color='warning'
+        variant='contained'
         className={trackState.video ? 'mute' : 'unmute'}
         onClick={() => mute('video')}
       >
         {trackState.video ? 'Hide video' : 'Turn video on'}
-      </p>
-      <p className='leave' onClick={leaveChannel}>
+      </Button>
+      <Button
+        color='error'
+        variant='contained'
+        className='leave'
+        onClick={leaveChannel}
+      >
         Leave
-      </p>
+      </Button>
     </div>
   );
 };
