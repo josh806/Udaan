@@ -16,27 +16,21 @@ const style = {
 };
 
 type Props = {
-  buttonLabel: string;
+  open: any;
+  handleModal: any;
   children: JSX.Element;
 };
 
-function BasicModal({ buttonLabel, children }: Props) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+function BasicModal({ open, handleModal, children }: Props) {
   return (
-    <>
-      <Button onClick={handleOpen}>{buttonLabel}</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>{children}</Box>
-      </Modal>
-    </>
+    <Modal
+      open={open}
+      onClose={handleModal}
+      aria-labelledby='modal-modal-title'
+      aria-describedby='modal-modal-description'
+    >
+      <Box sx={style}>{children}</Box>
+    </Modal>
   );
 }
 

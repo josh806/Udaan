@@ -6,6 +6,7 @@ import {
   IMicrophoneAudioTrack,
 } from 'agora-rtc-sdk-ng';
 import { AgoraVideoPlayer } from 'agora-rtc-react';
+import user from '../../redux/user';
 
 const Videos = (props: {
   users: IAgoraRTCRemoteUser[];
