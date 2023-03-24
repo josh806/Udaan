@@ -1,26 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './store';
+import { User } from '../types/types';
 
 // Define a type for the slice state
-type UserState = {
-  name: string;
-  inCall: boolean;
-};
+
 
 // Define the initial state using that type
-const initialState: UserState = {
-  name: 'Joaquin',
+const initialState:User = {
   inCall: false,
+  id:'',
+  firstName:'',
+  lastName:'',
+  email:'',
+  username:'',
+  student:true,
+  newUser:true,
+  schoolId: '',
+  avatar: 'bob',
+
 };
+
 
 export const userSlice = createSlice({
   name: 'users',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    updateName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+    updateUser: (state, action: PayloadAction<User>) => {
+      const tempState = {...action.payload };
+      state = tempState;
+      return state;
+
     },
     enterVideoCall: (state) => {
       state.inCall = true;
@@ -31,10 +42,10 @@ export const userSlice = createSlice({
   },
 });
 
-export const { updateName, enterVideoCall, endVideoCall } = userSlice.actions;
+export const { updateUser, enterVideoCall, endVideoCall } = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectUser = (state: RootState) => state.users.name;
-export const checkInCall = (state: RootState) => state.users.inCall;
+// export const selectUser = (state: RootState) => state.users.name;
+// export const checkInCall = (state: RootState) => state.users.inCall;
 
 export default userSlice.reducer;
