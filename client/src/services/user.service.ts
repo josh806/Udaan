@@ -2,7 +2,7 @@
 Add try/catch blocks on each request --------------
 */
 
-import { User } from '../types/user';
+import { User } from '../types/types';
 
 const usersDomain = import.meta.env.VITE_SERVER_DOMAIN;
 

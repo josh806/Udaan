@@ -4,17 +4,18 @@ export type User = {
   lastName: string;
   email: string;
   username: string;
+  avatar?: string;
   student: boolean;
   newUser?: boolean;
-  schoolId?: number;
+  schoolId?: string;
   inCall?: boolean;
 };
 export type Library = {
-  id: number;
+  id: string;
   lessons: Lesson[];
-  notes: File; // need to change according to how we save in agora
-  user: User;
+  Notes: File; // need to change according to how we save in agora
   userId: string;
+  notes: NoteBook[];
 };
 export type School = {
   id: number;
@@ -27,17 +28,26 @@ export type Subject = {
   id: number;
   name: string;
   lessons: Lesson[];
-  school: School;
   schoolId: number;
 };
-export type Lesson = {
-  id: number;
+export type NoteBook = {
+  id: string;
   name: string;
-  material: string;
-  date: string;
-  recording: boolean;
-  subject: Subject;
+  createdAt: string;
+  updatedAt: string;
+  note: string;
+  libraryId: string;
+  lessonId: string;
+}
+export type Lesson = {
+  id: string;
+  name: string;
+  createdAt: string;
+  video: string;
+  drawing: string;
+  scheduledDate: string;
   subjectId: number;
   library: Library[];
   user: User[];
+  notes: NoteBook[];
 };
