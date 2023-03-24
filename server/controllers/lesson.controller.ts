@@ -37,23 +37,27 @@ const getLesson = async (req: Request, res: Response) => {
 const deleteLesson = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
   try {
-    // const deleteNotes = prisma.noteBook.deleteMany({
-    //   where: {
-    //     lessonId: lessonId,
-    //   },
-    // });
-    // const deletedLesson = await prisma.lesson.delete({
-    //   where: {
-    //     id: lessonId,
-    //   },
-    // });
+    await prisma.noteBook.deleteMany({
+      where: {
+        lessonId: lessonId,
+      },
+    });
+    await prisma.whiteboard.deleteMany({
+      where: {
+        lessonId: lessonId,
+      },
+    });
+    const deletedLesson = await prisma.lesson.delete({
+      where: {
+        id: lessonId,
+      },
+    });
 
     // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
-    // console.log(deletedLesson);
-    // res.status(200).send(deletedLesson);
+    res.status(200).send(deletedLesson);
   } catch (error) {
     console.error(error);
-    res.status(404).send('Lesson not found');
+    res.status(404).send('Couldnt delete the lesson');
   }
 };
 
