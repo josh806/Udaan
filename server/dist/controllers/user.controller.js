@@ -85,13 +85,13 @@ const getUserByUsername = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.getUserByUsername = getUserByUsername;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id, firstName, lastName, student, avatar } = req.body;
+        const { id, firstName, lastName, username, avatar } = req.body;
         const user = yield database_1.prisma.user.update({
             where: { id: String(id) },
             data: {
                 firstName,
                 lastName,
-                student,
+                username,
                 avatar
             }
         });

@@ -94,7 +94,7 @@ const deleteLessonFromLibrary = async (req: Request, res: Response) => {
     });
   
     if (!library) {
-      res.status(404).send(`Library with ID ${req.params.userId} not found`);
+      res.status(404).send(`User with ID ${req.params.userId} not found`);
     }
     const updatedLibrary = await prisma.library.update({
       where: {

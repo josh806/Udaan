@@ -108,7 +108,7 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
             },
         });
         if (!library) {
-            res.status(404).send(`Library with ID ${req.params.userId} not found`);
+            res.status(404).send(`User with ID ${req.params.userId} not found`);
         }
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {

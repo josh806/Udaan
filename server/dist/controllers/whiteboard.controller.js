@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addToken = exports.createWhiteboard = void 0;
+exports.getToken = exports.addToken = exports.createWhiteboard = void 0;
 const database_1 = require("../database");
 const createWhiteboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lessonId = req.params.lessonId;
@@ -52,6 +52,9 @@ const addToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 }
             }
         });
+        if (!whiteboardId) {
+            throw new Error('no whiteboard found for this lesson');
+        }
         const uuid = (_a = whiteboardId === null || whiteboardId === void 0 ? void 0 : whiteboardId.whiteboard) === null || _a === void 0 ? void 0 : _a.uuid;
         const newWhiteBoard = yield database_1.prisma.whiteboard.update({
             where: { uuid: uuid },
@@ -59,12 +62,50 @@ const addToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 token,
             }
         });
+        if (!newWhiteBoard) {
+            throw new Error('problem db server');
+        }
         res.status(200);
         res.send(newWhiteBoard);
     }
     catch (error) {
         console.error(error);
-        res.status(400).send({ error: 'Could not update the user' });
+        res.status(400).send(`${error}`);
     }
 });
 exports.addToken = addToken;
+const getToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    const lessonId = req.params.lessonId;
+    try {
+        const whiteboardId = yield database_1.prisma.lesson.findUnique({
+            where: {
+                id: lessonId,
+            },
+            select: {
+                whiteboard: {
+                    select: {
+                        uuid: true
+                    }
+                }
+            }
+        });
+        if (!whiteboardId) {
+            throw new Error('no whiteboard found for this lesson');
+        }
+        const uuid = (_b = whiteboardId === null || whiteboardId === void 0 ? void 0 : whiteboardId.whiteboard) === null || _b === void 0 ? void 0 : _b.uuid;
+        const whiteBoard = yield database_1.prisma.whiteboard.findUnique({
+            where: { uuid: uuid },
+        });
+        if (!whiteBoard) {
+            throw new Error('problem db server');
+        }
+        res.status(200);
+        res.send(whiteBoard);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).send(`${error}`);
+    }
+});
+exports.getToken = getToken;

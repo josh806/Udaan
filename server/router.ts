@@ -46,5 +46,6 @@ router.put('/noteBook', noteBookController.updateNote);
 //whiteboard routes
 router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
 router.put('/whiteboard/:lessonId', whiteboardController.addToken);
+router.get('/whiteboard/:lessonId', whiteboardController.getToken);
 
 export default router;
