@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSubject = exports.createSubject = void 0;
+exports.deleteSubject = exports.getSubjects = exports.createSubject = void 0;
 const database_1 = require("../database");
 const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name.toLowerCase().trim();
@@ -35,6 +35,26 @@ const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.createSubject = createSubject;
+const getSubjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    try {
+        const subjects = yield database_1.prisma.school.findMany({
+            where: {
+                id: id,
+            },
+            include: {
+                subjects: true
+            }
+        });
+        res.status(200);
+        res.send(subjects);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(404).send({ error: 'Cant find school ID' });
+    }
+});
+exports.getSubjects = getSubjects;
 const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const subjectId = req.params.subjectId;
     console.log(req.params.id);
