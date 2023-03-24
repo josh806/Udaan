@@ -8,53 +8,63 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const user_controller_1 = require("./user.controller");
-const options = {
-    method: 'POST',
-    url: 'https://api.netless.link/v5/rooms',
-    headers: {
-        token: 'NETLESSSDK_YWs9Y2d4Y1NTVG1rN25neGpkSSZub25jZT1mYzY1NGIwMC1jNzE5LTExZWQtYWM2OS1mOTc2YTcxOTk1OWUmcm9sZT0wJnNpZz1hMTU0ZWRkZTM3ODAwYjBlNjY5Mzk4NjBiZGQxZDY0ZDMyMzIyMDkzMjFhOGI3ZTNlODkzNGJjYmYzNzRmYTli',
-        'Content-Type': 'application/json',
-        region: 'us-sv',
-    },
-    body: JSON.stringify({
-        isRecord: false,
-    }),
-};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.addToken = exports.createWhiteboard = void 0;
+const database_1 = require("../database");
 const createWhiteboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lessonId = req.params.lessonId;
+    const { uuid, teamUUID, appUUID, isBan, createdAt, limit } = req.body;
     try {
-        const room = req.body;
-        const id = room.uuid;
-        console.log(room);
-        const name = 'Name' + id;
-        const newWhiteboard = yield user_controller_1.prisma.whiteboard.create({
+        const newWhiteBoard = yield database_1.prisma.whiteboard.create({
             data: {
-                id: id,
-                name: name,
-            },
+                uuid,
+                teamUUID,
+                appUUID,
+                isBan,
+                createdAt,
+                limit,
+                lessonId
+            }
         });
-        res.status(200);
-        res.send(newWhiteboard);
+        res.status(201);
+        res.send(newWhiteBoard);
     }
     catch (error) {
-        console.log(error);
-        res.status(300);
+        console.error(error);
+        res.status(500).send({ error: error });
     }
 });
-const joinWhiteboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createWhiteboard = createWhiteboard;
+const addToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const lessonId = req.params.lessonId;
+    const { token } = req.body;
     try {
-        const id = 'f7ef7cb0c74d11ed85245975e226531a';
-        const whiteboard = yield user_controller_1.prisma.whiteboard.findUnique({
+        const whiteboardId = yield database_1.prisma.lesson.findUnique({
             where: {
-                id: id,
+                id: lessonId,
             },
+            select: {
+                whiteboard: {
+                    select: {
+                        uuid: true
+                    }
+                }
+            }
+        });
+        const uuid = (_a = whiteboardId === null || whiteboardId === void 0 ? void 0 : whiteboardId.whiteboard) === null || _a === void 0 ? void 0 : _a.uuid;
+        const newWhiteBoard = yield database_1.prisma.whiteboard.update({
+            where: { uuid: uuid },
+            data: {
+                token,
+            }
         });
         res.status(200);
-        res.send(whiteboard);
+        res.send(newWhiteBoard);
     }
     catch (error) {
-        console.log(error);
-        res.status(300);
+        console.error(error);
+        res.status(400).send({ error: 'Could not update the user' });
     }
 });
-module.exports = { createWhiteboard, joinWhiteboard };
+exports.addToken = addToken;
