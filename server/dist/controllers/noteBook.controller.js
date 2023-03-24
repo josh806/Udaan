@@ -9,27 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNote = void 0;
+exports.getOneLessonNote = exports.createNote = void 0;
 const database_1 = require("../database");
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, lessonId, name, note } = req.body;
-    const library = yield database_1.prisma.library.findUnique({
-        where: {
-            userId: userId,
-        },
-        include: {
-            lessons: true
-        }
-    });
-    console.log(library);
     try {
+        const library = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: userId,
+            },
+            include: {
+                lessons: true
+            }
+        });
         if (!library) {
             throw new Error();
         }
-        const hasLesson = library.lessons.some(lesson => lesson.id === lessonId);
-        console.log(hasLesson);
+        const hasLesson = library.lessons.some(noteBook => noteBook.id === lessonId);
         if (!hasLesson) {
-            throw new Error('user doesnt have this lesson');
+            throw new Error('user doesnt have this noteBook');
         }
         const newNote = yield database_1.prisma.noteBook.create({
             data: {
@@ -48,3 +46,28 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createNote = createNote;
+// router.get('/noteBook/:userId/:lessonId', noteBookController.getOneLessonNote);
+const getOneLessonNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.params);
+    const { userId, lessonId } = req.params;
+    const libraryId = yield database_1.prisma.library.findUnique({
+        where: {
+            userId: userId,
+        },
+        select: {
+            id: true
+        }
+    });
+    console.log(typeof libraryId);
+    if (!libraryId) {
+        throw new Error();
+    }
+    // const noteBook = await prisma.noteBook.findUnique({
+    //   where: {
+    //     // id: '2d0d1dbb-986d-409e-a63a-a35249d5e1cd'
+    //     libraryId: 2,
+    //   },
+    // });
+    // res.status(200).send(noteBook);
+});
+exports.getOneLessonNote = getOneLessonNote;

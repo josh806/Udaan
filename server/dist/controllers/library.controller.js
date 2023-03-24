@@ -99,22 +99,6 @@ const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getLesson = getLesson;
-// const getNotes = async (req: Request, res: Response) => {
-//   try {
-//     const library = await prisma.library.findUnique({
-//       where: {
-//         userId: String(req.params.id),
-//       },
-//       select: {
-//         notes: true,
-//       }
-//     });
-//     res.status(200).send(library);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Library not found');
-//   }
-// };
 const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const library = yield database_1.prisma.library.findUnique({

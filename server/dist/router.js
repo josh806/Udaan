@@ -56,4 +56,8 @@ router.delete('/library/:userId/library/:lessonId', libraryController.deleteLess
 router.get('/user/:id/library/:lessonId', libraryController.getLesson);
 //noteBook routes
 router.post('/noteBook', noteBookController.createNote);
+router.get('/noteBook/:userId/:lessonId', noteBookController.getOneLessonNote);
+// router.get('/noteBook/:userId/:lessonId', noteBookController.getAllUserNotes);
+// router.delete('/noteBook', noteBookController.deleteNote);
+// router.put('/noteBook', noteBookController.updateNote);
 exports.default = router;
