@@ -69,13 +69,13 @@ const getUserByUsername = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const { id, firstName, lastName, student, avatar } = req.body;
+    const { id, firstName, lastName, username, avatar } = req.body;
     const user = await prisma.user.update({
       where: { id: String(id) },
       data: {
         firstName,
         lastName,
-        student,
+        username,
         avatar
       }
     });
