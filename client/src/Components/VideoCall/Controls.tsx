@@ -37,27 +37,35 @@ const Controls = (props: {
   };
 
   return (
-    <div className='controls'>
+    <div className="controls">
       <Button
-        color='info'
-        variant='contained'
+        color="info"
+        variant="contained"
         className={trackState.audio ? 'mute' : 'unmute'}
         onClick={() => mute('audio')}
       >
         {trackState.audio ? 'Mute' : 'Unmute'}
       </Button>
       <Button
-        color='warning'
-        variant='contained'
+        color="info"
+        variant="contained"
+        className={trackState.audio ? 'mute' : 'unmute'}
+        onClick={() => mute('audio')}
+      >
+        Whiteboard
+      </Button>
+      <Button
+        color="warning"
+        variant="contained"
         className={trackState.video ? 'mute' : 'unmute'}
         onClick={() => mute('video')}
       >
         {trackState.video ? 'Hide video' : 'Turn video on'}
       </Button>
       <Button
-        color='error'
-        variant='contained'
-        className='leave'
+        color="error"
+        variant="contained"
+        className="leave"
         onClick={leaveChannel}
       >
         Leave

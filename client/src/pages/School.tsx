@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Profile from '../features/Profile';
 import VideoCall from '../components/VideoCall/VideoCall';
 import BasicModal from '../components/BasicModal';
+import InteractiveWhiteboard from '../Components/InteractiveWhiteboard/InteractiveWhiteboard';
 
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
@@ -35,22 +36,28 @@ const School = () => {
 
   const [chat, setChat] = useState(false);
   return (
-    <AuthRequired>
-      <>
-        <BasicModal buttonLabel='My profile'>
-          <Profile />
-        </BasicModal>
+    <>
+      <InteractiveWhiteboard />
+      <AuthRequired>
         <>
-          {chat && (
-            <button className='open_chat' onClick={() => setChat(!chat)}>
-              Show chat
-            </button>
-          )}
-          <PhaserRoot />
-          {inCall && <VideoCall />}
+          <BasicModal buttonLabel="My profile">
+            <Profile />
+          </BasicModal>
+          <>
+            {chat && (
+              <button
+                className="open_chat"
+                onClick={() => setChat(!chat)}
+              >
+                Show chat
+              </button>
+            )}
+            <PhaserRoot />
+            {inCall && <VideoCall />}
+          </>
         </>
-      </>
-    </AuthRequired>
+      </AuthRequired>
+    </>
   );
 };
 
