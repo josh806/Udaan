@@ -54,6 +54,8 @@ export class MySchool extends Room<MySchoolSchema> {
     });
   }
 
+
+
   onJoin (client: Client) {
     console.log(client.sessionId, 'joined!');
 

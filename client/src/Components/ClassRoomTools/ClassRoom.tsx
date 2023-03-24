@@ -1,8 +1,5 @@
 import React from 'react';
-import { useState, useEffect, FC } from 'react';
-import { createClassRoom } from './flexibleclassroom_service';
 import { AgoraEduSDK } from 'agora-classroom-sdk';
-import Room from './Room';
 
 const InteractiveTool: React.FC = () => {
   async function handleClassRoom() {
@@ -15,8 +12,9 @@ const InteractiveTool: React.FC = () => {
 
     // Launch Flexible Classroom
     if (div) {
-      const room = await  AgoraEduSDK.launch(div, {
-        rtmToken: '007eJxSYPB+tifermRrpPvl511sDtxxTaqdfidD134/cTgr3MTn3WcFBksLIzMzs5TUJKPEJBOTVPNE48QkS1NTU1MDc7MkCzOTaF7plOiN66w+neJnYGRgYmBkYGQA8RkZDAABAAD//8/hH7I=',
+      const room = await AgoraEduSDK.launch(div, {
+        rtmToken:
+          '007eJxSYPB+tifermRrpPvl511sDtxxTaqdfidD134/cTgr3MTn3WcFBksLIzMzs5TUJKPEJBOTVPNE48QkS1NTU1MDc7MkCzOTaF7plOiN66w+neJnYGRgYmBkYGQA8RkZDAABAAD//8/hH7I=',
         userUuid: 'test',
         userName: 'teacher',
         roomUuid: '4321',
@@ -30,7 +28,7 @@ const InteractiveTool: React.FC = () => {
         courseWareList: [],
         listener: (ready) => {
           console.log('ready', ready, 'yes');
-        }
+        },
       })
         .then(() => {
           console.log('start launch');
@@ -40,12 +38,10 @@ const InteractiveTool: React.FC = () => {
         });
       return room;
     }
-
-    
   }
 
   return (
-    <div id="room">
+    <div id='room'>
       <button onClick={() => handleClassRoom()}> Class Room</button>
     </div>
   );

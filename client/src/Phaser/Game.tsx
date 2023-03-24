@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
 import { store } from '../redux/store';
+import { enterVideoCall } from '../redux/user';
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -13,13 +14,14 @@ export default class Game extends Phaser.Scene {
   private userName!: string;
   private spacebar!: Phaser.Input.Keyboard.Key;
   private sitting = false;
+  private inCall = false;
   private chairPosition = [0, 0];
 
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
 
   // private client = new Client(import.meta.env.VITE_PHASER);
-  private client = new Client('ws://192.168.0.238:4001');
+  private client = new Client('ws://192.168.0.182:4001');
   private room!: Room;
 
   private playerEntities: {
@@ -34,6 +36,7 @@ export default class Game extends Phaser.Scene {
     down: [false, 'movedown'],
     idle: [false, 'idle'],
     sit: [false, 'sit'],
+    inCall: this.inCall,
     collider: false,
     chairPosition: this.chairPosition,
   };
@@ -62,12 +65,12 @@ export default class Game extends Phaser.Scene {
     chairLayer.setCollisionByProperty({ collides: true });
 
     // to be removed: to see the collidable surface
-    const debugGraphics = this.add.graphics().setAlpha(0.7);
-    wallsLayer.renderDebug(debugGraphics, {
-      tileColor: null,
-      collidingTileColor: new Phaser.Display.Color(243, 243, 48, 255),
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255),
-    });
+    // const debugGraphics = this.add.graphics().setAlpha(0.7);
+    // wallsLayer.renderDebug(debugGraphics, {
+    //   tileColor: null,
+    //   collidingTileColor: new Phaser.Display.Color(243, 243, 48, 255),
+    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255),
+    // });
 
     //colyseus
     try {
@@ -81,17 +84,17 @@ export default class Game extends Phaser.Scene {
         console.log('sesion id', sessionId);
         if (sessionId === this.room.sessionId) {
           this.currentPlayer = entity;
-          this.localRef = this.add.rectangle(0, 0, entity.width, entity.height);
-          this.localRef.setStrokeStyle(1, 0x00ff00);
+          // this.localRef = this.add.rectangle(0, 0, entity.width, entity.height);
+          // this.localRef.setStrokeStyle(1, 0x00ff00);
 
           // to be removed: remoteRef is being used for debug only
-          this.remoteRef = this.add.rectangle(
-            0,
-            0,
-            entity.width,
-            entity.height
-          );
-          this.remoteRef.setStrokeStyle(1, 0xff0000);
+          // this.remoteRef = this.add.rectangle(
+          //   0,
+          //   0,
+          //   entity.width,
+          //   entity.height
+          // );
+          // this.remoteRef.setStrokeStyle(1, 0xff0000);
           // listening for server updates
           player.onChange(() => {
             this.remoteRef.x = player.x;
@@ -102,7 +105,7 @@ export default class Game extends Phaser.Scene {
           this.playerName = this.add
             .text(
               this.currentPlayer.x + 8,
-              this.currentPlayer.y + 32,
+              this.currentPlayer.y + 48,
               this.userName,
               {
                 fontFamily: 'Arial',
@@ -260,14 +263,14 @@ export default class Game extends Phaser.Scene {
     if (!this.currentPlayer) {
       return;
     }
+    const user = store.getState();
+    this.inCall = user.users.inCall;
 
-    const velocity = 2;
     if (!this.checkCollisions) {
       this.inputPayload.left[0] = this.cursorKeys.left.isDown;
       this.inputPayload.right[0] = this.cursorKeys.right.isDown;
       this.inputPayload.up[0] = this.cursorKeys.up.isDown;
       this.inputPayload.down[0] = this.cursorKeys.down.isDown;
-      this.inputPayload.sit[0] = Phaser.Input.Keyboard.JustDown(this.spacebar);
       this.room.send('move', this.inputPayload);
     } else {
       this.inputPayload.left[0] = this.cursorKeys.left.isDown;
@@ -277,6 +280,7 @@ export default class Game extends Phaser.Scene {
       this.room.send('stop', this.inputPayload);
     }
 
+    const velocity = 2;
     if (this.inputPayload.left[0]) {
       this.currentPlayer.x -= velocity;
       this.currentPlayer.setVelocityX(-velocity);
@@ -293,38 +297,36 @@ export default class Game extends Phaser.Scene {
       this.currentPlayer.y += velocity;
       this.currentPlayer.setVelocityY(velocity);
       this.currentPlayer.anims.play('movedown', true);
-    } else if (this.inputPayload.sit[0] && this.collisionCounter > 0) {
-      this.sitting = !this.sitting;
+    } else if (
+      Phaser.Input.Keyboard.JustDown(this.spacebar) &&
+      this.collisionCounter > 0
+    ) {
+      this.sitting = true;
       this.collisionCounter++;
+      console.log(this.collisionCounter);
       if (this.collisionCounter === 2) {
         this.textBox.setVisible(false);
         this.text.setVisible(false);
-
+        store.dispatch(enterVideoCall());
         this.currentPlayer.x = this.chairPosition[0];
         this.currentPlayer.y = this.chairPosition[1];
         this.currentPlayer.setPosition(
           this.chairPosition[0],
           this.chairPosition[1]
         );
-      } else {
+        this.currentPlayer.anims.play('sit', true);
+        this.inputPayload.sit[0] = true;
+        this.room.send('move', this.inputPayload);
         this.collisionCounter = 0;
       }
-
-      // to be removed: dispatch to redux
-      // store.dispatch(updateName('josh'));
-      // this.userName = store.getState().users.name;
     } else {
       this.currentPlayer.x += 0;
       this.currentPlayer.setVelocityX(0);
       this.currentPlayer.y += 0;
       this.currentPlayer.setVelocityY(0);
-      if (!this.sitting) {
+      if (!this.sitting || !this.inCall) {
         this.currentPlayer.anims.play('idle');
         this.inputPayload.sit[0] = false;
-        this.room.send('move', this.inputPayload);
-      } else {
-        this.currentPlayer.anims.play('sit');
-        this.inputPayload.sit[0] = true;
         this.room.send('move', this.inputPayload);
       }
     }
@@ -346,6 +348,6 @@ export default class Game extends Phaser.Scene {
     this.checkCollisions = false;
     // player name follows the character
     this.playerName.x = this.currentPlayer.body.position.x + 8;
-    this.playerName.y = this.currentPlayer.body.position.y + 32;
+    this.playerName.y = this.currentPlayer.body.position.y + 48;
   }
 }
