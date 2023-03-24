@@ -4,7 +4,7 @@ import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
 
 import Profile from '../features/Profile';
-import VideoCall from '../components/VideoChat/VideoCall';
+import VideoCall from '../components/VideoCall/VideoCall';
 import BasicModal from '../components/BasicModal';
 
 import PhaserRoot from '../Phaser/Phaser';

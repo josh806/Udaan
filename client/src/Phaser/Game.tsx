@@ -65,12 +65,12 @@ export default class Game extends Phaser.Scene {
     chairLayer.setCollisionByProperty({ collides: true });
 
     // to be removed: to see the collidable surface
-    const debugGraphics = this.add.graphics().setAlpha(0.7);
-    wallsLayer.renderDebug(debugGraphics, {
-      tileColor: null,
-      collidingTileColor: new Phaser.Display.Color(243, 243, 48, 255),
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255),
-    });
+    // const debugGraphics = this.add.graphics().setAlpha(0.7);
+    // wallsLayer.renderDebug(debugGraphics, {
+    //   tileColor: null,
+    //   collidingTileColor: new Phaser.Display.Color(243, 243, 48, 255),
+    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255),
+    // });
 
     //colyseus
     try {
@@ -84,17 +84,17 @@ export default class Game extends Phaser.Scene {
         console.log('sesion id', sessionId);
         if (sessionId === this.room.sessionId) {
           this.currentPlayer = entity;
-          this.localRef = this.add.rectangle(0, 0, entity.width, entity.height);
-          this.localRef.setStrokeStyle(1, 0x00ff00);
+          // this.localRef = this.add.rectangle(0, 0, entity.width, entity.height);
+          // this.localRef.setStrokeStyle(1, 0x00ff00);
 
           // to be removed: remoteRef is being used for debug only
-          this.remoteRef = this.add.rectangle(
-            0,
-            0,
-            entity.width,
-            entity.height
-          );
-          this.remoteRef.setStrokeStyle(1, 0xff0000);
+          // this.remoteRef = this.add.rectangle(
+          //   0,
+          //   0,
+          //   entity.width,
+          //   entity.height
+          // );
+          // this.remoteRef.setStrokeStyle(1, 0xff0000);
           // listening for server updates
           player.onChange(() => {
             this.remoteRef.x = player.x;
@@ -105,7 +105,7 @@ export default class Game extends Phaser.Scene {
           this.playerName = this.add
             .text(
               this.currentPlayer.x + 8,
-              this.currentPlayer.y + 32,
+              this.currentPlayer.y + 48,
               this.userName,
               {
                 fontFamily: 'Arial',
@@ -297,7 +297,10 @@ export default class Game extends Phaser.Scene {
       this.currentPlayer.y += velocity;
       this.currentPlayer.setVelocityY(velocity);
       this.currentPlayer.anims.play('movedown', true);
-    } else if (Phaser.Input.Keyboard.JustDown(this.spacebar) && this.collisionCounter > 0) {
+    } else if (
+      Phaser.Input.Keyboard.JustDown(this.spacebar) &&
+      this.collisionCounter > 0
+    ) {
       this.sitting = true;
       this.collisionCounter++;
       console.log(this.collisionCounter);
@@ -345,6 +348,6 @@ export default class Game extends Phaser.Scene {
     this.checkCollisions = false;
     // player name follows the character
     this.playerName.x = this.currentPlayer.body.position.x + 8;
-    this.playerName.y = this.currentPlayer.body.position.y + 32;
+    this.playerName.y = this.currentPlayer.body.position.y + 48;
   }
 }
