@@ -96,20 +96,20 @@ const Profile = () => {
         helperText: '',
       });
 
+      let userFromDb;
       if (currUser.newUser) {
         // Create user
         console.log('--- user info ---');
-        const newUser = await userService.createUser(currUser);
+        userFromDb = await userService.createUser(currUser);
 
-        // set redux user-------------------
         // Message: Successfully created
       } else {
         // Update user
-        const updatedUser = await userService.updateUser(currUser);
+        userFromDb = await userService.updateUser(currUser);
 
-        // set redux user-------------------
         // Message: Successfully updated
       }
+      // set redux user-------------------
     }
   };
 

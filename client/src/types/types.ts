@@ -38,16 +38,15 @@ export type NoteBook = {
   note: string;
   libraryId: string;
   lessonId: string;
-}
+};
 export type Lesson = {
   id: string;
   name: string;
-  createdAt: string;
-  video: string;
-  drawing: string;
+  video?: string;
+  drawing?: string;
   scheduledDate: string;
   subjectId: number;
-  library: Library[];
-  user: User[];
-  notes: NoteBook[];
+  library?: Library[];
+  user?: User[];
+  notes?: NoteBook[];
 };
