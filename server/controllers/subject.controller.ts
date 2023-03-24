@@ -24,15 +24,20 @@ const createSubject = async (req: Request, res: Response) => {
 };
 
 const deleteSubject = async (req: Request, res: Response) => {
-  const subjectId = req.params.id;
+  const subjectId = req.params.subjectId;
   console.log(req.params.id);
   try {
-    const subject = await prisma.subject.delete({
+    await prisma.lesson.deleteMany({
       where: {
-        id: Number(subjectId),
+        subjectId: subjectId,
+      }
+    });
+    const deletedSubject = await prisma.subject.delete({
+      where: {
+        id: subjectId,
       },
     });
-    res.status(200).send(subject);
+    res.status(200).send(deletedSubject);
   } catch (error) {
     console.error(error);
     res.status(404).send('Subject not found');

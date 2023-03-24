@@ -43,7 +43,7 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield database_1.prisma.school.findMany({
             where: {
-                id: Number(id),
+                id: id,
             },
             include: {
                 users: true
@@ -63,7 +63,7 @@ const getSubjects = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const subjects = yield database_1.prisma.school.findMany({
             where: {
-                id: Number(id),
+                id: id,
             },
             include: {
                 subjects: true

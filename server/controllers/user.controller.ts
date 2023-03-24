@@ -3,8 +3,7 @@ import { prisma } from '../database';
 
 
 const createUser = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { firstName, lastName, email, student, schoolId } = req.body;
+  const { id, firstName, lastName, email, student, schoolId } = req.body;
   const username = req.body.username.toLowerCase().trim();
   if (firstName && lastName && email && username && student !== undefined && schoolId) {
     try {
@@ -40,7 +39,7 @@ const getUserById = async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: req.params.id
+        id: req.body
       }, 
     });
     if (!user) { throw new Error(); }
@@ -70,7 +69,7 @@ const getUserByUsername = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body.id;
     const data = req.body;
     delete data['email'];
     delete data['id'];

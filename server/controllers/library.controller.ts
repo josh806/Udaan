@@ -5,7 +5,7 @@ const addLessonId = async (req: Request, res: Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       select: {
         lessons: true,
@@ -16,21 +16,21 @@ const addLessonId = async (req: Request, res: Response) => {
     const lessonIds = library.lessons.map(el => ({ id: el.id }));
     await prisma.user.update({
       where: {
-        id: req.params.id,
+        id: req.params.userId,
       },
       data: {
         lessons: {
-          set : [...lessonIds, {id: +req.params.lessonId}]
+          set : [...lessonIds, {id: req.params.lessonId}]
         }
       }
     });
     const updatedLibrary = await prisma.library.update({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       data: {
         lessons: {
-          set: [...lessonIds, {id: +req.params.lessonId}]
+          set: [...lessonIds, {id: req.params.lessonId}]
         }
       }
     });
@@ -45,7 +45,7 @@ const getLessons = async (req:Request, res:Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       include: {
         lessons: true
@@ -60,29 +60,52 @@ const getLessons = async (req:Request, res:Response) => {
   }
 };
 
-
-const getNotes = async (req: Request, res: Response) => {
+const getLesson = async (req: Request, res: Response) => {
+  console.log(req.params.id);
+  console.log(req.params.lessonId);
   try {
-    const library = await prisma.library.findUnique({
+    const lessonInLibrary = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: req.params.id,
       },
-      select: {
-        notes: true,
-      }
+      include: {
+        lessons: {
+          where: {
+            id: req.params.lessonId
+          },
+        },
+      },
     });
-    res.status(200).send(library);
+    res.status(200).send(lessonInLibrary);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Library not found');
+    res.status(404).send('Lesson not found');
   }
 };
 
-const deleteLesson = async (req: Request, res: Response) => {
+
+// const getNotes = async (req: Request, res: Response) => {
+//   try {
+//     const library = await prisma.library.findUnique({
+//       where: {
+//         userId: String(req.params.id),
+//       },
+//       select: {
+//         notes: true,
+//       }
+//     });
+//     res.status(200).send(library);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Library not found');
+//   }
+// };
+
+const deleteLessonFromLibrary = async (req: Request, res: Response) => {
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: String(req.params.id),
+        userId: String(req.params.userId),
       },
       include: {
         lessons: true
@@ -90,16 +113,16 @@ const deleteLesson = async (req: Request, res: Response) => {
     });
   
     if (!library) {
-      res.status(404).send(`Library with ID ${req.params.id} not found`);
+      res.status(404).send(`Library with ID ${req.params.userId} not found`);
     }
     const updatedLibrary = await prisma.library.update({
       where: {
-        userId: String(req.params.id)
+        userId: String(req.params.userId)
       },
       data: {
         lessons: {
           disconnect: {
-            id: Number(req.params.lessonId)
+            id: req.params.lessonId
           }
         }
       }
@@ -111,4 +134,4 @@ const deleteLesson = async (req: Request, res: Response) => {
   }
 };
 
-export { addLessonId, getLessons, getNotes, deleteLesson };
+export { addLessonId, getLessons, deleteLessonFromLibrary, getLesson };
