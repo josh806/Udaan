@@ -48,6 +48,7 @@ Table Lesson {
   librarys Library [not null]
   users User [not null]
   notes NoteBook [not null]
+  whiteboard Whiteboard
 
   indexes {
     (name, subjectId) [unique]
@@ -69,13 +70,25 @@ Table NoteBook {
   note String
   library Library [not null]
   libraryId String [not null]
-  Lesson Lesson [not null]
+  lesson Lesson [not null]
   lessonId String [not null]
 
   indexes {
     (libraryId, lessonId) [pk]
     (name, libraryId) [unique]
   }
+}
+
+Table Whiteboard {
+  uuid String [pk]
+  teamUUID String [not null]
+  appUUID String [not null]
+  isBan Boolean [not null]
+  createdAt String [not null]
+  limit Int [not null]
+  token String [unique]
+  lesson Lesson
+  lessonId String [unique]
 }
 
 Ref: User.schoolId > School.id
@@ -89,3 +102,5 @@ Ref: Library.userId - User.id
 Ref: NoteBook.libraryId > Library.id
 
 Ref: NoteBook.lessonId > Lesson.id
+
+Ref: Whiteboard.lessonId - Lesson.id

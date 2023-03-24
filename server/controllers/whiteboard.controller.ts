@@ -3,16 +3,18 @@ import { prisma } from '../database';
 
 
 const createWhiteboard = async (req: Request, res: Response) => {
+  const lessonId = req.params.lessonId;
+  const { uuid, teamUUID, appUUID, isBan, createdAt, limit } = req.body;
   try {
     const newWhiteBoard = await prisma.whiteboard.create({
       data: {
-        id,
-        firstName, 
-        lastName,
-        email,
-        username,
-        student, 
-        schoolId,
+        uuid,
+        teamUUID,
+        appUUID,
+        isBan,
+        createdAt,
+        limit,
+        lessonId
       }
     });
     res.status(201);
@@ -23,58 +25,70 @@ const createWhiteboard = async (req: Request, res: Response) => {
   }
 };
 
+const addToken = async (req: Request, res: Response) => {
+  const lessonId = req.params.lessonId;
+  const { token } = req.body;
+  try {
+    const whiteboardId = await prisma.lesson.findUnique({
+      where: {
+        id: lessonId,
+      },
+      select: {
+        whiteboard: {
+          select: {
+            uuid:true
+          }
+        }
+      }
+    });
 
-// const getUserById = async (req: Request, res: Response) => {
+    const uuid = whiteboardId?.whiteboard?.uuid;
+
+    const newWhiteBoard = await prisma.whiteboard.update({
+      where: { uuid: uuid  },
+      data: {
+        token,
+      }
+    });
+    res.status(200);
+    res.send(newWhiteBoard);
+
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ error: 'Could not update the user' });
+  }
+};
+
+// const getToken = async (req: Request, res: Response) => {
+//   const lessonId = req.params.lessonId;
 //   try {
-//     const user = await prisma.user.findUnique({
+//     const whiteboardId = await prisma.lesson.findUnique({
 //       where: {
-//         id: req.params.userId
-//       }, 
+//         id: lessonId,
+//       },
+//       select: {
+//         whiteboard: {
+//           select: {
+//             uuid:true
+//           }
+//         }
+//       }
 //     });
-//     if (!user) { throw new Error(); }
-//     res.send(user);
-//     res.status(200);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(400).send({ error: 'User not found' });
-//   }
-// };
+    
+//     const uuid = whiteboardId?.whiteboard?.uuid;
 
-// const getUserByUsername = async (req: Request, res: Response) => {
-//   try {
-//     const user = await prisma.user.findUnique({
-//       where: {
-//         username: req.params.username
-//       }, 
-//     });
-//     if (!user) { throw new Error(); }
-//     res.send({username: req.params.username});
-//     res.status(200);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(400).send({ error: 'User not found' });
-//   }
-// };
-
-// const updateUser = async (req: Request, res: Response) => {
-//   try {
-//     const { id, firstName, lastName, student, avatar } = req.body;
-//     const user = await prisma.user.update({
-//       where: { id: String(id) },
+//     const newWhiteBoard = await prisma.whiteboard.findUnique({
+//       where: { uuid: uuid  },
 //       data: {
-//         firstName,
-//         lastName,
-//         student,
-//         avatar
+//         token,
 //       }
 //     });
 //     res.status(200);
-//     res.send(user);
-
+//     res.send(newWhiteBoard);
 //   } catch (error) {
 //     console.error(error);
-//     res.status(400).send({ error: 'Could not update the user' });
+//     res.status(400).send({ error: 'User not found' });
 //   }
 // };
 
-export { createWhiteboard };
+export { createWhiteboard, addToken };

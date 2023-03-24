@@ -11,8 +11,8 @@ const router = Router();
 
 //user routes
 router.post('/user', userController.createUser);
-router.get('/user/:userId/id', userController.getUserById);
-router.get('/user/:username/username', userController.getUserByUsername);
+router.get('/user/userId/:userId', userController.getUserById);
+router.get('/user/username/:username', userController.getUserByUsername);
 router.put('/user', userController.updateUser);
 
 //school routes
@@ -45,5 +45,6 @@ router.put('/noteBook', noteBookController.updateNote);
 
 //whiteboard routes
 router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
+router.put('/whiteboard/:lessonId', whiteboardController.addToken);
 
 export default router;

@@ -34,8 +34,8 @@ const whiteboardController = __importStar(require("./controllers/whiteboard.cont
 const router = (0, express_1.Router)();
 //user routes
 router.post('/user', userController.createUser);
-router.get('/user/:userId/id', userController.getUserById);
-router.get('/user/:username/username', userController.getUserByUsername);
+router.get('/user/userId/:userId', userController.getUserById);
+router.get('/user/username/:username', userController.getUserByUsername);
 router.put('/user', userController.updateUser);
 //school routes
 router.post('/school', schoolController.createSchool);
@@ -62,4 +62,5 @@ router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 //whiteboard routes
 router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
+router.put('/whiteboard/:lessonId', whiteboardController.addToken);
 exports.default = router;
