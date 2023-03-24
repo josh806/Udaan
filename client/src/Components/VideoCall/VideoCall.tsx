@@ -71,11 +71,20 @@ const VideoCall = () => {
   }, [channelName, client, ready, tracks]);
 
   return (
-    <div className='videocall-container'>
+    <div className="videocall-container">
       {ready && tracks && (
-        <Controls client={client} tracks={tracks} setStart={setStart} />
+        <Controls
+          client={client}
+          tracks={tracks}
+          setStart={setStart}
+        />
       )}
-      {start && tracks && <Videos users={remoteUsers} tracks={tracks} />}
+      {start && tracks && (
+        <Videos
+          users={remoteUsers}
+          tracks={tracks}
+        />
+      )}
     </div>
   );
 };
