@@ -5,6 +5,8 @@ import * as subjectController from './controllers/subject.controller';
 import * as lessonController from './controllers/lesson.controller';
 import * as libraryController from './controllers/library.controller';
 import * as noteBookController from './controllers/noteBook.controller';
+import * as whiteboardController from './controllers/whiteboard.controller';
+
 const router = Router();
 
 //user routes
@@ -42,6 +44,6 @@ router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 
 //whiteboard routes
-// router.post('/whiteboard', whiteboardController.createWhiteBoard)
+router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
 
 export default router;

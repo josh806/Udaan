@@ -42,17 +42,19 @@ model Subject {
 }
 
 model Lesson {
-  id            String     @id @default(uuid()) //The room UUID
-  name          String
-  createdAt     DateTime   @default(now())
-  scheduledDate String
-  video         String?
-  drawing       String?
-  subject       Subject    @relation(fields: [subjectId], references: [id])
-  subjectId     String
-  librarys      Library[]
-  users         User[]
-  notes         NoteBook[]
+  id             String      @id @default(uuid())
+  name           String
+  createdAt      DateTime    @default(now())
+  scheduledDate  String
+  video          String?
+  drawing        String?
+  subject        Subject     @relation(fields: [subjectId], references: [id])
+  subjectId      String
+  librarys       Library[]
+  users          User[]
+  notes          NoteBook[]
+  whiteboard     Whiteboard? @relation(fields: [whiteboardUuid], references: [uuid])
+  whiteboardUuid String?     @unique
 
   @@unique([name, subjectId])
 }
@@ -66,7 +68,6 @@ model Library {
 }
 
 model NoteBook {
-  // id        String   @id @default(uuid())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,6 +79,17 @@ model NoteBook {
 
   @@id([libraryId, lessonId])
   @@unique([name, libraryId])
+}
+
+model Whiteboard {
+  uuid      String  @id
+  teamUUID  String
+  appUUID   String
+  isBan     Boolean
+  createdAt String
+  limit     Int
+  token     String? @unique
+  Lesson    Lesson?
 }
 
 generator dbml {
