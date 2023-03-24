@@ -37,18 +37,13 @@ const School = () => {
   return (
     <AuthRequired>
       <>
-        <BasicModal buttonLabel='My profile'>
-          <Profile />
-        </BasicModal>
-        <>
-          {chat && (
-            <button className='open_chat' onClick={() => setChat(!chat)}>
-              Show chat
-            </button>
-          )}
-          <PhaserRoot />
-          {inCall && <VideoCall />}
-        </>
+        {chat && (
+          <button className='open_chat' onClick={() => setChat(!chat)}>
+            Show chat
+          </button>
+        )}
+        <PhaserRoot />
+        {inCall && <VideoCall />}
       </>
     </AuthRequired>
   );

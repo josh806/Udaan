@@ -12,13 +12,13 @@ const config: ClientConfig = {
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
-  '007eJxTYDDoVxHmPO/Wdk5yUXDOR/6Nj9bt0X+dvmTrP84f75wCHYwVGCwtjMzMzFJSk4wSk0xMUs0TjROTLE2BwMDcLMnCzEReXSalIZCRYUNWBSsjAwSC+DwMIanFJeGZJRle+cUZDAwAFaEhPA==';
+  '007eJxTYLBcEHJ6qcCrx6cCf0jnm9nsiZ+mbWquvf/ks1dvH36KYQpTYLC0MDIzM0tJTTJKTDIxSTVPNE5MsjQFAgNzsyQLMxPfKtmUhkBGBrMEZVZGBggE8fkZQlKLS8IzSzK88hMLSzPzGBgA62gjRw==';
 const useClient = createClient(config);
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
 //VideoComponent for the video call
 const VideoCall = () => {
-  const channelName = 'TestWithJosh';
+  const channelName = 'TestWithJoaquin';
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
   const [start, setStart] = useState<boolean>(false);
   const client = useClient();

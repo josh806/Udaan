@@ -15,6 +15,7 @@
   grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
   justify-items: center;
   align-items: center;
+  background-color: black;
 }
 
 .video {
