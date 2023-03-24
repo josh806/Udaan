@@ -1,64 +1,35 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f7f7f7;
-}
-
-/* .App{
-    position: relative;
-    display: grid;
-    grid-template-columns: 100%;
-    justify-items: center;
-    align-items: center;
-    height: 90vh;
-  } */
-
-.heading {
-  text-align: center;
-  align-self: flex-start;
-  margin-bottom: 0;
-}
-
-#videos {
-  position: relative;
-  height: 85vh;
+.videocall-container {
+  position: absolute;
+  top: 0;
   width: 100vw;
-  margin: auto;
-  align-self: flex-start;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
-  justify-items: center;
-  align-items: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
-.vid {
+.video-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.video {
   position: relative;
   background-color: black;
-  height: 95%;
-  width: 95%;
-  border-width: 1px;
-  border-color: #38373a;
-  border-style: solid;
+  height: 100%;
+  width: 100%;
+  border: 5px solid black;
+  box-sizing: border-box;
 }
 
 .controls {
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: -20px auto;
-  display: grid;
-  grid-template-columns: repeat(3, 33%);
-  align-items: center;
-  justify-items: center;
+  bottom: 10%;
   z-index: 1;
-  width: 500px;
-  max-width: 60vw;
+  display: flex;
+  justify-content: space-evenly;
+  width: 25%;
 }
 
 .controls p {
@@ -70,51 +41,3 @@ body {
   border-color: #f7f7f7;
   border-style: solid;
 }
-
-/* .controls p.on{
-    background: #F7F7F7;
-    color: #38373A;
-    border-width: 1px;
-    border-color: #38373A;
-    border-style: solid;
-  } */
-/*
-  .join{
-    position: absolute;
-    z-index: 1;
-    width: 30vw;
-    height: fit-content;
-    height: -moz-max-content;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    max-width: 75vw;
-  } */
-
-/* .join  input{
-    padding: 15px;
-    font-size: 1rem;
-    border-width: 1px;
-    border-color: #38373A;
-    border-style: solid;
-    width: 80%;
-    display: block;
-    margin:  50px auto;
-  } */
-
-/* .join  button{
-    min-width: 200px;
-    padding: 12px 0;
-    text-align: center;
-    background-color: #38373A;
-    color: #F7F7F7;
-    border-width: 1px;
-    border-color: #F7F7F7;
-    border-style: solid;
-    font-size: 1rem;
-    font-weight: 400;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-  } */

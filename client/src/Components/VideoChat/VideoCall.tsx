@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Controls from './Controls';
 import Videos from './Videos';
 import './VideoCall.css';
@@ -71,7 +71,7 @@ const VideoCall = () => {
   }, [channelName, client, ready, tracks]);
 
   return (
-    <div>
+    <div className='videocall-container'>
       {ready && tracks && (
         <Controls client={client} tracks={tracks} setStart={setStart} />
       )}

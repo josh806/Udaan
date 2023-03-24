@@ -4,8 +4,8 @@ import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
 
 import Profile from '../features/Profile';
-import VideoCall from '../Components/VideoChat/VideoCall';
-import BasicModal from '../Components/BasicModal';
+import VideoCall from '../components/VideoChat/VideoCall';
+import BasicModal from '../components/BasicModal';
 
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
@@ -26,7 +26,6 @@ const School = () => {
   */
   const { user } = useAuth0();
   const inCall = useSelector((state: RootState) => state.users.inCall);
-  console.log(inCall);
   useEffect(() => {
     // User exists
     // OR
