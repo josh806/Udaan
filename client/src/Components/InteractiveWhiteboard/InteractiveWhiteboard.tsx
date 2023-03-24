@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { WhiteWebSdk, RoomWhiteboard } from 'white-react-sdk';
 import { createRoom, getRoomToken } from './Request';
 
@@ -56,7 +56,7 @@ const InteractiveWhiteboard = () => {
               });
             });
             if (toolbar) toolbar.appendChild(btn);
-            
+
             console.log(btn.getAttribute('id'));
           }
           setRoom(room);
@@ -78,7 +78,7 @@ const InteractiveWhiteboard = () => {
           style={{ width: '1000vh', height: '100vh', background: 'white' }}
         />
       )}
-      <div id="toolbar" style={{ background: 'black' }}></div>
+      <div id='toolbar' style={{ background: 'black' }}></div>
     </div>
   );
 };
