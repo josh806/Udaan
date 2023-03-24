@@ -67,9 +67,9 @@ Table NoteBook {
   updatedAt DateTime [not null]
   note String
   library Library [not null]
-  libraryId String [unique, not null]
+  libraryId String [not null]
   Lesson Lesson [not null]
-  lessonId String [unique, not null]
+  lessonId String [not null]
 
   indexes {
     (libraryId, lessonId) [pk]

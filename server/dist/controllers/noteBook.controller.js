@@ -23,11 +23,13 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             }
         });
         if (!library) {
-            throw new Error();
+            throw new Error('library or user doesnt exist');
         }
+        console.log(library.id);
+        // console.log(lessonId);
         const hasLesson = library.lessons.some(noteBook => noteBook.id === lessonId);
         if (!hasLesson) {
-            throw new Error('user doesnt have this noteBook');
+            throw new Error('user doesnt have this lesson');
         }
         const newNote = yield database_1.prisma.noteBook.create({
             data: {

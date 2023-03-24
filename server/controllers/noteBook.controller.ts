@@ -12,9 +12,11 @@ const createNote = async (req: Request, res: Response) => {
         lessons:true
       }
     });
-    if (!library) { throw new Error(); }
+    if (!library) { throw new Error('library or user doesnt exist'); }
+    console.log(library.id);
+    // console.log(lessonId);
     const hasLesson = library.lessons.some(noteBook => noteBook.id === lessonId);
-    if (!hasLesson) { throw new Error('user doesnt have this noteBook'); }
+    if (!hasLesson) { throw new Error('user doesnt have this lesson'); }
     const newNote = await prisma.noteBook.create({
       data: {
         libraryId: library.id,

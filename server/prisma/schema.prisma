@@ -71,9 +71,9 @@ model NoteBook {
   updatedAt DateTime @updatedAt
   note      String?
   library   Library  @relation(fields: [libraryId], references: [id])
-  libraryId String   @unique
+  libraryId String
   Lesson    Lesson   @relation(fields: [lessonId], references: [id])
-  lessonId  String   @unique
+  lessonId  String
 
   @@id([libraryId, lessonId])
   @@unique([name, libraryId])
