@@ -47,7 +47,7 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     const user = store.getState();
-    this.userName = user.users.name;
+    this.userName = user.users.firstName;
     this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
@@ -264,7 +264,9 @@ export default class Game extends Phaser.Scene {
       return;
     }
     const user = store.getState();
-    this.inCall = user.users.inCall;
+    if (user.users.inCall) {
+      this.inCall = user.users.inCall;
+    }
 
     if (!this.checkCollisions) {
       this.inputPayload.left[0] = this.cursorKeys.left.isDown;
