@@ -1,13 +1,61 @@
-.hello {
-  position: absolute;
-  /* z-index: 1; */
-  color: white;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  height: 100%;
-  top: 0;
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
 }
 .open_chat {
   position: absolute;
   top: 100px;
+}
+
+._form {
+  padding: 1rem;
+}
+._form__field {
+  width: 100%;
+}
+
+#root {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.navbar {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  z-index: 10;
+}
+
+.navbar-item {
+  margin: 0 20px;
+}
+
+.avatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: 70px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.menu-item {
+  display: flex !important;
+  align-items: center !important;
+  margin-left: 0 !important;
+  margin-right: 5px !important;
+  text-decoration: none;
+  color: black;
 }

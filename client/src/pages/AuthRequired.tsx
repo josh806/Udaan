@@ -7,13 +7,12 @@ type Props = {
 };
 
 const AuthRequired = ({ children }: Props): JSX.Element => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const auth = useAuth0();
 
-  if (isLoading) {
+  if (auth.isLoading) {
     return <div>Loading ...</div>;
   }
-
-  return isAuthenticated && children ? children : <NotFound />;
+  return auth.isAuthenticated && children ? children : <NotFound />;
 };
 
 export default AuthRequired;

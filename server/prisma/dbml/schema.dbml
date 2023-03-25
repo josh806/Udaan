@@ -45,6 +45,7 @@ Table Lesson {
   drawing String
   subject Subject [not null]
   subjectId String [not null]
+  scheduledDate String [not null]
   librarys Library [not null]
   users User [not null]
   notes NoteBook [not null]

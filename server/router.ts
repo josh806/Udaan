@@ -33,7 +33,10 @@ router.put('/lesson/:lessonId', lessonController.updateLesson);
 //library routes - post library automatically created when user is created
 router.get('/library/:userId', libraryController.getLessons);
 router.get('/library/:userId/:lessonId', libraryController.getLesson);
-router.delete('/library/:userId/:lessonId', libraryController.deleteLessonFromLibrary);
+router.delete(
+  '/library/:userId/:lessonId',
+  libraryController.deleteLessonFromLibrary
+);
 router.put('/library/:userId/:lessonId', libraryController.addLessonId);
 
 //noteBook routes
