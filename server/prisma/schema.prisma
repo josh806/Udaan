@@ -5,8 +5,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres@localhost:5432/thesis-project?schema=classzoom"
+provider = "postgresql"
+url = env("DATABASE_URL")
 }
 
 model School {
