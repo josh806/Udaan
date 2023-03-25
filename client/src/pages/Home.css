@@ -1,0 +1,54 @@
+.Home_background {
+  font-family: 'Playfair Display', serif;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.homepage_title_container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 8rem;
+}
+.homepage_wrapper {
+  position: absolute;
+}
+.homepage_title {
+  position: relative;
+  font-size: 5rem;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  width: 350px;
+}
+.tagline {
+  display:flex;
+  justify-content: center;
+}
+.gif {
+  width: 16px;
+  height: 32px;
+}
+.reading_anim {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+}
+.adam_anim {
+  position: absolute;
+  top: 60px;
+  right: 15px;
+}
+.mark_anim {
+  position: absolute;
+  top: 60px;
+  left: 90px;
+  z-index: 1;
+}
+.play_button {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}

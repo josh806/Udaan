@@ -5,7 +5,7 @@ import AuthLogin from './auth/AuthLoginBtn';
 import AuthLogoutBtn from './auth/AuthLogoutBtn';
 import * as pages from './pages';
 import Profile from './features/Profile';
-import BasicModal from './components/BasicModal';
+import BasicModal from './Components/BasicModal';
 import { Avatar, Menu, MenuItem, ListItemIcon } from '@mui/material';
 import { Home, School } from '@mui/icons-material';
 import './App.css';
@@ -38,6 +38,7 @@ function App() {
       </Routes>
 
       <div className='App'>
+        {!isAuthenticated ? <AuthLogin /> : <AuthLogoutBtn />}
         <div className='navbar'>
           <Avatar
             onClick={handleClick}

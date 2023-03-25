@@ -130,14 +130,17 @@ function generateDatabase() {
                 {
                     name: 'Class 1',
                     subjectId: newSubject.id,
+                    scheduledDate: '2023-03-24T18:01:41.754Z',
                 },
                 {
                     name: 'Class 2',
                     subjectId: newSubject.id,
+                    scheduledDate: '2023-03-24T18:01:41.754Z',
                 },
                 {
                     name: 'Class 3',
                     subjectId: newSubject.id,
+                    scheduledDate: '2023-03-24T18:01:41.754Z',
                 },
             ],
         });

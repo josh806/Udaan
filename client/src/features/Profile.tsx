@@ -4,7 +4,7 @@ import * as userService from '../services/user.service';
 import AuthRequired from '../pages/AuthRequired';
 import { User } from '../types/types';
 
-import Field from '../components/Field';
+import Field from '../Components/Field';
 
 import Box from '@mui/material/Box';
 import { Button, Grid, Typography } from '@mui/material';
@@ -15,7 +15,7 @@ const initialUser = {
   email: '',
   username: '',
   student: true,
-  schoolId: 1,
+  schoolId: '1',
 };
 
 const Profile = () => {
