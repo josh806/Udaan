@@ -10,7 +10,7 @@ async function generateDatabase () {
 
   const newUser1 = await prisma.user.create({
     data: {
-      id: 'abcd1',
+      id:'abcd1',
       firstName: 'Victor',
       lastName: 'Losada',
       email: 'victor@losada.com.br',
@@ -121,14 +121,17 @@ async function generateDatabase () {
       {
         name: 'Class 1',
         subjectId: newSubject.id,
+        scheduledDate: '2023-03-24T18:01:41.754Z',
       },
       {
         name: 'Class 2',
         subjectId: newSubject.id,
+        scheduledDate: '2023-03-24T18:01:41.754Z',
       },
       {
         name: 'Class 3',
         subjectId: newSubject.id,
+        scheduledDate: '2023-03-24T18:01:41.754Z',
       },
     ],
   });

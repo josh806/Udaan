@@ -1,16 +1,8 @@
-body {
-  position: absolute;
-  margin: 0;
+* {
+  box-sizing: border-box;
 }
-
-.hello {
-  position: absolute;
-  /* z-index: 1; */
-  color: white;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  height: 100%;
-  top: 0;
+body {
+  margin: 0;
 }
 .open_chat {
   position: absolute;
@@ -31,7 +23,6 @@ body {
 }
 
 .App {
-  position: absolute;
   top: 0;
   width: 100%;
   height: 100%;

@@ -1,0 +1,101 @@
+.Home_background {
+  font-family: 'Playfair Display', serif;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.homepage_title_container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 8rem;
+}
+.homepage_wrapper {
+  position: absolute;
+}
+.homepage_title {
+  position: relative;
+  font-size: 5rem;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  width: 350px;
+}
+.tagline {
+  display: flex;
+  justify-content: center;
+}
+.gif {
+  width: 16px;
+  height: 32px;
+}
+.reading_anim {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+}
+.adam_anim {
+  position: absolute;
+  top: 60px;
+  right: 15px;
+}
+.mark_anim {
+  position: absolute;
+  top: 60px;
+  left: 90px;
+  z-index: 1;
+}
+.signin_button {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+.signin_button button {
+  width: 100px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: #183a1d;
+  color: white;
+}
+.signin{
+  width: 100px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: #183a1d;
+  color: white;
+}
+.signin_button button:hover {
+  cursor: pointer;
+}
+.Home_nav{
+  background-color: white;
+  z-index: 3;
+  overflow: hidden;
+  position: sticky;
+  height:70px;
+  top:0;
+  box-shadow: 3px -5px 4px 2px;
+  display:flex;
+align-items: center;
+justify-content: space-between;
+}
+.logo{
+  padding-left:20px;
+}
+.Home_nav_options{
+  display: flex;
+  outline: none;
+  list-style: none;
+  margin:10px 30px;
+}
+.Home_nav_options>li{
+  margin: 0px 80px;
+}
+.Home_nav_options>li:hover{
+  cursor: pointer;
+}
+

@@ -2,47 +2,49 @@ import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
-
-import Profile from '../features/Profile';
 import VideoCall from '../components/VideoCall/VideoCall';
 import BasicModal from '../components/BasicModal';
-
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
+import Profile from '../features/Profile';
+import NavBar from '../components/Navbar';
+
 const School = () => {
-  /*
-  Flow:
-    Sign in
-      New user
-        Redirect to /profile
-          First name
-          Last name
-          Set nickname (unique)
-          email (blocked)
+  const [openModal, setOpenModal] = useState(true);
 
-      Existing user
-        Show /school
-
-  */
+  const handleModal = () => {
+    setOpenModal(!openModal);
+  };
   const { user } = useAuth0();
-  const inCall = useSelector((state: RootState) => state.users.inCall);
+  const { newUser, inCall } = useSelector((state: RootState) => state.users);
   useEffect(() => {
     // User exists
+
     // OR
     // Create user and redirect to profile
-    console.log(user);
+    if (user) {
+      console.log(user);
+    }
   }, []);
 
   const [chat, setChat] = useState(false);
   return (
     <AuthRequired>
       <>
+        <NavBar />
         {chat && (
           <button className='open_chat' onClick={() => setChat(!chat)}>
             Show chat
           </button>
         )}
-        <PhaserRoot />
+        {!newUser ? (
+          <PhaserRoot />
+        ) : (
+          <BasicModal open={openModal} handleModal={handleModal}>
+            <Profile />
+          </BasicModal>
+        )}
+
         {inCall && <VideoCall />}
       </>
     </AuthRequired>

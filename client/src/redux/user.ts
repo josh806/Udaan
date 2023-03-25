@@ -18,7 +18,6 @@ const initialState:User = {
   newUser:true,
   schoolId: '',
   avatar: 'bob',
-
 };
 
 

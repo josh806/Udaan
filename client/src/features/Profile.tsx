@@ -17,7 +17,7 @@ const initialUser = {
   email: '',
   username: '',
   student: true,
-  schoolId: 1,
+  schoolId: '1',
 };
 
 const Profile = () => {
