@@ -1,12 +1,24 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import './Home.css';
 import alex from '../assets/reading.gif';
 import mark from '../assets/mark_sitting_left.gif';
 import adam from '../assets/adam_phone.gif';
+import AuthLoginBtn from '../auth/AuthLoginBtn';
+
 function Home() {
   return (
     <>
+      <nav className='Home_nav'>
+        <div className='logo'>Logo</div>
+        <div className='Home_nav_options'>
+          <li>About</li>
+          <li>Features</li>
+          <li>Pricing</li>
+        </div>
+        <div>
+          <button className='signin'>Sign in</button>
+        </div>
+      </nav>
       <div className='Home_background'>
         <div className='header'></div>
         <div className='details'>
@@ -19,9 +31,8 @@ function Home() {
             </div>
           </div>
           <div className='tagline'>Learning the old school way</div>
-          <div className='play_button'>
-            <Button variant='contained'
-            >Play </Button>
+          <div className='signin_button'>
+            <AuthLoginBtn buttonLabel={'Sign in'}></AuthLoginBtn>
           </div>
         </div>
       </div>

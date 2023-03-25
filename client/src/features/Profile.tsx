@@ -6,7 +6,7 @@ import { User } from '../types/types';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../redux/user';
 
-import Field from '../Components/Field';
+import Field from '../components/Field';
 
 import Box from '@mui/material/Box';
 import { Button, Grid, Typography } from '@mui/material';
