@@ -2,43 +2,72 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const addLessonId = async (req: Request, res: Response) => {
+  const { userId, lessonId } = req.params;
   try {
     const library = await prisma.library.findUnique({
       where: {
-        userId: req.params.userId,
+        userId: userId,
       },
       select: {
         lessons: true,
       },
     });
     if (!library) {
-      throw new Error();
+      throw new Error('library or user doesnt exist');
     }
-    const filterLessons = library.lessons.filter((lesson) => lesson.id === req.params.lessonId);
+    const filterLessons = library.lessons.filter((lesson) => lesson.id === lessonId);
     if (filterLessons.length) {
       throw new Error('lesson already exists');
     }
     const lessonIds = library.lessons.map((el) => ({ id: el.id }));
     await prisma.user.update({
       where: {
-        id: req.params.userId,
+        id: userId,
       },
       data: {
         lessons: {
-          set: [...lessonIds, { id: req.params.lessonId }],
+          set: [...lessonIds, { id: lessonId }],
         },
       },
     });
     const updatedLibrary = await prisma.library.update({
       where: {
-        userId: req.params.userId,
+        userId: userId,
       },
       data: {
         lessons: {
-          set: [...lessonIds, { id: req.params.lessonId }],
+          set: [...lessonIds, { id: lessonId }],
         },
       },
     });
+
+    //----------------- create a noteBook ----------------------------
+    console.log(updatedLibrary);
+
+    const library2 = await prisma.library.findUnique({
+      where: {
+        userId: userId,
+      },
+      include: {
+        lessons: true,
+      },
+    });
+    if (!library2) {
+      throw new Error('library or user doesnt exist');
+    }
+    const hasLesson = library2.lessons.some((noteBook) => noteBook.id === lessonId);
+    if (!hasLesson) {
+      throw new Error('user doesnt have this lesson');
+    }
+
+    await prisma.noteBook.create({
+      data: {
+        libraryId: library2.id,
+        lessonId,
+      },
+    });
+    //----------------------------------------------------------------
+
     res.status(201).send(updatedLibrary);
   } catch (error) {
     console.log(error);
