@@ -21,7 +21,7 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 data: {
                     name,
                     subjectId,
-                    scheduledDate
+                    scheduledDate,
                 },
             });
             res.status(201);
@@ -49,10 +49,32 @@ exports.getLesson = getLesson;
 const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lessonId = req.params.lessonId;
     try {
-        yield database_1.prisma.noteBook.deleteMany({
+        const libraries = yield database_1.prisma.library.findMany({
             where: {
-                lessonId: lessonId,
+                lessons: {
+                    some: {
+                        id: lessonId,
+                    },
+                },
             },
+        });
+        yield Promise.all(libraries.map((library) => __awaiter(void 0, void 0, void 0, function* () {
+            yield database_1.prisma.library.update({
+                where: {
+                    id: library.id,
+                },
+                data: {
+                    lessons: {
+                        disconnect: {
+                            id: lessonId,
+                        },
+                    },
+                },
+            });
+        })));
+        yield database_1.prisma.lesson.findUnique({
+            where: { id: lessonId },
+            include: { notes: true },
         });
         yield database_1.prisma.whiteboard.deleteMany({
             where: {
@@ -64,12 +86,11 @@ const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 id: lessonId,
             },
         });
-        // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
         res.status(200).send(deletedLesson);
     }
     catch (error) {
         console.error(error);
-        res.status(404).send('Couldnt delete the lesson');
+        res.status(500).send('Lesson not found');
     }
 });
 exports.deleteLesson = deleteLesson;
@@ -81,8 +102,8 @@ const updateLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         },
         data: {
             video: req.body.video,
-            drawing: req.body.drawing
-        }
+            drawing: req.body.drawing,
+        },
     });
     res.status(201).send(updatedLesson);
 });

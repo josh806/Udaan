@@ -6,6 +6,7 @@ import * as lessonController from './controllers/lesson.controller';
 import * as libraryController from './controllers/library.controller';
 import * as noteBookController from './controllers/noteBook.controller';
 import * as whiteboardController from './controllers/whiteboard.controller';
+import * as populateController from './dataGenerate';
 
 const router = Router();
 
@@ -47,5 +48,9 @@ router.put('/noteBook', noteBookController.updateNote);
 router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
 router.put('/whiteboard/:lessonId', whiteboardController.addToken);
 router.get('/whiteboard/:lessonId', whiteboardController.getToken);
+
+
+
+router.post('/populate', populateController.generateDatabase);
 
 export default router;

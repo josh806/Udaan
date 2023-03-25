@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateNote = exports.deleteNote = exports.getAllUserNotes = exports.getOneLessonNote = exports.createNote = void 0;
 const database_1 = require("../database");
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, lessonId, name, note } = req.body;
+    const { id, userId, lessonId, name, note } = req.body;
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
@@ -31,6 +31,7 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         const newNote = yield database_1.prisma.noteBook.create({
             data: {
+                id,
                 libraryId: library.id,
                 lessonId,
                 name,
@@ -47,28 +48,33 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createNote = createNote;
 const getOneLessonNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, lessonId } = req.params;
+    // const { userId, lessonId } = req.params;
+    // tem que fazer outro para pegar pelo lesson id 
     try {
-        const libraryId = yield database_1.prisma.library.findUnique({
+        const notebook = yield database_1.prisma.noteBook.findUnique({
             where: {
-                userId: userId,
-            },
-            select: {
-                id: true
+                id: String(req.params.lessonId),
             }
         });
-        if (!libraryId) {
-            throw new Error('no library found');
-        }
-        const noteBook = yield database_1.prisma.noteBook.findUnique({
-            where: {
-                libraryId_lessonId: {
-                    libraryId: libraryId.id,
-                    lessonId: lessonId,
-                },
-            },
-        });
-        res.status(200).send(noteBook);
+        res.status(200).send(notebook);
+        // const libraryId = await prisma.library.findUnique({
+        //   where: {
+        //     userId: userId,
+        //   },
+        //   select: {
+        //     id: true
+        //   }
+        // });
+        // if (!libraryId) { throw new Error('no library found'); }
+        // const noteBook = await prisma.noteBook.findUnique({
+        //   where: {
+        //     libraryId_lessonId: {
+        //       libraryId: libraryId.id,
+        //       lessonId: lessonId,
+        //     },
+        //   },
+        // });
+        // res.status(200).send(noteBook);
     }
     catch (error) {
         console.error(error);
@@ -99,7 +105,7 @@ const getAllUserNotes = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getAllUserNotes = getAllUserNotes;
 const deleteNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, lessonId } = req.params;
+    // const { userId, lessonId } = req.params;
     try {
         const libraryId = yield database_1.prisma.library.findUnique({
             where: {
@@ -112,15 +118,20 @@ const deleteNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!libraryId) {
             throw new Error('no library found');
         }
-        const noteBook = yield database_1.prisma.noteBook.delete({
+        const notebook = yield database_1.prisma.noteBook.delete({
             where: {
-                libraryId_lessonId: {
-                    libraryId: libraryId.id,
-                    lessonId: lessonId,
-                },
-            },
+                id: String(req.params),
+            }
         });
-        res.status(200).send(noteBook);
+        // const noteBook = await prisma.noteBook.delete({
+        //   where: {
+        //     libraryId_lessonId: {
+        //       libraryId: libraryId.id,
+        //       lessonId: lessonId,
+        //     },
+        //   },
+        // });
+        res.status(200).send(notebook);
     }
     catch (error) {
         console.error(error);

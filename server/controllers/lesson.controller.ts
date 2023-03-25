@@ -11,7 +11,7 @@ const createLesson = async (req: Request, res: Response) => {
         data: {
           name,
           subjectId,
-          scheduledDate
+          scheduledDate,
         },
       });
       res.status(201);
@@ -37,10 +37,35 @@ const getLesson = async (req: Request, res: Response) => {
 const deleteLesson = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
   try {
-    await prisma.noteBook.deleteMany({
+    const libraries = await prisma.library.findMany({
       where: {
-        lessonId: lessonId,
+        lessons: {
+          some: {
+            id: lessonId,
+          },
+        },
       },
+    });
+    await Promise.all(
+      libraries.map(async (library) => {
+        await prisma.library.update({
+          where: {
+            id: library.id,
+          },
+          data: {
+            lessons: {
+              disconnect: {
+                id: lessonId,
+              },
+            },
+          },
+        });
+      })
+    );
+  
+    await prisma.lesson.findUnique({
+      where: { id: lessonId },
+      include: { notes: true },
     });
     await prisma.whiteboard.deleteMany({
       where: {
@@ -52,12 +77,10 @@ const deleteLesson = async (req: Request, res: Response) => {
         id: lessonId,
       },
     });
-
-    // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
     res.status(200).send(deletedLesson);
   } catch (error) {
     console.error(error);
-    res.status(404).send('Couldnt delete the lesson');
+    res.status(500).send('Lesson not found');
   }
 };
 
@@ -69,10 +92,10 @@ const updateLesson = async (req: Request, res: Response) => {
     },
     data: {
       video: req.body.video,
-      drawing: req.body.drawing
-    }
+      drawing: req.body.drawing,
+    },
   });
   res.status(201).send(updatedLesson);
 };
 
-export { createLesson, deleteLesson, getLesson, updateLesson};
+export { createLesson, deleteLesson, getLesson, updateLesson };

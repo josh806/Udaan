@@ -64,17 +64,17 @@ Table Library {
 }
 
 Table NoteBook {
+  id String [pk]
   name String [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   note String
-  library Library [not null]
-  libraryId String [not null]
-  lesson Lesson [not null]
-  lessonId String [not null]
+  library Library
+  libraryId String
+  lesson Lesson
+  lessonId String
 
   indexes {
-    (libraryId, lessonId) [pk]
     (name, libraryId) [unique]
   }
 }

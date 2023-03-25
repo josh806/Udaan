@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../database';
 
 const createNote = async (req: Request, res: Response) => {
-  const { userId, lessonId, name, note } = req.body;
+  const { id, userId, lessonId, name, note } = req.body;
   try {
     const library = await prisma.library.findUnique({
       where: {
@@ -17,6 +17,7 @@ const createNote = async (req: Request, res: Response) => {
     if (!hasLesson) { throw new Error('user doesnt have this lesson'); }
     const newNote = await prisma.noteBook.create({
       data: {
+        id,
         libraryId: library.id,
         lessonId,
         name,
@@ -32,28 +33,35 @@ const createNote = async (req: Request, res: Response) => {
 };
 
 const getOneLessonNote = async (req: Request, res: Response) => {
-  const { userId, lessonId } = req.params;
+  // const { userId, lessonId } = req.params;
+  // tem que fazer outro para pegar pelo lesson id 
   try {
-    const libraryId = await prisma.library.findUnique({
+    const notebook = await prisma.noteBook.findUnique({
       where: {
-        userId: userId,
-      },
-      select: {
-        id: true
+        id: String(req.params.lessonId),
       }
     });
+    res.status(200).send(notebook);
+    // const libraryId = await prisma.library.findUnique({
+    //   where: {
+    //     userId: userId,
+    //   },
+    //   select: {
+    //     id: true
+    //   }
+    // });
 
-    if (!libraryId) { throw new Error('no library found'); }
+    // if (!libraryId) { throw new Error('no library found'); }
 
-    const noteBook = await prisma.noteBook.findUnique({
-      where: {
-        libraryId_lessonId: {
-          libraryId: libraryId.id,
-          lessonId: lessonId,
-        },
-      },
-    });
-    res.status(200).send(noteBook);
+    // const noteBook = await prisma.noteBook.findUnique({
+    //   where: {
+    //     libraryId_lessonId: {
+    //       libraryId: libraryId.id,
+    //       lessonId: lessonId,
+    //     },
+    //   },
+    // });
+    // res.status(200).send(noteBook);
   } catch (error) {
     console.error(error);
     res.status(500).send( `${ error }` );
@@ -81,7 +89,7 @@ const getAllUserNotes = async (req: Request, res: Response) => {
 
 
 const deleteNote = async (req: Request, res: Response) => {
-  const { userId, lessonId } = req.params;
+  // const { userId, lessonId } = req.params;
   try {
     const libraryId = await prisma.library.findUnique({
       where: {
@@ -93,16 +101,20 @@ const deleteNote = async (req: Request, res: Response) => {
     });
 
     if (!libraryId) { throw new Error('no library found'); }
-
-    const noteBook = await prisma.noteBook.delete({
+    const notebook = await prisma.noteBook.delete({
       where: {
-        libraryId_lessonId: {
-          libraryId: libraryId.id,
-          lessonId: lessonId,
-        },
-      },
+        id: String(req.params),
+      }
     });
-    res.status(200).send(noteBook);
+    // const noteBook = await prisma.noteBook.delete({
+    //   where: {
+    //     libraryId_lessonId: {
+    //       libraryId: libraryId.id,
+    //       lessonId: lessonId,
+    //     },
+    //   },
+    // });
+    res.status(200).send(notebook);
   } catch (error) {
     console.error(error);
     res.status(500).send( `${ error }` );
