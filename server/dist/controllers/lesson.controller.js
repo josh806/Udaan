@@ -21,7 +21,7 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 data: {
                     name,
                     subjectId,
-                    scheduledDate
+                    scheduledDate,
                 },
             });
             res.status(201);
@@ -49,16 +49,17 @@ exports.getLesson = getLesson;
 const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lessonId = req.params.lessonId;
     try {
-        yield database_1.prisma.noteBook.deleteMany({
-            where: {
-                lessonId: lessonId,
-            },
-        });
-        yield database_1.prisma.whiteboard.deleteMany({
-            where: {
-                lessonId: lessonId,
-            },
-        });
+        // await prisma.noteBook.update({
+        //   where: {
+        //     lessonId: lessonId,
+        //   },
+        //   data:
+        // });
+        // await prisma.whiteboard.deleteMany({
+        //   where: {
+        //     lessonId: lessonId,
+        //   },
+        // });
         const deletedLesson = yield database_1.prisma.lesson.delete({
             where: {
                 id: lessonId,
@@ -74,15 +75,14 @@ const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.deleteLesson = deleteLesson;
 const updateLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const updatedLesson = yield database_1.prisma.lesson.updateMany({
         where: {
             id: req.params.lessonId,
         },
         data: {
             video: req.body.video,
-            drawing: req.body.drawing
-        }
+            drawing: req.body.drawing,
+        },
     });
     res.status(201).send(updatedLesson);
 });

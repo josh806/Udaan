@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as userController  from './controllers/user.controller';
+import * as userController from './controllers/user.controller';
 import * as schoolController from './controllers/school.controller';
 import * as subjectController from './controllers/subject.controller';
 import * as lessonController from './controllers/lesson.controller';
