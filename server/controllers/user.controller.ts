@@ -39,7 +39,7 @@ const getUserById = async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: req.body
+        id: req.params.userId
       }, 
     });
     if (!user) { throw new Error(); }
@@ -69,16 +69,15 @@ const getUserByUsername = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body.id;
-    const data = req.body;
-    delete data['email'];
-    delete data['id'];
-    delete data['schoolId'];
-    delete data['student'];
-
+    const { id, firstName, lastName, username, avatar } = req.body;
     const user = await prisma.user.update({
       where: { id: String(id) },
-      data: data
+      data: {
+        firstName,
+        lastName,
+        username,
+        avatar
+      }
     });
     res.status(200);
     res.send(user);
@@ -88,6 +87,5 @@ const updateUser = async (req: Request, res: Response) => {
     res.status(400).send({ error: 'Could not update the user' });
   }
 };
-
 
 export { createUser, getUserById, getUserByUsername, updateUser };

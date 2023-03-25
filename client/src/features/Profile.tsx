@@ -3,6 +3,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import * as userService from '../services/user.service';
 import AuthRequired from '../pages/AuthRequired';
 import { User } from '../types/types';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../redux/user';
 
 import Field from '../Components/Field';
 
@@ -20,6 +22,7 @@ const initialUser = {
 
 const Profile = () => {
   const { user } = useAuth0();
+  const dispatch = useDispatch();
 
   const [currUser, setCurrUser] = useState<User>(initialUser);
   const [usernameChanged, setUsernameChanged] = useState(false);
@@ -82,7 +85,6 @@ const Profile = () => {
 
     if (usernameChanged && (await usernameExists(currUser.username))) {
       // Username already exists
-      console.log('--- username already exists ---');
       setUsernameProps({
         ...usernameProps,
         isError: true,
@@ -99,7 +101,6 @@ const Profile = () => {
       let userFromDb;
       if (currUser.newUser) {
         // Create user
-        console.log('--- user info ---');
         userFromDb = await userService.createUser(currUser);
 
         // Message: Successfully created
@@ -109,7 +110,8 @@ const Profile = () => {
 
         // Message: Successfully updated
       }
-      // set redux user-------------------
+
+      dispatch(updateUser(userFromDb));
     }
   };
 
