@@ -12,43 +12,68 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLesson = exports.deleteLessonFromLibrary = exports.getLessons = exports.addLessonId = void 0;
 const database_1 = require("../database");
 const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, lessonId } = req.params;
     try {
         const library = yield database_1.prisma.library.findUnique({
             where: {
-                userId: req.params.userId,
+                userId: userId,
             },
             select: {
                 lessons: true,
-            }
+            },
         });
         if (!library) {
-            throw new Error();
+            throw new Error('library or user doesnt exist');
         }
-        const filterLessons = library.lessons.filter(lesson => lesson.id === req.params.lessonId);
+        const filterLessons = library.lessons.filter((lesson) => lesson.id === lessonId);
         if (filterLessons.length) {
             throw new Error('lesson already exists');
         }
-        const lessonIds = library.lessons.map(el => ({ id: el.id }));
+        const lessonIds = library.lessons.map((el) => ({ id: el.id }));
         yield database_1.prisma.user.update({
             where: {
-                id: req.params.userId,
+                id: userId,
             },
             data: {
                 lessons: {
-                    set: [...lessonIds, { id: req.params.lessonId }]
-                }
-            }
+                    set: [...lessonIds, { id: lessonId }],
+                },
+            },
         });
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
-                userId: req.params.userId,
+                userId: userId,
             },
             data: {
                 lessons: {
-                    set: [...lessonIds, { id: req.params.lessonId }]
-                }
-            }
+                    set: [...lessonIds, { id: lessonId }],
+                },
+            },
         });
+        //----------------- create a noteBook ----------------------------
+        console.log(updatedLibrary);
+        const library2 = yield database_1.prisma.library.findUnique({
+            where: {
+                userId: userId,
+            },
+            include: {
+                lessons: true,
+            },
+        });
+        if (!library2) {
+            throw new Error('library or user doesnt exist');
+        }
+        const hasLesson = library2.lessons.some((noteBook) => noteBook.id === lessonId);
+        if (!hasLesson) {
+            throw new Error('user doesnt have this lesson');
+        }
+        yield database_1.prisma.noteBook.create({
+            data: {
+                libraryId: library2.id,
+                lessonId,
+            },
+        });
+        //----------------------------------------------------------------
         res.status(201).send(updatedLibrary);
     }
     catch (error) {
@@ -64,8 +89,8 @@ const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 userId: req.params.userId,
             },
             include: {
-                lessons: true
-            }
+                lessons: true,
+            },
         });
         res.status(200).send(library === null || library === void 0 ? void 0 : library.lessons);
     }
@@ -84,7 +109,7 @@ const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             include: {
                 lessons: {
                     where: {
-                        id: req.params.lessonId
+                        id: req.params.lessonId,
                     },
                 },
             },
@@ -104,7 +129,7 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
                 userId: req.params.userId,
             },
             include: {
-                lessons: true
+                lessons: true,
             },
         });
         if (!library) {
@@ -112,15 +137,20 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
         }
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
-                userId: req.params.userId
+                userId: req.params.userId,
             },
             data: {
                 lessons: {
                     disconnect: {
-                        id: req.params.lessonId
-                    }
-                }
-            }
+                        id: req.params.lessonId,
+                    },
+                },
+            },
+        });
+        yield database_1.prisma.noteBook.deleteMany({
+            where: {
+                lessonId: req.params.lessonId,
+            },
         });
         res.status(200).send(updatedLibrary);
     }
