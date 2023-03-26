@@ -39,6 +39,7 @@ export const userSlice = createSlice({
       state.inCall = false;
     },
   },
+  
 });
 
 export const { updateUser, enterVideoCall, endVideoCall } = userSlice.actions;

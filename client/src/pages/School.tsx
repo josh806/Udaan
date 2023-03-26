@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { useState } from 'react';
 import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
 import VideoCall from '../components/VideoCall/VideoCall';
 import BasicModal from '../components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
-import Profile from '../features/Profile';
-import NavBar from '../components/Navbar';
+import Profile from './Profile';
+import NavBar from '../features/Navbar';
+import Loading from '../features/Loading';
 
 const School = () => {
   const [openModal, setOpenModal] = useState(true);
@@ -15,19 +15,11 @@ const School = () => {
   const handleModal = () => {
     setOpenModal(!openModal);
   };
-  const { user } = useAuth0();
+
   const { newUser, inCall } = useSelector((state: RootState) => state.users);
-  useEffect(() => {
-    // User exists
-
-    // OR
-    // Create user and redirect to profile
-    if (user) {
-      console.log(user);
-    }
-  }, []);
-
+  console.log(newUser);
   const [chat, setChat] = useState(false);
+
   return (
     <AuthRequired>
       <>
@@ -44,7 +36,6 @@ const School = () => {
             <Profile />
           </BasicModal>
         )}
-
         {inCall && <VideoCall />}
       </>
     </AuthRequired>

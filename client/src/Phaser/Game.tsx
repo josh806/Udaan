@@ -95,11 +95,11 @@ export default class Game extends Phaser.Scene {
           //   entity.height
           // );
           // this.remoteRef.setStrokeStyle(1, 0xff0000);
-          // listening for server updates
-          player.onChange(() => {
-            this.remoteRef.x = player.x;
-            this.remoteRef.y = player.y;
-          });
+          // // listening for server updates
+          // player.onChange(() => {
+          //   this.remoteRef.x = player.x;
+          //   this.remoteRef.y = player.y;
+          // });
 
           this.cameras.main.startFollow(this.currentPlayer);
           this.playerName = this.add

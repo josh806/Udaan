@@ -3,6 +3,48 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 0.1558
+        },
+        "classroom.tmx": {
+            "scale": 0.43,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1056.9767441860465,
+                "y": 562.7906976744187
+            }
+        },
+        "classroom.tmx#floor": {
+            "scaleInDock": 1
+        },
+        "classroom.tmx#furnitures": {
+            "scaleInDock": 1
+        },
+        "school 2.0.tmx": {
+            "scale": 0.0494,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 9969.635627530364,
+                "y": 10971.659919028341
+            }
+        },
+        "school 2.0.tmx#Exterior_ground": {
+            "scaleInDock": 0.42,
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#Interior_floor": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.4114,
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#classroom_furnitures": {
+            "scaleInDock": 0.442,
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#furnitures": {
+            "scaleInDock": 0.5927,
+            "scaleInEditor": 1
+        }
     },
     "openFiles": [
     ],
