@@ -32,30 +32,52 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createToken = void 0;
-// import { prisma } from '../../database';
+exports.getTokenForStudent = exports.createOrGetToken = void 0;
 const requestToAgora_1 = require("./requestToAgora");
+const database_1 = require("../../database");
 const whiteboardController = __importStar(require("./whiteboard.controller"));
-const createToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //   const { lessonId } = req.params;
+const createOrGetToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // 1. create a whiteboard room
-        const data = yield (0, requestToAgora_1.createRoom)();
-        // const { uuid, teamUUID, appUUID, isBan, createdAt, limit } = data;
-        req.body = data;
-        // 2. store whiteboard session in db
-        whiteboardController.createWhiteboard(req, res);
-        // 3. create token
-        const token = yield (0, requestToAgora_1.generateRoomToken)(data.uuid);
-        req.body = token;
-        // 4. store token in db
-        whiteboardController.addToken(req, res);
-        // res.status(201);
-        // res.send(newWhiteBoard);
+        // 0. check if token already exists
+        const hasToken = yield whiteboardController.getToken(req);
+        if (!hasToken) {
+            // 1. create a whiteboard room
+            const data = yield (0, requestToAgora_1.createRoom)();
+            req.body = data;
+            // 2. store whiteboard session in db
+            yield whiteboardController.createWhiteboard(req);
+            // 3. create token
+            const token = yield (0, requestToAgora_1.generateRoomToken)(data.uuid);
+            req.body = token;
+            // 4. store token in db
+            yield whiteboardController.addToken(req, res);
+        }
+        else {
+            res.send(hasToken);
+        }
     }
     catch (error) {
         console.error(error);
         res.status(500).send({ error: error });
     }
 });
-exports.createToken = createToken;
+exports.createOrGetToken = createOrGetToken;
+const getTokenForStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lessonId = req.params.lessonId;
+    try {
+        const whiteBoard = yield database_1.prisma.whiteboard.findUnique({
+            where: { lessonId: lessonId },
+        });
+        if (whiteBoard.token) {
+            res.send(whiteBoard);
+        }
+        else {
+            throw new Error;
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return res.send({ error: 'token or whiteboard doesnt exist' });
+    }
+});
+exports.getTokenForStudent = getTokenForStudent;

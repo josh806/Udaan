@@ -52,9 +52,9 @@ router.put('/noteBook', noteBookController.updateNote);
 
 //Agora roomToken
 // create token for the teacher
-router.post('/roomToken/:lessonId', roomTokenController.createToken); // return the token
+router.post('/roomToken/:lessonId', roomTokenController.createOrGetToken);
 //get token for the students
-// router.get('/roomToken/:lessonId', roomTokenController.getToken);
+router.get('/roomToken/:lessonId', roomTokenController.getTokenForStudent);
 
 
 router.post('/populate', generateDatabase);

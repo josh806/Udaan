@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../database';
 
-const createWhiteboard = async (req: Request) => {
+const createWhiteboard = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
   const { uuid, teamUUID, appUUID, isBan, createdAt, limit } = req.body;
   try {
@@ -16,15 +16,17 @@ const createWhiteboard = async (req: Request) => {
         lessonId
       }
     });
-    return newWhiteBoard;
+    res.status(201);
+    res.send(newWhiteBoard);
   } catch (error) {
-    return error;
+    console.error(error);
+    res.status(500).send({ error: error });
   }
 };
 
 const addToken = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
-  const token = req.body;
+  const { token } = req.body;
   console.log(`this is the ${token}`);
   try {
     const whiteboardId = await prisma.lesson.findUnique({
@@ -59,20 +61,34 @@ const addToken = async (req: Request, res: Response) => {
   }
 };
 
-const getToken = async (req: Request) => {
+const getToken = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
   try {
-    const whiteBoard = await prisma.whiteboard.findUnique({
-      where: { lessonId: lessonId  },
+    const whiteboardId = await prisma.lesson.findUnique({
+      where: {
+        id: lessonId,
+      },
+      select: {
+        whiteboard: {
+          select: {
+            uuid:true
+          }
+        }
+      }
     });
-    if (whiteBoard.token) {
-      return whiteBoard;
-    } else {
-      throw new Error;
-    }
+    if (!whiteboardId) { throw new Error('no whiteboard found for this lesson'); }
+    const uuid = whiteboardId?.whiteboard?.uuid;
+
+    const whiteBoard = await prisma.whiteboard.findUnique({
+      where: { uuid: uuid  },
+    });
+    if (!whiteBoard) { throw new Error ('problem db server'); }
+
+    res.status(200);
+    res.send(whiteBoard);
   } catch (error) {
     console.error(error);
-    return null;
+    res.status(400).send(`${ error }`);
   }
 };
 
