@@ -49,6 +49,30 @@ exports.getLesson = getLesson;
 const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lessonId = req.params.lessonId;
     try {
+        // const updateNote = await prisma.noteBook.updateMany({
+        //   where: {
+        //     lessonId: lessonId,
+        //   },
+        //   data: {
+        //     lesson: {
+        //       // disconnect: true
+        //     }
+        //   }
+        // })
+        // const updateLesson = await prisma.lesson.update({
+        //   where: {
+        //     id: lessonId,
+        //   },
+        //   data: {
+        //     librarys: {
+        //       set: []
+        //     },
+        //     notes: {
+        //       set: []
+        //     }
+        //   }
+        // });
+        // console.log(updateLesson);
         // await prisma.noteBook.update({
         //   where: {
         //     lessonId: lessonId,
@@ -60,13 +84,13 @@ const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         //     lessonId: lessonId,
         //   },
         // });
-        const deletedLesson = yield database_1.prisma.lesson.delete({
-            where: {
-                id: lessonId,
-            },
-        });
+        // const deletedLesson = await prisma.lesson.delete({
+        //   where: {
+        //     id: lessonId,
+        //   },
+        // });
         // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
-        res.status(200).send(deletedLesson);
+        // res.status(200).send(deletedLesson);
     }
     catch (error) {
         console.error(error);

@@ -5,7 +5,8 @@ import * as subjectController from './controllers/subject.controller';
 import * as lessonController from './controllers/lesson.controller';
 import * as libraryController from './controllers/library.controller';
 import * as noteBookController from './controllers/noteBook.controller';
-import * as whiteboardController from './controllers/whiteboard.controller';
+import * as roomTokenController from './controllers/interactiveWhiteboard/roomToken.controller';
+
 import { generateDatabase } from './populate';
 
 const router = Router();
@@ -45,9 +46,16 @@ router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 
 //whiteboard routes
-router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
-router.put('/whiteboard/:lessonId', whiteboardController.addToken);
-router.get('/whiteboard/:lessonId', whiteboardController.getToken);
+// router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
+// router.put('/whiteboard/:lessonId', whiteboardController.addToken);
+// router.get('/whiteboard/:lessonId', whiteboardController.getToken);
+
+//Agora roomToken
+// create token for the teacher
+router.post('/roomToken/:lessonId', roomTokenController.createToken); // return the token
+//get token for the students
+// router.get('/roomToken/:lessonId', roomTokenController.getToken);
+
 
 router.post('/populate', generateDatabase);
 

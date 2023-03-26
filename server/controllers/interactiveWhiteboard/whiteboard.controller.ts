@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { prisma } from '../database';
+import { prisma } from '../../database';
 
 const createWhiteboard = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
