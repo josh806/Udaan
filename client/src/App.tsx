@@ -13,6 +13,7 @@ function App() {
           <Route path='/' element={<pages.Home />} />
           <Route path='/profile' element={<pages.Profile />} />
           <Route path='/school' element={<pages.School />} />
+          <Route path='/lessons' element={<pages.Lessons />} />
           <Route path='*' element={<pages.NotFound />} />
         </Routes>
       </div>

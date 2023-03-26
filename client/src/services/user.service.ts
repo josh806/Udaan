@@ -45,3 +45,12 @@ export const getUserByUsername = async (username: string) => {
     console.log(error);
   }
 };
+
+export const getLessonsbyUserId = async (userId: string) => {
+  try {
+    const response = await fetch(`${usersDomain}/library/${userId}`);
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
