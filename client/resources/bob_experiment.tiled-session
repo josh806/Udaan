@@ -1,10 +1,18 @@
 {
-    "activeFile": "",
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "school 2.0.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
         "": {
-            "scaleInDock": 0.1558
+            "scaleInDock": 1
+        },
+        "Udaan.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "classroom.tmx": {
             "scale": 0.43,
@@ -21,12 +29,15 @@
             "scaleInDock": 1
         },
         "school 2.0.tmx": {
-            "scale": 0.0494,
-            "selectedLayer": 3,
+            "scale": 0.06,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 9969.635627530364,
-                "y": 10971.659919028341
+                "x": 1750,
+                "y": 6258.333333333333
             }
+        },
+        "school 2.0.tmx#Exterior": {
+            "dynamicWrapping": true
         },
         "school 2.0.tmx#Exterior_ground": {
             "scaleInDock": 0.42,
@@ -34,11 +45,17 @@
         },
         "school 2.0.tmx#Interior_floor": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.4114,
+            "scaleInDock": 0.5819,
+            "scaleInEditor": 0.4439
+        },
+        "school 2.0.tmx#Terrains_and_Fences": {
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#Terrance_and_Fences": {
             "scaleInEditor": 1
         },
         "school 2.0.tmx#classroom_furnitures": {
-            "scaleInDock": 0.442,
+            "scaleInDock": 0.5,
             "scaleInEditor": 1
         },
         "school 2.0.tmx#furnitures": {
@@ -46,9 +63,26 @@
             "scaleInEditor": 1
         }
     },
+    "last.imagePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles/Exterior",
+    "map.height": 300,
+    "map.tileHeight": 48,
+    "map.tileWidth": 48,
+    "map.width": 300,
     "openFiles": [
+        "school 2.0.tmx"
     ],
     "project": "bob_experiment.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
-    ]
+        "Udaan.tsx",
+        "school 2.0.tmx",
+        "classroom.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 48,
+        "width": 48
+    },
+    "tileset.type": 0
 }
