@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthLogin from '../auth/AuthLoginBtn';
 import AuthLogoutBtn from '../auth/AuthLogoutBtn';
-import RegisterProfile from './RegisterProfile';
-import BasicModal  from '../components/BasicModal';
+import RegisterProfile from '../features/RegisterProfile';
+import BasicModal from './BasicModal';
 import { Avatar, Menu, MenuItem, ListItemIcon } from '@mui/material';
 import { Home, School } from '@mui/icons-material';
 import { useState } from 'react';
@@ -14,7 +14,7 @@ const NavBar = function () {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [openModal, setOpenModal] = useState(false);
-  const handleClick = (event) => {
+  const handleClick = (event:any) => {
     setAnchorEl(event.currentTarget);
   };
 
