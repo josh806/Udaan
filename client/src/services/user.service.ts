@@ -48,7 +48,18 @@ export const getUserByUsername = async (username: string) => {
 
 export const getLessonsbyUserId = async (userId: string) => {
   try {
-    const response = await fetch(`${usersDomain}/library/${userId}`);
+    const response = await fetch(`${usersDomain}/user/lessons/${userId}`);
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getNotebyUserLesson = async (userId: string, lessonId: string) => {
+  try {
+    const response = await fetch(
+      `${usersDomain}/noteBook/${userId}/${lessonId}`
+    );
     return response.json();
   } catch (error) {
     console.log(error);

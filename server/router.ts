@@ -15,6 +15,7 @@ router.post('/user', userController.createUser);
 router.get('/user/userId/:userId', userController.getUserById);
 router.get('/user/username/:username', userController.getUserByUsername);
 router.put('/user', userController.updateUser);
+router.get('/user/lessons/:userId', userController.getLessonsByUser);
 
 //school routes
 router.post('/school', schoolController.createSchool);

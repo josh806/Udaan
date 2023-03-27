@@ -19,25 +19,25 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             },
             select: {
                 lessons: true,
-            }
+            },
         });
         if (!library) {
             throw new Error();
         }
-        const filterLessons = library.lessons.filter(lesson => lesson.id === req.params.lessonId);
+        const filterLessons = library.lessons.filter((lesson) => lesson.id === req.params.lessonId);
         if (filterLessons.length) {
             throw new Error('lesson already exists');
         }
-        const lessonIds = library.lessons.map(el => ({ id: el.id }));
+        const lessonIds = library.lessons.map((el) => ({ id: el.id }));
         yield database_1.prisma.user.update({
             where: {
                 id: req.params.userId,
             },
             data: {
                 lessons: {
-                    set: [...lessonIds, { id: req.params.lessonId }]
-                }
-            }
+                    set: [...lessonIds, { id: req.params.lessonId }],
+                },
+            },
         });
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
@@ -45,9 +45,9 @@ const addLessonId = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             },
             data: {
                 lessons: {
-                    set: [...lessonIds, { id: req.params.lessonId }]
-                }
-            }
+                    set: [...lessonIds, { id: req.params.lessonId }],
+                },
+            },
         });
         res.status(201).send(updatedLibrary);
     }
@@ -64,8 +64,8 @@ const getLessons = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 userId: req.params.userId,
             },
             include: {
-                lessons: true
-            }
+                lessons: true,
+            },
         });
         res.status(200).send(library === null || library === void 0 ? void 0 : library.lessons);
     }
@@ -84,7 +84,7 @@ const getLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             include: {
                 lessons: {
                     where: {
-                        id: req.params.lessonId
+                        id: req.params.lessonId,
                     },
                 },
             },
@@ -104,7 +104,7 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
                 userId: req.params.userId,
             },
             include: {
-                lessons: true
+                lessons: true,
             },
         });
         if (!library) {
@@ -112,15 +112,15 @@ const deleteLessonFromLibrary = (req, res) => __awaiter(void 0, void 0, void 0, 
         }
         const updatedLibrary = yield database_1.prisma.library.update({
             where: {
-                userId: req.params.userId
+                userId: req.params.userId,
             },
             data: {
                 lessons: {
                     disconnect: {
-                        id: req.params.lessonId
-                    }
-                }
-            }
+                        id: req.params.lessonId,
+                    },
+                },
+            },
         });
         res.status(200).send(updatedLibrary);
     }

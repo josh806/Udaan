@@ -18,22 +18,22 @@ import { MenuBook, Description } from '@mui/icons-material';
 import BasicModal from '../components/BasicModal';
 import Notes from '../features/Notes';
 import './Lessons.css';
+import AuthRequired from './AuthRequired';
 
 const Lessons = () => {
   const [lessons, setLessons] = useState([]);
   const [openNotesModal, setOpenNotesModal] = useState(false);
-  const [notes, setNotes] = useState<NoteBook[] | undefined>([]);
+  const [lessonId, setLessonId] = useState<string>('');
 
   const user = useSelector((state: RootState) => state.users);
 
   const getLessons = async () => {
-    // TODO: add current user.userId
-    const response = await userService.getLessonsbyUserId('abcd1');
+    const response = await userService.getLessonsbyUserId(user.id);
     setLessons(response);
   };
 
-  const handleNotesModal = (notes: NoteBook[] | undefined) => {
-    setNotes(notes);
+  const handleNotesModal = (lessonId: string) => {
+    setLessonId(lessonId);
     setOpenNotesModal(!openNotesModal);
   };
 
@@ -45,42 +45,43 @@ const Lessons = () => {
     }
   }, []);
   return (
-    <>
-      <AppBar position='static'>
-        <Toolbar>
-          <MenuBook />
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{ flexGrow: 1, marginLeft: 2 }}
-          >
-            Lessons
-          </Typography>
-          <Button color='success' variant='contained'>
-            Create New Lesson
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth='sm'>
-        <Stack spacing={2} mt={5}>
-          {lessons &&
-            lessons.map((lesson: Lesson) => (
-              <Paper key={lesson.id} className='lesson'>
-                {lesson.name}
-                <Tooltip title='Open Notes'>
-                  <IconButton onClick={() => handleNotesModal(lesson.notes)}>
-                    <Description />
-                  </IconButton>
-                </Tooltip>
-              </Paper>
-            ))}
-        </Stack>
-        <BasicModal open={openNotesModal} handleModal={handleNotesModal}>
-          {/* <Notes notes={notes} /> */}
-          <Lessons />
-        </BasicModal>
-      </Container>
-    </>
+    <AuthRequired>
+      <>
+        <AppBar position='static'>
+          <Toolbar>
+            <MenuBook />
+            <Typography
+              variant='h6'
+              component='div'
+              sx={{ flexGrow: 1, marginLeft: 2 }}
+            >
+              Lessons
+            </Typography>
+            <Button color='success' variant='contained'>
+              Create New Lesson
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <Container maxWidth='sm'>
+          <Stack spacing={2} mt={5} mb={5}>
+            {lessons &&
+              lessons.map((lesson: Lesson) => (
+                <Paper key={lesson.id} className='lesson'>
+                  <Typography>{lesson.name}</Typography>
+                  <Tooltip title='Open Notes'>
+                    <IconButton onClick={() => handleNotesModal(lesson.id)}>
+                      <Description />
+                    </IconButton>
+                  </Tooltip>
+                </Paper>
+              ))}
+          </Stack>
+          <BasicModal open={openNotesModal} handleModal={handleNotesModal}>
+            <Notes userId={user.id} lessonId={lessonId} />
+          </BasicModal>
+        </Container>
+      </>
+    </AuthRequired>
   );
 };
 
