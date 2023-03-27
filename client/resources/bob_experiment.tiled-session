@@ -9,7 +9,8 @@
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 1
+            "scaleInDock": 0.6948,
+            "scaleInEditor": 1
         },
         "Udaan.tsx": {
             "scaleInDock": 1,
@@ -69,29 +70,33 @@
             "scaleInEditor": 1
         },
         "udaan_backup.tmx": {
-            "scale": 0.25,
-            "selectedLayer": 2,
+            "scale": 0.11,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 1606,
-                "y": 2910
+                "x": 2300,
+                "y": 1640.909090909091
             }
+        },
+        "udaan_backup.tmx#Bathroom": {
+            "scaleInEditor": 0.25
         },
         "udaan_backup.tmx#Bathroom_Black_Shadow": {
             "scaleInDock": 0.5319,
             "scaleInEditor": 0.25
         },
         "udaan_backup.tmx#Generic": {
-            "scaleInDock": 0.4855
+            "scaleInDock": 0.4603
         },
         "udaan_backup.tmx#Interior_floor": {
-            "scaleInDock": 0.3026
+            "scaleInDock": 0.4265
         },
         "udaan_backup.tmx#Interior_sports": {
             "scaleInDock": 0.5712,
             "scaleInEditor": 0.25
         },
         "udaan_backup.tmx#LivingRoom": {
-            "scaleInDock": 0.6948
+            "scaleInDock": 0.6948,
+            "scaleInEditor": 1
         },
         "udaan_backup.tmx#Music": {
             "scaleInDock": 0.2929,
@@ -103,7 +108,7 @@
         },
         "udaan_backup.tmx#Swimming_Pool": {
             "scaleInDock": 0.2367,
-            "scaleInEditor": 0.9804
+            "scaleInEditor": 0.98
         },
         "udaan_backup.tmx#Terrains_and_Fences": {
             "scaleInDock": 0.1933
@@ -112,24 +117,74 @@
             "scaleInDock": 0.4512,
             "scaleInEditor": 0.41
         },
+        "udaan_backup.tmx#Vehicles": {
+            "scaleInDock": 0.2751,
+            "scaleInEditor": 0.3
+        },
+        "udaan_backup.tmx#bathroom": {
+            "scaleInDock": 0.5319,
+            "scaleInEditor": 0.25
+        },
         "udaan_backup.tmx#classroom_furnitures": {
-            "scaleInDock": 0.29
+            "scaleInDock": 0.29,
+            "scaleInEditor": 0.32
+        },
+        "udaan_backup.tmx#generic": {
+            "scaleInDock": 0.4603,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#interior_floor": {
+            "scaleInDock": 0.4265,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#interior_sports": {
+            "scaleInDock": 0.5712,
+            "scaleInEditor": 0.53
+        },
+        "udaan_backup.tmx#living_room": {
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#music": {
+            "scaleInDock": 0.2929,
+            "scaleInEditor": 0.41
         },
         "udaan_backup.tmx#parking": {
-            "scaleInDock": 0.2309
+            "scaleInDock": 0.2309,
+            "scaleInEditor": 1
         },
         "udaan_backup.tmx#playground": {
             "scaleInDock": 0.7137,
             "scaleInEditor": 0.41
         },
+        "udaan_backup.tmx#school_exterior": {
+            "scaleInDock": 0.1847,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#swimming_pool": {
+            "scaleInDock": 0.2367,
+            "scaleInEditor": 0.98
+        },
         "udaan_backup.tmx#swings": {
             "scaleInDock": 0.4122,
             "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#terrains_and_fences": {
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#trees": {
+            "scaleInDock": 0.4512,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#vehicles": {
+            "scaleInDock": 0.1191,
+            "scaleInEditor": 0.3
         }
     },
+    "frame.defaultDuration": 30,
     "last.exportedFilePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles",
     "last.externalTilesetPath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles",
     "last.imagePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles/Exterior",
+    "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
     "map.height": 300,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",

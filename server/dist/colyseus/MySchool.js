@@ -67,8 +67,8 @@ class MySchool extends colyseus_1.Room {
         console.log(client.sessionId, 'joined!');
         // create Player instance
         const player = new MySchoolSchema_1.Player();
-        player.x = 3900;
-        player.y = 4000;
+        player.x = 3500;
+        player.y = 3500;
         // place player in the map of players by its sessionId
         this.state.players.set(client.sessionId, player);
     }
