@@ -2,7 +2,7 @@ import { Room, Client } from 'colyseus';
 import { MySchoolSchema, Player } from './MySchoolSchema';
 
 export class MySchool extends Room<MySchoolSchema> {
-  onCreate() {
+  onCreate () {
     this.setState(new MySchoolSchema());
 
     this.onMessage('move', (client, input) => {
@@ -32,7 +32,7 @@ export class MySchool extends Room<MySchoolSchema> {
         }
       }
     });
-    this.onMessage('stop', (client, input) => {
+    this.onMessage ('stop', (client, input) => {
       const player = this.state.players.get(client.sessionId);
       if (input.left[0]) {
         player.x -= 0;
@@ -54,7 +54,7 @@ export class MySchool extends Room<MySchoolSchema> {
     });
   }
 
-  onJoin(client: Client) {
+  onJoin (client: Client) {
     console.log(client.sessionId, 'joined!');
 
     // create Player instance
@@ -66,13 +66,13 @@ export class MySchool extends Room<MySchoolSchema> {
     this.state.players.set(client.sessionId, player);
   }
 
-  onLeave(client: Client) {
+  onLeave (client: Client) {
     console.log(client.sessionId, 'left!');
 
     this.state.players.delete(client.sessionId);
   }
 
-  onDispose() {
+  onDispose () {
     console.log('room', this.roomId, 'disposing...');
   }
 }
