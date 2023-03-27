@@ -65,7 +65,7 @@ router.put('/noteBook', noteBookController.updateNote);
 // router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
 // router.put('/whiteboard/:lessonId', whiteboardController.addToken);
 // router.get('/whiteboard/:lessonId', whiteboardController.getToken);
-//Agora roomToken
+//Agora WhiteboardroomToken
 // create token for the teacher
 router.post('/roomToken/:lessonId', roomTokenController.createOrGetToken);
 //get token for the students

@@ -7,7 +7,7 @@ import BasicModal from '../Components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
 import Profile from '../features/RegisterProfile';
-import NavBar from '../components/Navbar';
+import NavBar from '../Components/NavBar';
 
 const School = () => {
   const [openModal, setOpenModal] = useState(true);
