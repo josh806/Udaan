@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import * as pages from './pages';
+import routes from './utils/routes';
 import './App.css';
 import { useDispatch } from 'react-redux';
 import { updateUser } from './redux/user';
@@ -36,20 +37,26 @@ function App() {
   }, [user]);
 
   return (
-    <>
-      {!loading ? (
-        <div className='App'>
-          <Routes>
-            <Route path='/' element={<pages.Home />} />
-            <Route path='/profile' element={<pages.Profile />} />
-            <Route path='/school' element={<pages.School />} />
-            <Route path='*' element={<pages.NotFound />} />
-          </Routes>
-        </div>
-      ) : (
-        <Loading />
-      )}
-    </>
+    <div className="App">
+      <Routes>
+        <Route
+          path={routes.home}
+          element={<pages.Home />}
+        />
+        <Route
+          path={routes.profile}
+          element={<pages.Profile />}
+        />
+        <Route
+          path={routes.school}
+          element={<pages.School />}
+        />
+        <Route
+          path="*"
+          element={<pages.NotFound />}
+        />
+      </Routes>
+    </div>
   );
 }
 

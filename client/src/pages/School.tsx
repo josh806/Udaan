@@ -25,14 +25,20 @@ const School = () => {
       <>
         <NavBar />
         {chat && (
-          <button className='open_chat' onClick={() => setChat(!chat)}>
+          <button
+            className="open_chat"
+            onClick={() => setChat(!chat)}
+          >
             Show chat
           </button>
         )}
         {!newUser ? (
           <PhaserRoot />
         ) : (
-          <BasicModal open={openModal} handleModal={handleModal}>
+          <BasicModal
+            open={openModal}
+            handleModal={handleModal}
+          >
             <Profile />
           </BasicModal>
         )}
