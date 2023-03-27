@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
-import VideoCall from '../components/VideoCall/VideoCall';
-import BasicModal from '../components/BasicModal';
+import VideoCall from '../Components/VideoCall/VideoCall';
+import BasicModal from '../Components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
-import Profile from '../features/Profile';
-import NavBar from '../components/Navbar';
+import Profile from '../features/RegisterProfile';
+import NavBar from '../Components/Navbar';
 
 const School = () => {
   const [openModal, setOpenModal] = useState(true);

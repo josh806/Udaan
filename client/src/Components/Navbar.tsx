@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthLogin from '../auth/AuthLoginBtn';
 import AuthLogoutBtn from '../auth/AuthLogoutBtn';
-import Profile from '../features/Profile';
+import Profile from '../features/RegisterProfile';
 import BasicModal  from './BasicModal';
 import { Avatar, Menu, MenuItem, ListItemIcon } from '@mui/material';
 import { Home, School } from '@mui/icons-material';
