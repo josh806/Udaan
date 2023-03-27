@@ -17,7 +17,7 @@ const initialState:User = {
   student:true,
   newUser:true,
   schoolId: '',
-  avatar: 'bob',
+  avatar: 'Jake',
 };
 
 
@@ -39,7 +39,7 @@ export const userSlice = createSlice({
       state.inCall = false;
     },
   },
-  
+
 });
 
 export const { updateUser, enterVideoCall, endVideoCall } = userSlice.actions;

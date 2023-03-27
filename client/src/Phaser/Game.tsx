@@ -3,7 +3,6 @@ import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
 import { store } from '../redux/store';
 import { enterVideoCall } from '../redux/user';
-import { MapsHomeWork } from '@mui/icons-material';
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -17,8 +16,8 @@ export default class Game extends Phaser.Scene {
   private sitting = false;
   private inCall = false;
   private chairPosition = [0, 0];
-  private avatar = 'Dona';
-
+  private chairDirection!: string;
+  private avatar = 'Jake';
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
 
@@ -37,7 +36,7 @@ export default class Game extends Phaser.Scene {
     up: [false, 'moveup'],
     down: [false, 'movedown'],
     idle: [false, 'idle'],
-    sit: [false, 'sit'],
+    sit: [false, 'sit-right'],
     inCall: this.inCall,
     collider: false,
     chairPosition: this.chairPosition,
@@ -49,7 +48,9 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     const user = store.getState();
-    this.userName = user.users.firstName;
+    if (user) {
+      this.userName = user.users.firstName;
+    }
     this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
@@ -153,14 +154,6 @@ export default class Game extends Phaser.Scene {
     furnitureLayer.setCollisionByProperty({ collides: true });
     chairLayer.setCollisionByProperty({ collides: true });
     playgroundPropsLayer.setCollisionByProperty({ collides: true });
-
-    // to be removed: to see the collidable surface
-    // const debugGraphics = this.add.graphics().setAlpha(0.7);
-    // wallsLayer.renderDebug(debugGraphics, {
-    //   tileColor: null,
-    //   collidingTileColor: new Phaser.Display.Color(243, 243, 48, 255),
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255),
-    // });
 
     //colyseus
     try {
@@ -301,9 +294,19 @@ export default class Game extends Phaser.Scene {
           repeat: -1,
         });
         entity.anims.create({
-          key: 'sit',
+          key: 'sit-right',
           frames: entity.anims.generateFrameNames(this.avatar, {
             prefix: 'right_sitting-',
+            end: 5,
+            zeroPad: 1,
+          }),
+          frameRate: 8,
+          repeat: -1,
+        });
+        entity.anims.create({
+          key: 'sit-left',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'left_sitting-',
             end: 5,
             zeroPad: 1,
           }),
@@ -340,8 +343,9 @@ export default class Game extends Phaser.Scene {
   ) {
     const player = p as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     const chair = c as unknown as Phaser.Tilemaps.Tile;
+    this.chairDirection = chair.properties.direction;
     this.chairPosition[0] = chair.pixelX + chair.width / 2;
-    this.chairPosition[1] = chair.pixelY - chair.height / 2;
+    this.chairPosition[1] = chair.pixelY + chair.height / 2;
     this.checkCollisions = true;
     if (this.collisionCounter === 0) {
       const screenCenterX = this.cameras.main.worldView.centerX;
@@ -374,6 +378,7 @@ export default class Game extends Phaser.Scene {
     const user = store.getState();
     if (user.users.inCall) {
       this.inCall = user.users.inCall;
+      console.log(this.inCall);
     }
 
     if (!this.checkCollisions) {
@@ -424,7 +429,13 @@ export default class Game extends Phaser.Scene {
           this.chairPosition[0],
           this.chairPosition[1]
         );
-        this.currentPlayer.anims.play('sit', true);
+        if (this.chairDirection === 'right') {
+          this.currentPlayer.anims.play('sit-right', true);
+          this.inputPayload.sit[1] = 'sit-right';
+        } else {
+          this.currentPlayer.anims.play('sit-left', true);
+          this.inputPayload.sit[1] = 'sit-left';
+        }
         this.inputPayload.sit[0] = true;
         this.room.send('move', this.inputPayload);
         this.collisionCounter = 0;
@@ -435,7 +446,7 @@ export default class Game extends Phaser.Scene {
       this.currentPlayer.y += 0;
       this.currentPlayer.setVelocityY(0);
       if (!this.sitting || !this.inCall) {
-        this.currentPlayer.anims.play('idle');
+        this.currentPlayer.anims.play('idle', true);
         this.inputPayload.sit[0] = false;
         this.room.send('move', this.inputPayload);
       }
@@ -453,7 +464,6 @@ export default class Game extends Phaser.Scene {
       entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
       entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
       entity.anims.play(`${animation}`, true);
-      console.log(entity.x);
     }
 
     this.checkCollisions = false;

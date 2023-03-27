@@ -27,7 +27,7 @@ export default class Preloader extends Phaser.Scene {
 
     this.load.tilemapTiledJSON('classroom', 'tiles/Udaan.tmj');
 
-    const player = 'Dona';
+    const player = 'Jake';
     this.load.atlas(
       `${player}`,
       `assets/${player}.png`,
