@@ -4,7 +4,7 @@ import alex from '../assets/reading.gif';
 import mark from '../assets/mark_sitting_left.gif';
 import adam from '../assets/adam_phone.gif';
 import AuthLoginBtn from '../auth/AuthLoginBtn';
-
+import About from '../components/HomePage/About';
 function Home() {
   return (
     <>
@@ -35,6 +35,10 @@ function Home() {
             <AuthLoginBtn buttonLabel={'Sign in'}></AuthLoginBtn>
           </div>
         </div>
+      </div>
+      <About/>
+      <div>
+
       </div>
     </>
   );
