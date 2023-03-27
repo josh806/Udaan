@@ -3,6 +3,7 @@ import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
 import { store } from '../redux/store';
 import { enterVideoCall } from '../redux/user';
+import { MapsHomeWork } from '@mui/icons-material';
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -16,6 +17,7 @@ export default class Game extends Phaser.Scene {
   private sitting = false;
   private inCall = false;
   private chairPosition = [0, 0];
+  private avatar = 'Dona';
 
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
@@ -53,16 +55,52 @@ export default class Game extends Phaser.Scene {
 
   async create() {
     const map = this.make.tilemap({ key: 'classroom' });
-    const floorlayout = map.addTilesetImage('floor', 'floor');
-    const furniturelayout = map.addTilesetImage('furnitures', 'furnitures');
-    map.createLayer('Ground', floorlayout);
-    const wallsLayer = map.createLayer('Wall', floorlayout);
-    const furnitureLayer = map.createLayer('Furnitures', furniturelayout);
-    const chairLayer = map.createLayer('Chairs', furniturelayout);
+    // const floorlayout = map.addTilesetImage('floor', 'floor');
+    // const furniturelayout = map.addTilesetImage('furnitures', 'furnitures');
+    // map.createLayer('Ground', floorlayout);
+    // const wallsLayer = map.createLayer('Wall', floorlayout);
+    // const furnitureLayer = map.createLayer('Furnitures', furniturelayout);
+    // const chairLayer = map.createLayer('Chairs', furniturelayout);
 
+    // wallsLayer.setCollisionByProperty({ collides: true });
+    // furnitureLayer.setCollisionByProperty({ collides: true });
+    // chairLayer.setCollisionByProperty({ collides: true });
+    const exterior_groundLayout = map.addTilesetImage(
+      'Terrains_and_Fences',
+      'Terrains_and_Fences'
+    );
+    const schoolExteriorLayout = map.addTilesetImage(
+      'SchoolExterior',
+      'SchoolExterior'
+    );
+    const schoolInteriorLayout = map.addTilesetImage(
+      'Interior_floor',
+      'Room_Builder'
+    );
+    const classRoomLayout = map.addTilesetImage(
+      'classroom_furnitures',
+      'Classroom'
+    );
+    map.createLayer('Exterior_ground', exterior_groundLayout);
+    map.createLayer('Interior_floor', schoolInteriorLayout);
+    map.createLayer('Library', classRoomLayout);
+    const wallsLayer = map.createLayer('interior_walls', schoolInteriorLayout);
+    const furnitureLayer = map.createLayer(
+      'classroom_furnitures',
+      classRoomLayout
+    );
+    const chairLayer = map.createLayer('chairs', classRoomLayout);
+    map.createLayer('classroom_props', classRoomLayout);
+    map.createLayer('Library_props', classRoomLayout);
+    map.createLayer('Playground', schoolExteriorLayout);
+    const playgroundPropsLayer = map.createLayer(
+      'Playground_props',
+      schoolExteriorLayout
+    );
     wallsLayer.setCollisionByProperty({ collides: true });
     furnitureLayer.setCollisionByProperty({ collides: true });
     chairLayer.setCollisionByProperty({ collides: true });
+    playgroundPropsLayer.setCollisionByProperty({ collides: true });
 
     // to be removed: to see the collidable surface
     // const debugGraphics = this.add.graphics().setAlpha(0.7);
@@ -78,7 +116,7 @@ export default class Game extends Phaser.Scene {
       console.log('Joined successfully!');
 
       this.room.state.players.onAdd((player: Player, sessionId: string) => {
-        const entity = this.physics.add.sprite(player.x, player.y, 'bob');
+        const entity = this.physics.add.sprite(player.x, player.y, this.avatar);
         this.playerEntities[sessionId] = entity;
 
         console.log('sesion id', sessionId);
@@ -100,6 +138,7 @@ export default class Game extends Phaser.Scene {
           //   this.remoteRef.x = player.x;
           //   this.remoteRef.y = player.y;
           // });
+          this.cameras.main.setZoom(0.5);
 
           this.cameras.main.startFollow(this.currentPlayer);
           this.playerName = this.add
@@ -148,8 +187,8 @@ export default class Game extends Phaser.Scene {
         //animations
         entity.anims.create({
           key: 'moveright',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'right-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'right_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -157,8 +196,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'moveup',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'up-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'up_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -166,8 +205,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'moveleft',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'left-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'left_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -175,8 +214,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'movedown',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'down-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'down_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -184,8 +223,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'idle',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'down-idle-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'down_idle-',
             end: 5,
             zeroPad: 1,
           }),
@@ -194,8 +233,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'sit',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'right-sitting-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'right_sitting-',
             end: 5,
             zeroPad: 1,
           }),
@@ -282,7 +321,7 @@ export default class Game extends Phaser.Scene {
       this.room.send('stop', this.inputPayload);
     }
 
-    const velocity = 2;
+    const velocity = 6;
     if (this.inputPayload.left[0]) {
       this.currentPlayer.x -= velocity;
       this.currentPlayer.setVelocityX(-velocity);
@@ -345,6 +384,7 @@ export default class Game extends Phaser.Scene {
       entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
       entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
       entity.anims.play(`${animation}`, true);
+      console.log(entity.x);
     }
 
     this.checkCollisions = false;

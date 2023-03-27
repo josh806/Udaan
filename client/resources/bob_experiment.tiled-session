@@ -3,9 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "school 2.0.tmx",
+    "activeFile": "udaan_backup.tmx",
     "expandedProjectPaths": [
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
             "scaleInDock": 1
@@ -18,8 +19,8 @@
             "scale": 0.43,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1056.9767441860465,
-                "y": 562.7906976744187
+                "x": 1058.139534883721,
+                "y": 563.953488372093
             }
         },
         "classroom.tmx#floor": {
@@ -29,11 +30,11 @@
             "scaleInDock": 1
         },
         "school 2.0.tmx": {
-            "scale": 0.06,
-            "selectedLayer": 0,
+            "scale": 0.13,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 1750,
-                "y": 6258.333333333333
+                "x": 7930.7692307692305,
+                "y": 12673.076923076922
             }
         },
         "school 2.0.tmx#Exterior": {
@@ -45,10 +46,15 @@
         },
         "school 2.0.tmx#Interior_floor": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.5819,
-            "scaleInEditor": 0.4439
+            "scaleInDock": 0.2715,
+            "scaleInEditor": 0.44
+        },
+        "school 2.0.tmx#SchoolExterior": {
+            "scaleInDock": 0.1847,
+            "scaleInEditor": 0.34
         },
         "school 2.0.tmx#Terrains_and_Fences": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "school 2.0.tmx#Terrance_and_Fences": {
@@ -61,24 +67,89 @@
         "school 2.0.tmx#furnitures": {
             "scaleInDock": 0.5927,
             "scaleInEditor": 1
+        },
+        "udaan_backup.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1606,
+                "y": 2910
+            }
+        },
+        "udaan_backup.tmx#Bathroom_Black_Shadow": {
+            "scaleInDock": 0.5319,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#Generic": {
+            "scaleInDock": 0.4855
+        },
+        "udaan_backup.tmx#Interior_floor": {
+            "scaleInDock": 0.3026
+        },
+        "udaan_backup.tmx#Interior_sports": {
+            "scaleInDock": 0.5712,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#LivingRoom": {
+            "scaleInDock": 0.6948
+        },
+        "udaan_backup.tmx#Music": {
+            "scaleInDock": 0.2929,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#SchoolExterior": {
+            "scaleInDock": 0.1847,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#Swimming_Pool": {
+            "scaleInDock": 0.2367,
+            "scaleInEditor": 0.9804
+        },
+        "udaan_backup.tmx#Terrains_and_Fences": {
+            "scaleInDock": 0.1933
+        },
+        "udaan_backup.tmx#Trees": {
+            "scaleInDock": 0.4512,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#classroom_furnitures": {
+            "scaleInDock": 0.29
+        },
+        "udaan_backup.tmx#parking": {
+            "scaleInDock": 0.2309
+        },
+        "udaan_backup.tmx#playground": {
+            "scaleInDock": 0.7137,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#swings": {
+            "scaleInDock": 0.4122,
+            "scaleInEditor": 0.41
         }
     },
+    "last.exportedFilePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles",
+    "last.externalTilesetPath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles",
     "last.imagePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles/Exterior",
     "map.height": 300,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
     "map.tileHeight": 48,
     "map.tileWidth": 48,
     "map.width": 300,
     "openFiles": [
-        "school 2.0.tmx"
+        "udaan_backup.tmx"
     ],
     "project": "bob_experiment.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "udaan_backup.tmx",
+        "classroom.tmx",
         "Udaan.tsx",
-        "school 2.0.tmx",
-        "classroom.tmx"
+        "school 2.0.tmx"
     ],
+    "resizeMap.removeObjects": false,
     "tileset.embedInMap": true,
+    "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 48,

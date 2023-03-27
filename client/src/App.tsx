@@ -12,7 +12,7 @@ import Loading from './features/Loading';
 function App() {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { user } = useAuth0();
 

@@ -7,7 +7,7 @@ export class MySchool extends Room<MySchoolSchema> {
 
     this.onMessage('move', (client, input) => {
       const player = this.state.players.get(client.sessionId);
-      const velocity = 2;
+      const velocity = 6;
       if (!input.collider) {
         if (input.left[0]) {
           player.x -= velocity;
@@ -54,15 +54,13 @@ export class MySchool extends Room<MySchoolSchema> {
     });
   }
 
-
-
   onJoin (client: Client) {
     console.log(client.sessionId, 'joined!');
 
     // create Player instance
     const player = new Player();
-    player.x = 325;
-    player.y = 600;
+    player.x = 3900;
+    player.y = 4000;
 
     // place player in the map of players by its sessionId
     this.state.players.set(client.sessionId, player);
