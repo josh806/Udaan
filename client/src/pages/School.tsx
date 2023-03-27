@@ -15,7 +15,6 @@ const School = () => {
   };
 
   const { newUser, inCall } = useSelector((state: RootState) => state.users);
-  console.log(newUser);
   const [chat, setChat] = useState(false);
 
   return (

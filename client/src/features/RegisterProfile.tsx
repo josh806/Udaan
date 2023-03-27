@@ -109,6 +109,7 @@ const RegisterProfile = () => {
         updateUser({
           ...userFromDb,
           newUser: false,
+          inCall: false,
         })
       );
 
