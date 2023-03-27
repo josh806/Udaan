@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import AuthRequired from './AuthRequired';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import VideoCall from '../Components/VideoCall/VideoCall';
 import BasicModal from '../Components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
 import Profile from '../features/RegisterProfile';
 import NavBar from '../Components/NavBar';
+import InteractiveWhiteboard from '../components/InteractiveWhiteboard/InteractiveWhiteboard';
+import Fastboard from '../components/InteractiveWhiteboard/FastBaord';
+
+import * as store from '../redux/user';
 
 const School = () => {
   const [openModal, setOpenModal] = useState(true);
@@ -28,6 +32,9 @@ const School = () => {
   }, []);
 
   const [chat, setChat] = useState(false);
+
+  const dispatch = useDispatch();
+
   return (
     <AuthRequired>
       <>
@@ -52,6 +59,11 @@ const School = () => {
         )}
 
         {inCall && <VideoCall />}
+        <InteractiveWhiteboard />
+        <button onClick={() => dispatch(store.enterVideoCall())}>
+          Start video
+        </button>
+        <Fastboard />
       </>
     </AuthRequired>
   );

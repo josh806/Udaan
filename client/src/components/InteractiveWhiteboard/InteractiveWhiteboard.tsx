@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WhiteWebSdk, RoomWhiteboard } from 'white-react-sdk';
 import { createRoom, getRoomToken } from './Request';
 
 const InteractiveWhiteboard = () => {
   const [room, setRoom] = useState(null);
 
-  async function createRoomAndJoin() {
+  async function createWhiteboard() {
+    const roomJSON = await createRoom();
+    const roomToken = await getRoomToken(roomJSON.uuid);
+    const whiteBoard = new WhiteWebSdk({
+      appIdentifier: 'F32XkMcZEe2safl2pxmVng/oPm-ru64AhNC1g',
+      region: 'us-sv',
+    });
+
+    console.log(`uuid: ${roomJSON.uuid}`);
+
+    return { whiteBoard, roomToken, uuid: roomJSON.uuid };
+  }
+
+  async function joinRoom() {
     try {
-      const roomJSON = await createRoom();
-      const roomToken = await getRoomToken(roomJSON.uuid);
-      const whiteWebSdk = new WhiteWebSdk({
-        appIdentifier: 'F32XkMcZEe2safl2pxmVng/oPm-ru64AhNC1g',
-        region: 'us-sv',
-      });
-      const room = await whiteWebSdk
+      const { whiteBoard, roomToken, uuid } = await createWhiteboard();
+
+      console.log(whiteBoard, roomToken, uuid);
+
+      const room = await whiteBoard
         .joinRoom({
-          uuid: roomJSON.uuid,
+          uuid,
           uid: '123',
-          roomToken: roomToken,
+          roomToken,
         })
-        .then((room) => {
+        .then((roomResponse) => {
           const toolbar = document.getElementById('toolbar');
           console.log(toolbar);
           const toolNames = [
@@ -47,7 +58,7 @@ const InteractiveWhiteboard = () => {
             btn.addEventListener('click', function (obj) {
               const ele = obj.target;
               // Call the setMemberState method to set the whiteboard tool.
-              room.setMemberState({
+              roomResponse.setMemberState({
                 currentApplianceName: ele.getAttribute('id').substring(3),
                 shapeType: 'pentagram',
                 strokeColor: [255, 182, 200],
@@ -59,7 +70,7 @@ const InteractiveWhiteboard = () => {
 
             console.log(btn.getAttribute('id'));
           }
-          setRoom(room);
+          setRoom(roomResponse);
         })
         .catch(function (err) {
           console.error(err);
@@ -71,14 +82,18 @@ const InteractiveWhiteboard = () => {
 
   return (
     <div>
-      <button onClick={createRoomAndJoin}>Create Room and Join</button>
+      <button onClick={createWhiteboard}>Create Room</button>
+      <button onClick={joinRoom}>Join</button>
       {room && (
         <RoomWhiteboard
           room={room}
           style={{ width: '1000vh', height: '100vh', background: 'white' }}
         />
       )}
-      <div id='toolbar' style={{ background: 'black' }}></div>
+      <div
+        id="toolbar"
+        style={{ background: 'black' }}
+      ></div>
     </div>
   );
 };

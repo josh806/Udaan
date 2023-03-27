@@ -61,6 +61,7 @@ const VideoCall = () => {
 
       await client.join(appId, name, token, null);
       if (tracks) await client.publish([tracks[0], tracks[1]]);
+      console.log('--- Start Video ---');
       setStart(true);
     };
 
@@ -71,11 +72,20 @@ const VideoCall = () => {
   }, [channelName, client, ready, tracks]);
 
   return (
-    <div className='videocall-container'>
+    <div className="videocall-container">
       {ready && tracks && (
-        <Controls client={client} tracks={tracks} setStart={setStart} />
+        <Controls
+          client={client}
+          tracks={tracks}
+          setStart={setStart}
+        />
       )}
-      {start && tracks && <Videos users={remoteUsers} tracks={tracks} />}
+      {start && tracks && (
+        <Videos
+          users={remoteUsers}
+          tracks={tracks}
+        />
+      )}
     </div>
   );
 };
