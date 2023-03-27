@@ -64,7 +64,7 @@ Table Library {
 }
 
 Table NoteBook {
-  name String [not null]
+  name String
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   note String
@@ -87,8 +87,8 @@ Table Whiteboard {
   createdAt String [not null]
   limit Int [not null]
   token String [unique]
-  lesson Lesson
-  lessonId String [unique]
+  lesson Lesson [not null]
+  lessonId String [unique, not null]
 }
 
 Ref: User.schoolId > School.id

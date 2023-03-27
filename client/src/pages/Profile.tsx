@@ -3,9 +3,11 @@ import RegisterProfile from '../features/RegisterProfile';
 
 function Profile() {
   return (
-    <div>
-      <RegisterProfile></RegisterProfile>
-    </div>
+    <>
+      <div>
+        <RegisterProfile />
+      </div>
+    </>
   );
 }
 

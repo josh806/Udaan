@@ -2,7 +2,7 @@
 Add try/catch blocks on each request --------------
 */
 
-import { User } from '../types/user';
+import { User } from '../types/types';
 
 const usersDomain = import.meta.env.VITE_SERVER_DOMAIN;
 
@@ -48,7 +48,7 @@ export const getUserByUsername = async (username: string) => {
 
 export const getLessonsbyUserId = async (userId: string) => {
   try {
-    const response = await fetch(`${usersDomain}/user/lessons/${userId}`);
+    const response = await fetch(`${usersDomain}/library/${userId}`);
     return response.json();
   } catch (error) {
     console.log(error);

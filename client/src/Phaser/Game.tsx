@@ -3,6 +3,7 @@ import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../server/colyseus/MySchoolSchema';
 import { store } from '../redux/store';
 import { enterVideoCall } from '../redux/user';
+import { MapsHomeWork } from '@mui/icons-material';
 
 export default class Game extends Phaser.Scene {
   private currentPlayer!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -16,6 +17,7 @@ export default class Game extends Phaser.Scene {
   private sitting = false;
   private inCall = false;
   private chairPosition = [0, 0];
+  private avatar = 'Dona';
 
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
@@ -53,16 +55,104 @@ export default class Game extends Phaser.Scene {
 
   async create() {
     const map = this.make.tilemap({ key: 'classroom' });
-    const floorlayout = map.addTilesetImage('floor', 'floor');
-    const furniturelayout = map.addTilesetImage('furnitures', 'furnitures');
-    map.createLayer('Ground', floorlayout);
-    const wallsLayer = map.createLayer('Wall', floorlayout);
-    const furnitureLayer = map.createLayer('Furnitures', furniturelayout);
-    const chairLayer = map.createLayer('Chairs', furniturelayout);
 
+    // map all the tilesets
+    const exterior_groundLayout = map.addTilesetImage('swings', 'swings');
+    const schoolExteriorLayout = map.addTilesetImage(
+      'school_exterior',
+      'school_exterior'
+    );
+    const schoolInteriorLayout = map.addTilesetImage(
+      'interior_floor',
+      'Room_Builder'
+    );
+    const classRoomLayout = map.addTilesetImage(
+      'classroom_furnitures',
+      'classroom_furnitures'
+    );
+    const bathRoomLayout = map.addTilesetImage('bathroom', 'bathroom');
+    const genericLayout = map.addTilesetImage('generic', 'generic');
+    const interiorSportsLayout = map.addTilesetImage(
+      'interior_sports',
+      'basement'
+    );
+    const musicLayout = map.addTilesetImage('music', 'music');
+    const parkingLayout = map.addTilesetImage('parking', 'parking');
+    const playgroundLayout = map.addTilesetImage('playground', 'playground');
+    const swimmingPoolLayout = map.addTilesetImage(
+      'swimming_pool',
+      'swimming_pool'
+    );
+    const swingsLayout = map.addTilesetImage('swings', 'swings');
+    const treesLayout = map.addTilesetImage('trees', 'trees');
+    const vehicleLayout = map.addTilesetImage('vehicles', 'vehicles');
+
+    // map all the layers from the tilesets
+    map.createLayer('Exterior_ground', exterior_groundLayout);
+    map.createLayer('Interior_floor', schoolInteriorLayout);
+    const wallsLayer = map.createLayer('interior_walls', schoolInteriorLayout);
+    map.createLayer('Library', classRoomLayout);
+    const furnitureLayer = map.createLayer(
+      'classroom_furnitures',
+      classRoomLayout
+    );
+    const genericLayer = map.createLayer('generic', genericLayout);
+    const libraryPropsLayer = map.createLayer('Library_props', classRoomLayout);
+    const genericOverlayLayer = map.createLayer(
+      'generic_overlay',
+      genericLayout
+    );
+    const genericPropLayer = map.createLayer('generic_prop', genericLayout);
+    const gameFieldLayer = map.createLayer('Game_field', schoolExteriorLayout);
+    map.createLayer('Swimming_pool', swimmingPoolLayout);
+    map.createLayer('Swimming_pool_prop', swimmingPoolLayout);
+    const playgroundLayer = map.createLayer('playground', playgroundLayout);
+    const playgroundPropsLayer = map.createLayer(
+      'playground_props',
+      playgroundLayout
+    );
+    map.createLayer('parking', parkingLayout);
+    const gameFieldPropLayer = map.createLayer(
+      'game_field_props',
+      schoolExteriorLayout
+    );
+    const TreeLayer1 = map.createLayer('Tree_layer_1', treesLayout);
+    const vehiclesLayer = map.createLayer('Vehicles', vehicleLayout);
+    const TreeLayer2 = map.createLayer('Tree_layer_2', treesLayout);
+    const swingsLayer = map.createLayer('swings', swingsLayout);
+    const musicLayer = map.createLayer('Music', musicLayout);
+    const officeChairLayer = map.createLayer(
+      'office_chairs',
+      interiorSportsLayout
+    );
+    const interiorSportsLayer = map.createLayer(
+      'Interior_sports',
+      interiorSportsLayout
+    );
+    const chairLayer = map.createLayer('chairs', classRoomLayout);
+    map.createLayer('classroom_props', classRoomLayout);
+    map.createLayer('interior_sports_prop', interiorSportsLayout);
+    const bathroomLayer = map.createLayer('bathroom', bathRoomLayout);
+
+    genericLayer.setCollisionByProperty({ collides: true });
+    libraryPropsLayer.setCollisionByProperty({ collides: true });
+    genericOverlayLayer.setCollisionByProperty({ collides: true });
+    genericPropLayer.setCollisionByProperty({ collides: true });
+    playgroundLayer.setCollisionByProperty({ collides: true });
+    gameFieldPropLayer.setCollisionByProperty({ collides: true });
+    gameFieldLayer.setCollisionByProperty({ collides: true });
+    TreeLayer1.setCollisionByProperty({ collides: true });
+    TreeLayer2.setCollisionByProperty({ collides: true });
+    vehiclesLayer.setCollisionByProperty({ collides: true });
+    swingsLayer.setCollisionByProperty({ collides: true });
+    musicLayer.setCollisionByProperty({ collides: true });
+    officeChairLayer.setCollisionByProperty({ collides: true });
+    interiorSportsLayer.setCollisionByProperty({ collides: true });
+    bathroomLayer.setCollisionByProperty({ collides: true });
     wallsLayer.setCollisionByProperty({ collides: true });
     furnitureLayer.setCollisionByProperty({ collides: true });
     chairLayer.setCollisionByProperty({ collides: true });
+    playgroundPropsLayer.setCollisionByProperty({ collides: true });
 
     // to be removed: to see the collidable surface
     // const debugGraphics = this.add.graphics().setAlpha(0.7);
@@ -78,7 +168,7 @@ export default class Game extends Phaser.Scene {
       console.log('Joined successfully!');
 
       this.room.state.players.onAdd((player: Player, sessionId: string) => {
-        const entity = this.physics.add.sprite(player.x, player.y, 'bob');
+        const entity = this.physics.add.sprite(player.x, player.y, this.avatar);
         this.playerEntities[sessionId] = entity;
 
         console.log('sesion id', sessionId);
@@ -95,11 +185,12 @@ export default class Game extends Phaser.Scene {
           //   entity.height
           // );
           // this.remoteRef.setStrokeStyle(1, 0xff0000);
-          // listening for server updates
-          player.onChange(() => {
-            this.remoteRef.x = player.x;
-            this.remoteRef.y = player.y;
-          });
+          // // listening for server updates
+          // player.onChange(() => {
+          //   this.remoteRef.x = player.x;
+          //   this.remoteRef.y = player.y;
+          // });
+          this.cameras.main.setZoom(0.75);
 
           this.cameras.main.startFollow(this.currentPlayer);
           this.playerName = this.add
@@ -115,6 +206,23 @@ export default class Game extends Phaser.Scene {
             .setVisible(true)
             .setOrigin(0.5)
             .setFontSize(16);
+          // add collision between layers
+          this.physics.add.collider(this.currentPlayer, genericLayer);
+          this.physics.add.collider(this.currentPlayer, libraryPropsLayer);
+          this.physics.add.collider(this.currentPlayer, genericOverlayLayer);
+          this.physics.add.collider(this.currentPlayer, genericPropLayer);
+          this.physics.add.collider(this.currentPlayer, playgroundLayer);
+          this.physics.add.collider(this.currentPlayer, gameFieldPropLayer);
+          this.physics.add.collider(this.currentPlayer, gameFieldLayer);
+          this.physics.add.collider(this.currentPlayer, TreeLayer1);
+          this.physics.add.collider(this.currentPlayer, TreeLayer2);
+          this.physics.add.collider(this.currentPlayer, vehiclesLayer);
+          this.physics.add.collider(this.currentPlayer, swingsLayer);
+          this.physics.add.collider(this.currentPlayer, musicLayer);
+          this.physics.add.collider(this.currentPlayer, officeChairLayer);
+          this.physics.add.collider(this.currentPlayer, interiorSportsLayer);
+          this.physics.add.collider(this.currentPlayer, bathroomLayer);
+          this.physics.add.collider(this.currentPlayer, playgroundPropsLayer);
 
           this.physics.add.collider(
             this.currentPlayer,
@@ -148,8 +256,8 @@ export default class Game extends Phaser.Scene {
         //animations
         entity.anims.create({
           key: 'moveright',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'right-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'right_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -157,8 +265,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'moveup',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'up-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'up_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -166,8 +274,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'moveleft',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'left-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'left_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -175,8 +283,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'movedown',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'down-walk-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'down_walk-',
             end: 5,
             zeroPad: 1,
           }),
@@ -184,8 +292,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'idle',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'down-idle-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'down_idle-',
             end: 5,
             zeroPad: 1,
           }),
@@ -194,8 +302,8 @@ export default class Game extends Phaser.Scene {
         });
         entity.anims.create({
           key: 'sit',
-          frames: entity.anims.generateFrameNames('bob', {
-            prefix: 'right-sitting-',
+          frames: entity.anims.generateFrameNames(this.avatar, {
+            prefix: 'right_sitting-',
             end: 5,
             zeroPad: 1,
           }),
@@ -282,7 +390,7 @@ export default class Game extends Phaser.Scene {
       this.room.send('stop', this.inputPayload);
     }
 
-    const velocity = 2;
+    const velocity = 6;
     if (this.inputPayload.left[0]) {
       this.currentPlayer.x -= velocity;
       this.currentPlayer.setVelocityX(-velocity);
@@ -345,6 +453,7 @@ export default class Game extends Phaser.Scene {
       entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
       entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
       entity.anims.play(`${animation}`, true);
+      console.log(entity.x);
     }
 
     this.checkCollisions = false;

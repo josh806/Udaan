@@ -21,7 +21,7 @@ const createLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 data: {
                     name,
                     subjectId,
-                    scheduledDate
+                    scheduledDate,
                 },
             });
             res.status(201);
@@ -49,7 +49,37 @@ exports.getLesson = getLesson;
 const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lessonId = req.params.lessonId;
     try {
-        // const deleteNotes = prisma.noteBook.deleteMany({
+        // const updateNote = await prisma.noteBook.updateMany({
+        //   where: {
+        //     lessonId: lessonId,
+        //   },
+        //   data: {
+        //     lesson: {
+        //       // disconnect: true
+        //     }
+        //   }
+        // })
+        // const updateLesson = await prisma.lesson.update({
+        //   where: {
+        //     id: lessonId,
+        //   },
+        //   data: {
+        //     librarys: {
+        //       set: []
+        //     },
+        //     notes: {
+        //       set: []
+        //     }
+        //   }
+        // });
+        // console.log(updateLesson);
+        // await prisma.noteBook.update({
+        //   where: {
+        //     lessonId: lessonId,
+        //   },
+        //   data:
+        // });
+        // await prisma.whiteboard.deleteMany({
         //   where: {
         //     lessonId: lessonId,
         //   },
@@ -60,25 +90,23 @@ const deleteLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         //   },
         // });
         // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
-        // console.log(deletedLesson);
         // res.status(200).send(deletedLesson);
     }
     catch (error) {
         console.error(error);
-        res.status(404).send('Lesson not found');
+        res.status(404).send('Couldnt delete the lesson');
     }
 });
 exports.deleteLesson = deleteLesson;
 const updateLesson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const updatedLesson = yield database_1.prisma.lesson.updateMany({
         where: {
             id: req.params.lessonId,
         },
         data: {
             video: req.body.video,
-            drawing: req.body.drawing
-        }
+            drawing: req.body.drawing,
+        },
     });
     res.status(201).send(updatedLesson);
 });

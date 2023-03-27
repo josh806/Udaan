@@ -129,86 +129,58 @@ const RegisterProfile = () => {
   return (
     <AuthRequired>
       <>
-        <div className="profile">
-          <Typography
-            variant="h4"
-            gutterBottom
-          >
+        <div className='profile'>
+          <Typography variant='h4' gutterBottom>
             My Profile
           </Typography>
 
           {content && (
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-            >
+            <Typography variant='subtitle1' gutterBottom>
               {content}
             </Typography>
           )}
 
-          <div className="_form">
-            <Box
-              component="form"
-              autoComplete="off"
-              onSubmit={handleSubmit}
-            >
-              <Grid
-                container
-                spacing={3}
-              >
-                <Grid
-                  item
-                  xs={6}
-                >
+          <div className='_form'>
+            <Box component='form' autoComplete='off' onSubmit={handleSubmit}>
+              <Grid container spacing={3}>
+                <Grid item xs={6}>
                   <Field
                     {...getCommonInputProps()}
-                    name="firstName"
-                    label="First name"
+                    name='firstName'
+                    label='First name'
                     value={currUser.firstName}
                   />
                 </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
+                <Grid item xs={6}>
                   <Field
                     {...getCommonInputProps()}
-                    name="lastName"
-                    label="Last name"
+                    name='lastName'
+                    label='Last name'
                     value={currUser.lastName}
                   />
                 </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
+                <Grid item xs={6}>
                   <Field
                     {...usernameProps}
                     value={currUser.username}
                     handleChange={handleChange}
                   />
                 </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
+                <Grid item xs={6}>
                   <Field
                     {...getCommonInputProps()}
-                    name="email"
-                    label="Email"
+                    name='email'
+                    label='Email'
                     value={currUser.email}
                     isDisabled={true}
-                    helperText="Contact administrator to change"
+                    helperText='Contact administrator to change'
                   />
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                >
+                <Grid item xs={12}>
                   <Button
-                    className="_form__field _form__field--submit"
-                    type="submit"
-                    variant="contained"
+                    className='_form__field _form__field--submit'
+                    type='submit'
+                    variant='contained'
                   >
                     Save
                   </Button>
@@ -220,15 +192,12 @@ const RegisterProfile = () => {
 
         {successMessage.message && (
           <Slide
-            direction="down"
+            direction='down'
             in={successMessage.show}
             mountOnEnter
             unmountOnExit
           >
-            <Alert
-              icon={<CheckIcon fontSize="inherit" />}
-              severity="success"
-            >
+            <Alert icon={<CheckIcon fontSize='inherit' />} severity='success'>
               {successMessage.message}
             </Alert>
           </Slide>

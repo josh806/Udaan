@@ -5,8 +5,9 @@ import * as subjectController from './controllers/subject.controller';
 import * as lessonController from './controllers/lesson.controller';
 import * as libraryController from './controllers/library.controller';
 import * as noteBookController from './controllers/noteBook.controller';
-import * as whiteboardController from './controllers/whiteboard.controller';
-import generateDatabase from './dataGenerate';
+import * as roomTokenController from './controllers/interactiveWhiteboard/roomToken.controller';
+
+import { generateDatabase } from './populate';
 
 const router = Router();
 
@@ -49,8 +50,23 @@ router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 
 //whiteboard routes
-router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
-router.put('/whiteboard/:lessonId', whiteboardController.addToken);
+// router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
+// router.put('/whiteboard/:lessonId', whiteboardController.addToken);
+// router.get('/whiteboard/:lessonId', whiteboardController.getToken);
+
+//Agora WhiteboardroomToken
+// create token for the teacher
+router.get(
+  '/roomToken/teacher/:lessonId',
+  roomTokenController.createOrGetToken
+);
+//get token for the students
+router.get(
+  '/roomToken/student/:lessonId',
+  roomTokenController.getTokenForStudent
+);
+
+router.post('/populate', generateDatabase);
 
 //
 router.post('/populate', generateDatabase);

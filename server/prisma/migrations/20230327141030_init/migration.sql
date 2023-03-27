@@ -53,7 +53,7 @@ CREATE TABLE "Library" (
 
 -- CreateTable
 CREATE TABLE "NoteBook" (
-    "name" TEXT NOT NULL,
+    "name" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "note" TEXT,
@@ -72,7 +72,7 @@ CREATE TABLE "Whiteboard" (
     "createdAt" TEXT NOT NULL,
     "limit" INTEGER NOT NULL,
     "token" TEXT,
-    "lessonId" TEXT,
+    "lessonId" TEXT NOT NULL,
 
     CONSTRAINT "Whiteboard_pkey" PRIMARY KEY ("uuid")
 );
@@ -150,7 +150,7 @@ ALTER TABLE "NoteBook" ADD CONSTRAINT "NoteBook_libraryId_fkey" FOREIGN KEY ("li
 ALTER TABLE "NoteBook" ADD CONSTRAINT "NoteBook_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "Lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Whiteboard" ADD CONSTRAINT "Whiteboard_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "Lesson"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Whiteboard" ADD CONSTRAINT "Whiteboard_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "Lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_LessonToLibrary" ADD CONSTRAINT "_LessonToLibrary_A_fkey" FOREIGN KEY ("A") REFERENCES "Lesson"("id") ON DELETE CASCADE ON UPDATE CASCADE;
