@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
-import VideoCall from '../components/VideoCall/VideoCall';
-import BasicModal from '../components/BasicModal';
+import VideoCall from '../Components/VideoCall/VideoCall';
+import BasicModal from '../Components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
 import Profile from './Profile';

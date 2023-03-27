@@ -30,7 +30,8 @@ const subjectController = __importStar(require("./controllers/subject.controller
 const lessonController = __importStar(require("./controllers/lesson.controller"));
 const libraryController = __importStar(require("./controllers/library.controller"));
 const noteBookController = __importStar(require("./controllers/noteBook.controller"));
-const whiteboardController = __importStar(require("./controllers/whiteboard.controller"));
+const roomTokenController = __importStar(require("./controllers/interactiveWhiteboard/roomToken.controller"));
+const populate_1 = require("./populate");
 const router = (0, express_1.Router)();
 //user routes
 router.post('/user', userController.createUser);
@@ -61,6 +62,13 @@ router.get('/noteBook/:userId', noteBookController.getAllUserNotes);
 router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 //whiteboard routes
-router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
-router.put('/whiteboard/:lessonId', whiteboardController.addToken);
+// router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
+// router.put('/whiteboard/:lessonId', whiteboardController.addToken);
+// router.get('/whiteboard/:lessonId', whiteboardController.getToken);
+//Agora WhiteboardroomToken
+// create token for the teacher
+router.get('/roomToken/teacher/:lessonId', roomTokenController.createOrGetToken);
+//get token for the students
+router.get('/roomToken/student/:lessonId', roomTokenController.getTokenForStudent);
+router.post('/populate', populate_1.generateDatabase);
 exports.default = router;

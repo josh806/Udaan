@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getToken = exports.addToken = exports.createWhiteboard = void 0;
-const database_1 = require("../database");
+const database_1 = require("../../database");
 const createWhiteboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const lessonId = req.params.lessonId;
     const { uuid, teamUUID, appUUID, isBan, createdAt, limit } = req.body;
@@ -39,6 +39,7 @@ const addToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const lessonId = req.params.lessonId;
     const { token } = req.body;
+    console.log(`this is the ${token}`);
     try {
         const whiteboardId = yield database_1.prisma.lesson.findUnique({
             where: {

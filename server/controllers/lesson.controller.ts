@@ -11,7 +11,7 @@ const createLesson = async (req: Request, res: Response) => {
         data: {
           name,
           subjectId,
-          scheduledDate
+          scheduledDate,
         },
       });
       res.status(201);
@@ -34,10 +34,48 @@ const getLesson = async (req: Request, res: Response) => {
   res.status(200).send(lesson);
 };
 
+
+
+
 const deleteLesson = async (req: Request, res: Response) => {
   const lessonId = req.params.lessonId;
   try {
-    // const deleteNotes = prisma.noteBook.deleteMany({
+
+    // const updateNote = await prisma.noteBook.updateMany({
+    //   where: {
+    //     lessonId: lessonId,
+    //   },
+    //   data: {
+    //     lesson: {
+    //       // disconnect: true
+    //     }
+    //   }
+    // })
+
+
+    // const updateLesson = await prisma.lesson.update({
+    //   where: {
+    //     id: lessonId,
+    //   },
+    //   data: {
+    //     librarys: {
+    //       set: []
+    //     },
+    //     notes: {
+    //       set: []
+    //     }
+    //   }
+    // });
+
+    // console.log(updateLesson);
+
+    // await prisma.noteBook.update({
+    //   where: {
+    //     lessonId: lessonId,
+    //   },
+    //   data:
+    // });
+    // await prisma.whiteboard.deleteMany({
     //   where: {
     //     lessonId: lessonId,
     //   },
@@ -49,26 +87,24 @@ const deleteLesson = async (req: Request, res: Response) => {
     // });
 
     // const transaction = await prisma.$transaction([deletedLesson, deleteNotes]);
-    // console.log(deletedLesson);
     // res.status(200).send(deletedLesson);
   } catch (error) {
     console.error(error);
-    res.status(404).send('Lesson not found');
+    res.status(404).send('Couldnt delete the lesson');
   }
 };
 
 const updateLesson = async (req: Request, res: Response) => {
-  console.log(req.body);
   const updatedLesson = await prisma.lesson.updateMany({
     where: {
       id: req.params.lessonId,
     },
     data: {
       video: req.body.video,
-      drawing: req.body.drawing
-    }
+      drawing: req.body.drawing,
+    },
   });
   res.status(201).send(updatedLesson);
 };
 
-export { createLesson, deleteLesson, getLesson, updateLesson};
+export { createLesson, deleteLesson, getLesson, updateLesson };
