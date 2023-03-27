@@ -1,9 +1,9 @@
 import React from 'react';
-const About = function () {
+const Pricing = function () {
   return (
     <>
-      <div id = 'About_container'>
-        <div className='About_content_container'>
+      <div id = 'Pricing_container'>
+        <div className='Features_content_container'>
           <h1>What is the game about?</h1>
           <p>
             {' '}
@@ -27,4 +27,4 @@ const About = function () {
     </>
   );
 };
-export default About;
+export default Pricing;

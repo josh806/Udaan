@@ -1,9 +1,9 @@
 import React from 'react';
-const About = function () {
+const Features = function () {
   return (
     <>
-      <div id = 'About_container'>
-        <div className='About_content_container'>
+      <div id = 'Features_container'>
+        <div className='Features_content_container'>
           <h1>What is the game about?</h1>
           <p>
             {' '}
@@ -27,4 +27,4 @@ const About = function () {
     </>
   );
 };
-export default About;
+export default Features;

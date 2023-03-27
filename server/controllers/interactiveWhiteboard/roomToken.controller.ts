@@ -46,4 +46,17 @@ const getTokenForStudent = async (req: Request, res: Response) => {
   }
 };
 
-export { createOrGetToken, getTokenForStudent };
+const deleteWhiteboard = async (req: Request, res: Response) => {
+  const lessonId = req.params.lessonId;
+  try {
+    await prisma.whiteboard.delete({
+      where: { lessonId: lessonId },
+    });
+    res.status(200).send('whiteboard deleted');
+  } catch (error) {
+    console.error(error);
+    return res.send({ error: 'token or whiteboard doesnt exist' });
+  }
+};
+
+export { createOrGetToken, getTokenForStudent, deleteWhiteboard };

@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTokenForStudent = exports.createOrGetToken = void 0;
+exports.deleteWhiteboard = exports.getTokenForStudent = exports.createOrGetToken = void 0;
 const requestToAgora_1 = require("./requestToAgora");
 const database_1 = require("../../database");
 const whiteboardController = __importStar(require("./whiteboard.controller"));
@@ -81,3 +81,17 @@ const getTokenForStudent = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.getTokenForStudent = getTokenForStudent;
+const deleteWhiteboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lessonId = req.params.lessonId;
+    try {
+        yield database_1.prisma.whiteboard.delete({
+            where: { lessonId: lessonId },
+        });
+        res.status(200).send('whiteboard deleted');
+    }
+    catch (error) {
+        console.error(error);
+        return res.send({ error: 'token or whiteboard doesnt exist' });
+    }
+});
+exports.deleteWhiteboard = deleteWhiteboard;
