@@ -70,11 +70,11 @@
             "scaleInEditor": 1
         },
         "udaan_backup.tmx": {
-            "scale": 0.11,
-            "selectedLayer": 5,
+            "scale": 0.1783,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 2300,
-                "y": 1640.909090909091
+                "x": 2619.1811553561415,
+                "y": 2779.0241166573196
             }
         },
         "udaan_backup.tmx#Bathroom": {
@@ -153,7 +153,7 @@
             "scaleInEditor": 1
         },
         "udaan_backup.tmx#playground": {
-            "scaleInDock": 0.7137,
+            "scaleInDock": 0.4206,
             "scaleInEditor": 0.41
         },
         "udaan_backup.tmx#school_exterior": {

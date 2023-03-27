@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 
-export const NavBar = () => {
+const NavBar = () => {
   const { isAuthenticated, user } = useAuth0();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -107,3 +107,4 @@ export const NavBar = () => {
     </>
   );
 };
+export default NavBar;
