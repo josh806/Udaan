@@ -1,6 +1,6 @@
 import Home from './Home';
-import Profile from '../features/Profile';
-import Lessons from '../features/Lessons';
+import Profile from './Profile';
+import Lessons from './Lessons';
 import School from './School';
 import NotFound from './NotFound';
 
