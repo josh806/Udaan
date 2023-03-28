@@ -40,7 +40,7 @@ export default class Game extends Phaser.Scene {
   private remoteRef!: Phaser.GameObjects.Rectangle;
 
   // private client = new Client(import.meta.env.VITE_PHASER);
-  private client = new Client('ws://192.168.0.241:4001');
+  private client = new Client('ws://192.168.0.184:4001');
   private room!: Room;
 
   private playerEntities: {

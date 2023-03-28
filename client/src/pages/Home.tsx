@@ -4,9 +4,9 @@ import alex from '../assets/reading.gif';
 import mark from '../assets/mark_sitting_left.gif';
 import adam from '../assets/adam_phone.gif';
 import AuthLoginBtn from '../auth/AuthLoginBtn';
-import About from '../components/HomePage/About';
-import Features from '../components/HomePage/Features';
-import Pricing from '../components/HomePage/Pricing';
+import About from '../components/homePage/About';
+import Features from '../components/homePage/Features';
+import Pricing from '../components/homePage/Pricing';
 
 
 function Home() {

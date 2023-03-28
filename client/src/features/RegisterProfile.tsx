@@ -18,7 +18,7 @@ const initialUser = {
   email: '',
   username: '',
   student: true,
-  schoolId: '1',
+  schoolId: 'a1b2',
   avatar: '',
 };
 
