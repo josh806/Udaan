@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../../server/colyseus/MySchoolSchema';
 import { store } from '../../redux/store';
-import {enterVideoCall, openLibrary } from '../../redux/user';
+import { enterVideoCall, openLibrary } from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
 import {
@@ -114,8 +114,7 @@ export default class Game extends Phaser.Scene {
         if (sessionId === this.room.sessionId) {
           this.currentPlayer = entity;
           this.cameras.main.setZoom(0.75);
-
-          this.cameras.main.startFollow(this.currentPlayer);
+          this.cameras.main.startFollow(this.currentPlayer, true);
           this.playerName = this.add
             .text(
               this.currentPlayer.x + 12,
