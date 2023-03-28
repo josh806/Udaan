@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
+import { store } from '../../redux/store';
 export default class Preloader extends Phaser.Scene {
+  avatar!: string;
   constructor() {
     super('preloader');
   }
@@ -27,7 +29,10 @@ export default class Preloader extends Phaser.Scene {
 
     this.load.tilemapTiledJSON('classroom', 'tiles/Udaan.tmj');
 
-    const player = 'Jake';
+    const user = store.getState();
+    this.avatar = user.users.avatar;
+    console.log(this.avatar);
+    const player = this.avatar;
     this.load.atlas(
       `${player}`,
       `assets/${player}.png`,

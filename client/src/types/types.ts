@@ -4,7 +4,7 @@ export type User = {
   lastName: string;
   email: string;
   username: string;
-  avatar?: string;
+  avatar: string;
   student: boolean;
   newUser?: boolean;
   schoolId?: string;

@@ -20,7 +20,7 @@ export default class Game extends Phaser.Scene {
   private inCall = false;
   private chairPosition = [0, 0];
   private chairDirection!: string;
-  private avatar = 'Jake';
+  private avatar!: string;
   private localRef!: Phaser.GameObjects.Rectangle;
   private remoteRef!: Phaser.GameObjects.Rectangle;
 
@@ -57,6 +57,7 @@ export default class Game extends Phaser.Scene {
     const user = store.getState();
     if (user) {
       this.userName = user.users.firstName;
+      this.avatar = user.users.avatar;
     }
 
     //create map
