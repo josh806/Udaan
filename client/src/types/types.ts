@@ -4,7 +4,7 @@ export type User = {
   lastName: string;
   email: string;
   username: string;
-  avatar?: string;
+  avatar: string;
   student: boolean;
   newUser?: boolean;
   schoolId?: string;
@@ -41,12 +41,14 @@ export type NoteBook = {
 };
 export type Lesson = {
   id: string;
-  name: string;
+  name?: string;
   video?: string;
   drawing?: string;
-  scheduledDate: string;
-  subjectId: number;
+  scheduledDate?: string;
+  subjectId?: number;
   library?: Library[];
   user?: User[];
   notes?: NoteBook[];
+  whiteboardToken?: string;
+  whiteboardId?: string;
 };

@@ -1,0 +1,18 @@
+._btn {
+  position: relative;
+  display: inline-block !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  padding: 0.4rem 0.8rem !important;
+}
+._btn__label {
+  display: block !important;
+}
+._btn__icon,
+.css-kp9ftd-MuiIcon-root {
+  display: inline-block !important;
+  margin-bottom: -8px !important;
+}
+._btn__icon svg {
+  display: block !important;
+}
