@@ -36,6 +36,7 @@ const NavBar = () => {
       setOpenLessonsModal(false);
     }
   };
+
   return (
     <>
       <div className='navbar'>

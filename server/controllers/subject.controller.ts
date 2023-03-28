@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 import { prisma } from '../database';
 
-const createSubject = async (req: Request, res: Response) => { 
+const createSubject = async (req: Request, res: Response) => {
   const name = req.body.name.toLowerCase().trim();
-  const schoolId  = req.body.schoolId;
+  const schoolId = req.body.schoolId;
   if (name && schoolId) {
     try {
       const newSubject = await prisma.subject.create({
         data: {
-          name, 
-          schoolId
-        }
+          name,
+          schoolId,
+        },
       });
       res.status(201);
       res.send(newSubject);
@@ -24,15 +24,12 @@ const createSubject = async (req: Request, res: Response) => {
 };
 
 const getSubjects = async (req: Request, res: Response) => {
-  const {id} = req.params;
+  const { id } = req.params;
   try {
-    const subjects = await prisma.school.findMany({
+    const subjects = await prisma.subject.findMany({
       where: {
-        id: id,
+        schoolId: id,
       },
-      include: {
-        subjects: true
-      } 
     });
     res.status(200);
     res.send(subjects);
@@ -49,7 +46,7 @@ const deleteSubject = async (req: Request, res: Response) => {
     await prisma.lesson.deleteMany({
       where: {
         subjectId: subjectId,
-      }
+      },
     });
     const deletedSubject = await prisma.subject.delete({
       where: {

@@ -17,13 +17,15 @@ import {
 import { MenuBook, Description } from '@mui/icons-material';
 import BasicModal from '../components/BasicModal';
 import Notes from '../features/Notes';
+import CreateLesson from '../features/CreateLesson';
 import './Lessons.css';
 import AuthRequired from './AuthRequired';
 
 const Lessons = () => {
   const [lessons, setLessons] = useState([]);
-  const [openNotesModal, setOpenNotesModal] = useState(false);
   const [lessonId, setLessonId] = useState<string>('');
+  const [openNotesModal, setOpenNotesModal] = useState(false);
+  const [openCreateLessonModal, setOpenCreateLessonModal] = useState(false);
 
   const user = useSelector((state: RootState) => state.users);
 
@@ -32,9 +34,18 @@ const Lessons = () => {
     setLessons(response);
   };
 
-  const handleNotesModal = (lessonId: string) => {
-    setLessonId(lessonId);
-    setOpenNotesModal(!openNotesModal);
+  const handleModal = (event, lessonId: string) => {
+    console.log(event, lessonId);
+    const clicked = event.currentTarget.dataset;
+    if (clicked.buttonClicked === 'note') {
+      setLessonId(lessonId);
+      setOpenNotesModal(!openNotesModal);
+    } else if (clicked.buttonClicked === 'new-lesson') {
+      setOpenCreateLessonModal(!openCreateLessonModal);
+    } else {
+      setOpenNotesModal(false);
+      setOpenCreateLessonModal(false);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +55,7 @@ const Lessons = () => {
       console.log(error);
     }
   }, []);
+
   return (
     <AuthRequired>
       <>
@@ -57,7 +69,12 @@ const Lessons = () => {
             >
               Lessons
             </Typography>
-            <Button color='success' variant='contained'>
+            <Button
+              color='success'
+              variant='contained'
+              data-button-clicked='new-lesson'
+              onClick={(event) => handleModal(event, '')}
+            >
               Create New Lesson
             </Button>
           </Toolbar>
@@ -69,15 +86,25 @@ const Lessons = () => {
                 <Paper key={lesson.id} className='lesson'>
                   <Typography>{lesson.name}</Typography>
                   <Tooltip title='Open Notes'>
-                    <IconButton onClick={() => handleNotesModal(lesson.id)}>
+                    <IconButton
+                      onClick={(event) => handleModal(event, lesson.id)}
+                      data-button-clicked='note'
+                    >
                       <Description />
                     </IconButton>
                   </Tooltip>
                 </Paper>
               ))}
           </Stack>
-          <BasicModal open={openNotesModal} handleModal={handleNotesModal}>
+          <BasicModal open={openNotesModal} handleModal={handleModal}>
             <Notes userId={user.id} lessonId={lessonId} />
+          </BasicModal>
+          <BasicModal
+            open={openCreateLessonModal}
+            handleModal={handleModal}
+            padding={0}
+          >
+            <CreateLesson setOpenCreateLessonModal={setOpenCreateLessonModal} />
           </BasicModal>
         </Container>
       </>

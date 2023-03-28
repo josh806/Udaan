@@ -7,7 +7,7 @@ export type User = {
   avatar?: string;
   student: boolean;
   newUser?: boolean;
-  schoolId?: string;
+  schoolId: string;
   inCall?: boolean;
 };
 export type Library = {
