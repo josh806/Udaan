@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import React, { useState } from 'react';
 import { endVideoCall } from '../../redux/user';
 import {
@@ -8,11 +8,13 @@ import {
 } from 'agora-rtc-sdk-ng';
 import Button from '@mui/material/Button';
 
+
 const Controls = (props: {
   tracks: [IMicrophoneAudioTrack, ICameraVideoTrack];
   setStart: React.Dispatch<React.SetStateAction<boolean>>;
   client: IAgoraRTCClient;
 }) => {
+
   const dispatch = useDispatch();
   const { tracks, setStart, client } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
@@ -28,12 +30,13 @@ const Controls = (props: {
   };
 
   const leaveChannel = async () => {
+    console.log('leaving call');
+    dispatch(endVideoCall());
     await client.leave();
     client.removeAllListeners();
     tracks[0].close();
     tracks[1].close();
     setStart(false);
-    dispatch(endVideoCall());
   };
 
   return (

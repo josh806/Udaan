@@ -33,6 +33,8 @@ const AuthRequired = ({ children }: Props): JSX.Element => {
           });
         } else {
           // Registered user
+          response.avatar = 'Dona';
+          console.log(response);
           dispatch(reduxUser.updateUser(response));
         }
       }
