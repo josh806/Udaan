@@ -1,4 +1,4 @@
-export const CreateAnimation = (
+export const createAnimation = (
   entity: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
   avatar: string
 ) => {
@@ -63,6 +63,16 @@ export const CreateAnimation = (
     frames: entity.anims.generateFrameNames(avatar, {
       prefix: 'left_sitting-',
       end: 5,
+      zeroPad: 1,
+    }),
+    frameRate: 8,
+    repeat: -1,
+  });
+  entity.anims.create({
+    key: 'reading',
+    frames: entity.anims.generateFrameNames(avatar, {
+      prefix: 'reading-',
+      end: 11,
       zeroPad: 1,
     }),
     frameRate: 8,

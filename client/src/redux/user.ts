@@ -8,6 +8,7 @@ import { User } from '../types/types';
 // Define the initial state using that type
 const initialState: User = {
   inCall: false,
+  isReading: false,
   id: '',
   firstName: '',
   lastName: '',
@@ -35,10 +36,22 @@ export const userSlice = createSlice({
     endVideoCall: (state) => {
       state.inCall = false;
     },
+    openLibrary: (state) => {
+      state.isReading = false;
+    },
+    closeLibrary: (state) => {
+      state.isReading = true;
+    },
   },
 });
 
-export const { updateUser, enterVideoCall, endVideoCall } = userSlice.actions;
+export const {
+  updateUser,
+  enterVideoCall,
+  endVideoCall,
+  openLibrary,
+  closeLibrary,
+} = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectUser = (state: RootState) => state.users.name;

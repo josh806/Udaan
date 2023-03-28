@@ -25,6 +25,10 @@ export class MySchool extends Room<MySchoolSchema> {
           player.x = input.chairPosition[0];
           player.y = input.chairPosition[1];
           player.animation = input.sit[1];
+        } else if (input.reading[0]) {
+          player.x = input.chairPosition[0];
+          player.y = input.chairPosition[1];
+          player.animation = input.reading[1];
         } else {
           player.x += 0;
           player.y += 0;
@@ -32,7 +36,7 @@ export class MySchool extends Room<MySchoolSchema> {
         }
       }
     });
-    this.onMessage ('stop', (client, input) => {
+    this.onMessage('stop', (client, input) => {
       const player = this.state.players.get(client.sessionId);
       if (input.left[0]) {
         player.x -= 0;

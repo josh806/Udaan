@@ -1,4 +1,4 @@
-export const CreateMap = (map: Phaser.Tilemaps.Tilemap) => {
+export const createMap = (map: Phaser.Tilemaps.Tilemap) => {
   // map all the tilesets
   const exterior_groundLayout = map.addTilesetImage('swings', 'swings');
   const schoolExteriorLayout = map.addTilesetImage(
@@ -115,7 +115,7 @@ export const CreateMap = (map: Phaser.Tilemaps.Tilemap) => {
     wallsLayer: wallsLayer,
     furnitureLayer: furnitureLayer,
     chairLayer: chairLayer,
-    playgroundPropsLayer:playgroundPropsLayer
+    playgroundPropsLayer: playgroundPropsLayer,
   };
   return layer;
 };
