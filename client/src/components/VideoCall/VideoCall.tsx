@@ -2,94 +2,111 @@ import React, { useEffect, useState } from 'react';
 import Controls from './Controls';
 import Videos from './Videos';
 import './VideoCall.css';
-import { ClientConfig, IAgoraRTCRemoteUser } from 'agora-rtc-sdk-ng';
+import { IAgoraRTCRemoteUser } from 'agora-rtc-sdk-ng';
 import { createClient, createMicrophoneAndCameraTracks } from 'agora-rtc-react';
 
-const config: ClientConfig = {
-  mode: 'rtc',
-  codec: 'vp8',
-};
+import * as whiteboardService from '../../services/whiteboard.service';
+import * as reduxLesson from '../../redux/lesson';
+import { useDispatch } from 'react-redux';
+
+import Fastboard from '../InteractiveWhiteboard/FastBoard';
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
-  '007eJxTYLBcEHJ6qcCrx6cCf0jnm9nsiZ+mbWquvf/ks1dvH36KYQpTYLC0MDIzM0tJTTJKTDIxSTVPNE5MsjQFAgNzsyQLMxPfKtmUhkBGBrMEZVZGBggE8fkZQlKLS8IzSzK88hMLSzPzGBgA62gjRw==';
-const useClient = createClient(config);
+  '007eJxTYNjy+tOSL85PNP7m7fjLlpdgeH3DtAvJK6d9O/2lIMhKq41NgcHSwsjMzCwlNckoMcnEJNU80TgxydIUCAzMzZIszEyEtiumNAQyMmQVbWFiZIBAEJ+HISS1uCQ8syTDKz8rn4EBAF94JKQ=';
+const useClient = createClient({
+  mode: 'rtc',
+  codec: 'vp8',
+});
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
-//VideoComponent for the video call
 const VideoCall = () => {
-  const channelName = 'TestWithJoaquin';
+  const channelName = 'TestWithJojo';
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
   const [start, setStart] = useState<boolean>(false);
+  const [showWhiteboard, setShowWhiteboard] = useState(false);
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // function to initialise the SDK
-    const init = async (name: string) => {
-      client.on('user-published', async (user, mediaType) => {
-        await client.subscribe(user, mediaType);
-        console.log('subscribe success');
-        if (mediaType === 'video') {
-          setRemoteUsers((prevUsers) => {
-            return [...prevUsers, user];
-          });
-        }
-        if (mediaType === 'audio') {
-          user.audioTrack?.play();
-        }
-      });
+  // Initialise the SDK
+  const init = async (name: string) => {
+    client.on('user-published', async (user, mediaType) => {
+      await client.subscribe(user, mediaType);
+      if (mediaType === 'video') {
+        setRemoteUsers((prevUsers) => {
+          return [...prevUsers, user];
+        });
+      }
+      if (mediaType === 'audio') {
+        user.audioTrack?.play();
+      }
+    });
 
-      client.on('user-unpublished', (user, type) => {
-        console.log('unpublished', user, type);
-        if (type === 'audio') {
-          user.audioTrack?.stop();
-        }
-        if (type === 'video') {
-          setRemoteUsers((prevUsers) => {
-            return prevUsers.filter((User) => User.uid !== user.uid);
-          });
-        }
-      });
-
-      client.on('user-left', (user) => {
-        console.log('leaving', user);
+    client.on('user-unpublished', (user, type) => {
+      if (type === 'audio') {
+        user.audioTrack?.stop();
+      }
+      if (type === 'video') {
         setRemoteUsers((prevUsers) => {
           return prevUsers.filter((User) => User.uid !== user.uid);
         });
+      }
+    });
+
+    client.on('user-left', (user) => {
+      setRemoteUsers((prevUsers) => {
+        return prevUsers.filter((User) => User.uid !== user.uid);
       });
+    });
 
-      await client.join(appId, name, token, null);
-      if (tracks) await client.publish([tracks[0], tracks[1]]);
-      console.log('--- Start Video ---');
-      setStart(true);
-    };
+    await client.join(appId, name, token, null);
+    if (tracks) await client.publish([tracks[0], tracks[1]]);
+    setStart(true);
+  };
 
+  const initWhiteboard = async (lessonId: string) => {
+    const whiteboardData = await whiteboardService.createWhiteboard(lessonId);
+    dispatch(
+      reduxLesson.updateLesson({
+        id: whiteboardData.lessonId,
+        whiteboardToken: whiteboardData.token,
+        whiteboardId: whiteboardData.uuid,
+      })
+    );
+  };
+
+  useEffect(() => {
     if (ready && tracks) {
-      console.log('init ready');
       init(channelName);
+      initWhiteboard('c68022d3-7c28-4276-bdcb-d0a9d8dbf985');
     }
   }, [channelName, client, ready, tracks]);
 
   return (
-    <div className="videocall-container">
-      {ready && tracks && (
+    <>
+      <div className="videocall-container">
+        {/* {ready && tracks && ( */}
         <Controls
           client={client}
           tracks={tracks}
           setStart={setStart}
+          whiteboardState={{ showWhiteboard, setShowWhiteboard }}
         />
-      )}
-      {start && tracks && (
-        <Videos
-          users={remoteUsers}
-          tracks={tracks}
-        />
-      )}
-    </div>
+        {/* )} */}
+        {start && tracks && (
+          <Videos
+            users={remoteUsers}
+            tracks={tracks}
+          />
+        )}
+        {showWhiteboard && <Fastboard />}
+      </div>
+    </>
   );
 };
 
+/*
 //Form to enter the channel name, to be used for teachers to create class.
 // right now it is for entering the class. need to be refactored
 // const ChannelForm = (props: {
@@ -118,4 +135,6 @@ const VideoCall = () => {
 //     </form>
 //   );
 // };
+*/
+
 export default VideoCall;

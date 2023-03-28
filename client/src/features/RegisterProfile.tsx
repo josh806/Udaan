@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import * as userService from '../services/user.service';
-import AuthRequired from '../pages/AuthRequired';
 import { User } from '../types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/user';
@@ -127,114 +126,112 @@ const RegisterProfile = () => {
   }
 
   return (
-    <AuthRequired>
-      <>
-        <div className="profile">
+    <>
+      <div className="profile">
+        <Typography
+          variant="h4"
+          gutterBottom
+        >
+          My Profile
+        </Typography>
+
+        {content && (
           <Typography
-            variant="h4"
+            variant="subtitle1"
             gutterBottom
           >
-            My Profile
+            {content}
           </Typography>
+        )}
 
-          {content && (
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-            >
-              {content}
-            </Typography>
-          )}
-
-          <div className="_form">
-            <Box
-              component="form"
-              autoComplete="off"
-              onSubmit={handleSubmit}
+        <div className="_form">
+          <Box
+            component="form"
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <Grid
+              container
+              spacing={3}
             >
               <Grid
-                container
-                spacing={3}
+                item
+                xs={6}
               >
-                <Grid
-                  item
-                  xs={6}
-                >
-                  <Field
-                    {...getCommonInputProps()}
-                    name="firstName"
-                    label="First name"
-                    value={currUser.firstName}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
-                  <Field
-                    {...getCommonInputProps()}
-                    name="lastName"
-                    label="Last name"
-                    value={currUser.lastName}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
-                  <Field
-                    {...usernameProps}
-                    value={currUser.username}
-                    handleChange={handleChange}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
-                  <Field
-                    {...getCommonInputProps()}
-                    name="email"
-                    label="Email"
-                    value={currUser.email}
-                    isDisabled={true}
-                    helperText="Contact administrator to change"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                >
-                  <Button
-                    className="_form__field _form__field--submit"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Save
-                  </Button>
-                </Grid>
+                <Field
+                  {...getCommonInputProps()}
+                  name="firstName"
+                  label="First name"
+                  value={currUser.firstName}
+                />
               </Grid>
-            </Box>
-          </div>
+              <Grid
+                item
+                xs={6}
+              >
+                <Field
+                  {...getCommonInputProps()}
+                  name="lastName"
+                  label="Last name"
+                  value={currUser.lastName}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={6}
+              >
+                <Field
+                  {...usernameProps}
+                  value={currUser.username}
+                  handleChange={handleChange}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={6}
+              >
+                <Field
+                  {...getCommonInputProps()}
+                  name="email"
+                  label="Email"
+                  value={currUser.email}
+                  isDisabled={true}
+                  helperText="Contact administrator to change"
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+              >
+                <Button
+                  className="_form__field _form__field--submit"
+                  type="submit"
+                  variant="contained"
+                >
+                  Save
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
         </div>
+      </div>
 
-        {successMessage.message && (
-          <Slide
-            direction="down"
-            in={successMessage.show}
-            mountOnEnter
-            unmountOnExit
+      {successMessage.message && (
+        <Slide
+          direction="down"
+          in={successMessage.show}
+          mountOnEnter
+          unmountOnExit
+        >
+          <Alert
+            icon={<CheckIcon fontSize="inherit" />}
+            severity="success"
           >
-            <Alert
-              icon={<CheckIcon fontSize="inherit" />}
-              severity="success"
-            >
-              {successMessage.message}
-            </Alert>
-          </Slide>
-        )}
-      </>
-    </AuthRequired>
+            {successMessage.message}
+          </Alert>
+        </Slide>
+      )}
+    </>
   );
 };
 
