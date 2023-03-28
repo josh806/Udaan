@@ -17,4 +17,4 @@ export const showInstruction = (scene: any, message: string) => {
 export const hideInstruction = (scene: any) => {
   scene.textBox.setVisible(false);
   scene.text.setVisible(false);
-}
+};

@@ -37,10 +37,10 @@ export const userSlice = createSlice({
       state.inCall = false;
     },
     openLibrary: (state) => {
-      state.isReading = false;
+      state.isReading = true;
     },
     closeLibrary: (state) => {
-      state.isReading = true;
+      state.isReading = false;
     },
   },
 });

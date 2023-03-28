@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../../server/colyseus/MySchoolSchema';
 import { store } from '../../redux/store';
-import { enterVideoCall } from '../../redux/user';
+import {enterVideoCall, openLibrary } from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
 import {
@@ -255,9 +255,14 @@ export default class Game extends Phaser.Scene {
     const user = store.getState();
     if (user.users.inCall) {
       this.inCall = user.users.inCall;
-      console.log(this.inCall);
     } else {
       this.inCall = false;
+    }
+    if (user.users.isReading) {
+      this.isReading = user.users.isReading;
+      console.log(this.isReading);
+    } else {
+      this.isReading = false;
     }
     this.inputPayload.left[0] = this.cursorKeys.left.isDown;
     this.inputPayload.right[0] = this.cursorKeys.right.isDown;
@@ -308,6 +313,7 @@ export default class Game extends Phaser.Scene {
       if (this.collisionCounter === 2) {
         hideInstruction(this);
         // dispatch to display the lessons
+        store.dispatch(openLibrary());
         setPlayerPosition(
           this.currentPlayer,
           this.chairPosition[0],
@@ -315,12 +321,8 @@ export default class Game extends Phaser.Scene {
         );
         this.currentPlayer.anims.play('reading', true);
         this.inputPayload.reading[0] = true;
-        this.isReading = true;
         this.room.send('move', this.inputPayload);
         this.collisionCounter = 0;
-        setTimeout(() => {
-          this.isReading = false;
-        }, 3000);
       }
     } else {
       stopMoving(this.currentPlayer);
