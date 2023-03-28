@@ -4,24 +4,51 @@ const Pricing = function () {
     <>
       <div id = 'Pricing_container'>
         <div className='Features_content_container'>
-          <h1>What is the game about?</h1>
-          <p>
-            {' '}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-            officiis voluptate pariatur reiciendis quis ab, ea placeat
-            voluptatem debitis accusamus minima adipisci quasi temporibus
-            incidunt laborum nulla beatae modi unde!
-          </p>
-        </div>
-        <h2>What are we solving?</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti vel
-          sequi consequuntur voluptas error atque reiciendis dolorem! Repellat
-          excepturi labore delectus, ipsam quae amet vero vel, adipisci alias ea
-          dolorem.
-        </p>
-        <div className='About_game_example'>
-          <img src='' alt='' />
+          <h1>Pricing</h1>
+          <div className='pricing_elements'>
+            <div className='element_1'>
+              <div className='title'>Individual</div>
+              <div className='inner'>
+                <div className='price'>4.99 Euro/month</div>
+                <div className='price_description'>Try free for 45 days. Cancel anytime.</div>
+                <div className='price_advantage'>
+                  <p>1 teacher</p>
+                  <p>Unlimited students</p>
+                </div>
+                <div className='join_button'>
+                  <button>Join</button>
+                </div>
+              </div>
+            </div>
+            <div className='element_2'>
+              <div className='title'>Small School</div>
+              <div className='inner'>
+                <div className='price'>29.99 Euro/month</div>
+                <div className='price_description'>Try free for 45 days. Cancel anytime.</div>
+                <div className='price_advantage'>
+                  <p>Unlimited teachers</p>
+                  <p>Up to 200 students</p>
+                </div>
+                <div className='join_button'>
+                  <button>Join</button>
+                </div>
+              </div>
+            </div>
+            <div className='element_3'>
+              <div className='title'>Large School</div>
+              <div className='inner'>
+                <div className='price'>49.99 Euro/month</div>
+                <div className='price_description'>Try free for 45 days. Cancel anytime.</div>
+                <div className='price_advantage'>
+                  <p>Unlimited teachers</p>
+                  <p>Unlimited students</p>
+                </div>
+                <div className='join_button'>
+                  <button>Join</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

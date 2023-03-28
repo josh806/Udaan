@@ -4,9 +4,9 @@ const Features = function () {
     <>
       <div id = 'Features_container'>
         <div className='Features_content_container'>
-          <h1>What is the game about?</h1>
+          <h1>Features</h1>
+          <h2>What is the game about?</h2>
           <p>
-            {' '}
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
             officiis voluptate pariatur reiciendis quis ab, ea placeat
             voluptatem debitis accusamus minima adipisci quasi temporibus
