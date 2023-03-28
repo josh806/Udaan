@@ -12,6 +12,7 @@ import Field from '../components/Field';
 import Box from '@mui/material/Box';
 import { Alert, Button, Grid, Slide, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import avatar from '../utils/avatar';
 
 const initialUser = {
   firstName: '',
@@ -20,6 +21,7 @@ const initialUser = {
   username: '',
   student: true,
   schoolId: '1',
+  avatar: '',
 };
 
 const RegisterProfile = () => {
@@ -109,6 +111,7 @@ const RegisterProfile = () => {
         updateUser({
           ...userFromDb,
           newUser: false,
+          inCall: false,
         })
       );
 
