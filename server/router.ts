@@ -45,11 +45,6 @@ router.get('/noteBook/:userId', noteBookController.getAllUserNotes);
 router.delete('/noteBook/:userId/:lessonId', noteBookController.deleteNote);
 router.put('/noteBook', noteBookController.updateNote);
 
-//whiteboard routes
-// router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
-// router.put('/whiteboard/:lessonId', whiteboardController.addToken);
-// router.get('/whiteboard/:lessonId', whiteboardController.getToken);
-
 //Agora Whiteboardroom Token
 router.get('/roomToken/teacher/:lessonId', roomTokenController.createOrGetToken); // for the teacher
 router.get('/roomToken/student/:lessonId', roomTokenController.getTokenForStudent); // for the student
