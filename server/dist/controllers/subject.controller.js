@@ -19,8 +19,8 @@ const createSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             const newSubject = yield database_1.prisma.subject.create({
                 data: {
                     name,
-                    schoolId
-                }
+                    schoolId,
+                },
             });
             res.status(201);
             res.send(newSubject);
@@ -59,7 +59,7 @@ const deleteSubject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         yield database_1.prisma.lesson.deleteMany({
             where: {
                 subjectId: subjectId,
-            }
+            },
         });
         const deletedSubject = yield database_1.prisma.subject.delete({
             where: {

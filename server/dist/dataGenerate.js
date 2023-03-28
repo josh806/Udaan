@@ -14,16 +14,17 @@ function generateDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         const newSchool = yield database_1.prisma.school.create({
             data: {
+                id: '1',
                 name: 'Code',
                 email: 'code@code.com',
             },
         });
         const newUser1 = yield database_1.prisma.user.create({
             data: {
-                id: 'abcd1',
+                id: 'auth0|641f0fdde1118da83ff1343b',
                 firstName: 'Victor',
                 lastName: 'Losada',
-                email: 'victor@losada.com.br',
+                email: 'vlosada77@gmail.com',
                 username: 'Vlosada',
                 student: true,
                 schoolId: newSchool.id,
@@ -35,10 +36,10 @@ function generateDatabase() {
         yield database_1.prisma.library.create({ data: library1 });
         const newUser2 = yield database_1.prisma.user.create({
             data: {
-                id: 'abcd2',
+                id: 'auth0|641f113068011b5232bd21c5',
                 firstName: 'Joaquin',
                 lastName: 'Buxó',
-                email: 'joaquin@buxó.com.es',
+                email: 'jamesbond1@gmail.com',
                 username: 'Jbuxó',
                 student: true,
                 schoolId: newSchool.id,
@@ -50,10 +51,10 @@ function generateDatabase() {
         yield database_1.prisma.library.create({ data: library2 });
         const newUser3 = yield database_1.prisma.user.create({
             data: {
-                id: 'abcd3',
+                id: 'auth0|641d9849f939365a568f0200',
                 firstName: 'Valentin',
                 lastName: 'Gaulg',
-                email: 'val@gaulg.com.fr',
+                email: 'val@hotmail.fr',
                 username: 'Vgaulg',
                 student: true,
                 schoolId: newSchool.id,
@@ -65,10 +66,10 @@ function generateDatabase() {
         yield database_1.prisma.library.create({ data: library3 });
         const newUser4 = yield database_1.prisma.user.create({
             data: {
-                id: 'abcd4',
+                id: 'auth0|641b5eb119607078dd5ad62c',
                 firstName: 'Josh',
                 lastName: 'McCarthy',
-                email: 'josh@mccarthy.com.nz',
+                email: 'joaquintest@123.com',
                 username: 'JmcCarthy',
                 student: true,
                 schoolId: newSchool.id,
@@ -80,10 +81,10 @@ function generateDatabase() {
         yield database_1.prisma.library.create({ data: library4 });
         const newUser5 = yield database_1.prisma.user.create({
             data: {
-                id: 'abcd5',
+                id: 'auth0|641f1768f939365a568f1e3f',
                 firstName: 'Joshua',
                 lastName: 'Thomas',
-                email: 'josh@thomas.com',
+                email: 'joshtest5@test.com',
                 username: 'Jthomas',
                 student: true,
                 schoolId: newSchool.id,
@@ -95,10 +96,10 @@ function generateDatabase() {
         yield database_1.prisma.library.create({ data: library5 });
         const newUser6 = yield database_1.prisma.user.create({
             data: {
-                id: 'abcd6',
+                id: 'auth0|64188241739976b7470d8e04',
                 firstName: 'Yacine',
                 lastName: 'Kadri',
-                email: 'yacine@kadri.com.fr',
+                email: 'hellotest@hello.com',
                 username: 'Ykadri',
                 student: true,
                 schoolId: newSchool.id,
@@ -110,10 +111,10 @@ function generateDatabase() {
         yield database_1.prisma.library.create({ data: library6 });
         yield database_1.prisma.user.create({
             data: {
-                id: 'abcd7',
+                id: 'auth0|641f0e0368011b5232bd21a4',
                 firstName: 'Guillem',
                 lastName: 'Sardà',
-                email: 'guillem@codeworks.com',
+                email: 'josh@thomas.com',
                 username: 'Gsardà',
                 student: false,
                 schoolId: newSchool.id,
@@ -129,29 +130,30 @@ function generateDatabase() {
             data: [
                 {
                     name: 'Class 1',
+                    scheduledDate: '21/04/2023',
                     subjectId: newSubject.id,
-                    scheduledDate: '2023-03-24T18:01:41.754Z',
                 },
                 {
                     name: 'Class 2',
+                    scheduledDate: '22/04/2023',
                     subjectId: newSubject.id,
-                    scheduledDate: '2023-03-24T18:01:41.754Z',
                 },
                 {
                     name: 'Class 3',
+                    scheduledDate: '23/04/2023',
                     subjectId: newSubject.id,
-                    scheduledDate: '2023-03-24T18:01:41.754Z',
                 },
             ],
         });
     });
 }
-generateDatabase()
-    .then(() => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.prisma.$disconnect();
-}))
-    .catch((e) => __awaiter(void 0, void 0, void 0, function* () {
-    console.error(e);
-    yield database_1.prisma.$disconnect();
-    process.exit(1);
-}));
+exports.default = generateDatabase;
+// generateDatabase()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });

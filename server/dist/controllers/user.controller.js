@@ -9,12 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getUserByUsername = exports.getUserById = exports.createUser = void 0;
+exports.getLessonsByUser = exports.updateUser = exports.getUserByUsername = exports.getUserById = exports.createUser = void 0;
 const database_1 = require("../database");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, firstName, lastName, email, student, schoolId } = req.body;
     const username = req.body.username.toLowerCase().trim();
-    if (firstName && lastName && email && username && student !== undefined && schoolId) {
+    if (firstName &&
+        lastName &&
+        email &&
+        username &&
+        student !== undefined &&
+        schoolId) {
         try {
             const newUser = yield database_1.prisma.user.create({
                 data: {
@@ -25,10 +30,10 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     username,
                     student,
                     schoolId,
-                }
+                },
             });
             const library = {
-                userId: newUser === null || newUser === void 0 ? void 0 : newUser.id
+                userId: newUser === null || newUser === void 0 ? void 0 : newUser.id,
             };
             yield database_1.prisma.library.create({ data: library });
             res.status(201);
@@ -49,7 +54,7 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const user = yield database_1.prisma.user.findUnique({
             where: {
-                id: req.params.userId
+                id: req.params.userId,
             },
         });
         if (!user) {
@@ -68,7 +73,7 @@ const getUserByUsername = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const user = yield database_1.prisma.user.findUnique({
             where: {
-                username: req.params.username
+                username: req.params.username,
             },
         });
         if (!user) {
@@ -92,8 +97,8 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 firstName,
                 lastName,
                 username,
-                avatar
-            }
+                avatar,
+            },
         });
         res.status(200);
         res.send(user);
@@ -104,3 +109,21 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateUser = updateUser;
+const getLessonsByUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const library = yield database_1.prisma.user.findUnique({
+            where: {
+                id: req.params.userId,
+            },
+            include: {
+                lessons: true,
+            },
+        });
+        res.status(200).send(library === null || library === void 0 ? void 0 : library.lessons);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Library doesnt find');
+    }
+});
+exports.getLessonsByUser = getLessonsByUser;

@@ -1,5 +1,5 @@
 export type User = {
-  id?: string;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -7,7 +7,7 @@ export type User = {
   avatar: string;
   student: boolean;
   newUser?: boolean;
-  schoolId?: string;
+  schoolId: string;
   inCall?: boolean;
   isReading?: boolean;
 };

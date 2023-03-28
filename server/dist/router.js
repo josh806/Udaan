@@ -38,6 +38,7 @@ router.post('/user', userController.createUser);
 router.get('/user/userId/:userId', userController.getUserById);
 router.get('/user/username/:username', userController.getUserByUsername);
 router.put('/user', userController.updateUser);
+router.get('/user/lessons/:userId', userController.getLessonsByUser);
 //school routes
 router.post('/school', schoolController.createSchool);
 router.get('/school/:schoolId', schoolController.getSchool);
@@ -69,5 +70,7 @@ router.put('/noteBook', noteBookController.updateNote);
 router.get('/roomToken/teacher/:lessonId', roomTokenController.createOrGetToken); // for the teacher
 router.get('/roomToken/student/:lessonId', roomTokenController.getTokenForStudent); // for the student
 router.delete('/roomToken/:lessonId', roomTokenController.deleteWhiteboard);
+router.post('/populate', populate_1.generateDatabase);
+//
 router.post('/populate', populate_1.generateDatabase);
 exports.default = router;

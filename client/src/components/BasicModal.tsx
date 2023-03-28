@@ -19,9 +19,10 @@ type Props = {
   open: any;
   handleModal: any;
   children: JSX.Element;
+  padding?: number;
 };
 
-function BasicModal({ open, handleModal, children }: Props) {
+function BasicModal({ open, handleModal, padding = 6, children }: Props) {
   return (
     <Modal
       open={open}
@@ -29,7 +30,7 @@ function BasicModal({ open, handleModal, children }: Props) {
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
     >
-      <Box sx={style}>{children}</Box>
+      <Box sx={{ ...style, p: padding }}>{children}</Box>
     </Modal>
   );
 }

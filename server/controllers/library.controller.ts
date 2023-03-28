@@ -15,7 +15,9 @@ const addLessonId = async (req: Request, res: Response) => {
     if (!library) {
       throw new Error('library or user doesnt exist');
     }
-    const filterLessons = library.lessons.filter((lesson) => lesson.id === lessonId);
+    const filterLessons = library.lessons.filter(
+      (lesson) => lesson.id === lessonId
+    );
     if (filterLessons.length) {
       throw new Error('lesson already exists');
     }
@@ -55,7 +57,9 @@ const addLessonId = async (req: Request, res: Response) => {
     if (!library2) {
       throw new Error('library or user doesnt exist');
     }
-    const hasLesson = library2.lessons.some((noteBook) => noteBook.id === lessonId);
+    const hasLesson = library2.lessons.some(
+      (noteBook) => noteBook.id === lessonId
+    );
     if (!hasLesson) {
       throw new Error('user doesnt have this lesson');
     }
