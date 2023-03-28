@@ -9,17 +9,24 @@ import {
 
 import * as muiIcons from './control-components';
 
-const Controls = (props: {
+const Controls: React.FC = (props: {
   tracks: [IMicrophoneAudioTrack, ICameraVideoTrack];
   setStart: React.Dispatch<React.SetStateAction<boolean>>;
   client: IAgoraRTCClient;
   whiteboardState: {
     showWhiteboard: boolean;
     setShowWhiteboard: React.Dispatch<React.SetStateAction<boolean>>;
+
+  },
+  noteState: {
+    noteTaking: boolean,
+    setNoteTaking: React.Dispatch<React.SetStateAction<boolean>>
   };
 }) => {
   const { showWhiteboard, setShowWhiteboard } = props.whiteboardState;
+  const { noteTaking, setNoteTaking } = props.noteState;
   const dispatch = useDispatch();
+
   const { tracks, setStart, client } = props;
   const [trackState, setTrackState] = useState({
     video: true,
@@ -51,65 +58,83 @@ const Controls = (props: {
     setShowWhiteboard(!showWhiteboard);
   };
 
-  return (
-    <div className="controls">
-      <muiIcons.Button
-        color="info"
-        variant="contained"
-        onClick={toggleWhiteboard}
-        className="_btn"
-      >
-        <muiIcons.Icon className="_btn__icon">
-          {showWhiteboard ? (
-            <muiIcons.WebAssetOffIcon />
-          ) : (
-            <muiIcons.WebAssetIcon />
-          )}
-        </muiIcons.Icon>
-        <span className="_btn__label">
-          {showWhiteboard ? 'No Whiteboard' : 'Whiteboard'}
-        </span>
-      </muiIcons.Button>
-      <muiIcons.Button
-        color="info"
-        variant="contained"
-        className={`_btn ${trackState.audio ? 'mute' : 'unmute'}`}
-        onClick={() => mute('audio')}
-      >
-        <muiIcons.Icon className="_btn__icon">
-          {trackState.audio ? <muiIcons.MicIcon /> : <muiIcons.MicOffIcon />}
-        </muiIcons.Icon>
-        <span className="_btn__label">
-          {trackState.audio ? 'Mute' : 'Unmute'}
-        </span>
-      </muiIcons.Button>
-      {!showWhiteboard && (
+  const toggleNotes = () => {
+    console.log('note taking')
+    setNoteTaking(!noteTaking);
+    console.log(noteTaking)
+  };
+
+
+    return (
+      <div className="controls">
         <muiIcons.Button
+          color="info"
           variant="contained"
-          className={`_btn ${trackState.video && !props ? 'Mute' : 'Unmute'}`}
-          onClick={() => mute('video')}
+          onClick={toggleWhiteboard}
+          className="_btn"
         >
+
           <muiIcons.Icon className="_btn__icon">
-            {trackState.video ? (
-              <muiIcons.VideocamIcon />
+            {showWhiteboard ? (
+              <muiIcons.WebAssetOffIcon />
             ) : (
-              <muiIcons.VideocamOffIcon />
+              <muiIcons.WebAssetIcon />
             )}
           </muiIcons.Icon>
           <span className="_btn__label">
-            {trackState.video ? 'No Video' : 'Video'}
+            {showWhiteboard ? 'No Whiteboard' : 'Whiteboard'}
           </span>
         </muiIcons.Button>
-      )}
-      <muiIcons.Button
-        color="error"
-        variant="contained"
-        className="leave"
-        onClick={leaveChannel}
-      >
-        Leave
-      </muiIcons.Button>
-    </div>
-  );
-};
+        <muiIcons.Button color="info" variant="contained" className="_btn" onClick={toggleNotes}>
+          <muiIcons.Icon className="_btn__icon">
+            <muiIcons.TextSnippetIcon />
+          
+          </muiIcons.Icon>
+          <span className="_btn__label">
+           Notebook
+          </span>
+        </muiIcons.Button>
+        <muiIcons.Button
+          color="info"
+          variant="contained"
+          className={`_btn ${trackState.audio ? 'mute' : 'unmute'}`}
+          onClick={() => mute('audio')}
+        >
+          <muiIcons.Icon className="_btn__icon">
+            {trackState.audio ? <muiIcons.MicIcon /> : <muiIcons.MicOffIcon />}
+          </muiIcons.Icon>
+          <span className="_btn__label">
+            {trackState.audio ? 'Mute' : 'Unmute'}
+          </span>
+        </muiIcons.Button>
+        {!showWhiteboard && (
+          <muiIcons.Button
+            variant="contained"
+            className={`_btn ${trackState.video && !props ? 'Mute' : 'Unmute'}`}
+            onClick={() => mute('video')}
+          >
+            <muiIcons.Icon className="_btn__icon">
+              {trackState.video ? (
+                <muiIcons.VideocamIcon />
+              ) : (
+                <muiIcons.VideocamOffIcon />
+              )}
+            </muiIcons.Icon>
+            <span className="_btn__label">
+              {trackState.video ? 'No Video' : 'Video'}
+            </span>
+          </muiIcons.Button>
+        )}
+        <muiIcons.Button
+          color="error"
+          variant="contained"
+          className="leave"
+          onClick={leaveChannel}
+        >
+          Leave
+        </muiIcons.Button>
+      </div>
+    );
+  }
+
 export default Controls;

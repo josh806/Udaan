@@ -3,9 +3,10 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
+
 export default function NoteTaking() {
   const user = useSelector((state: RootState) => state.users);
-  const lesson = useSelector((state: RootState) => state.lessons);
+  const lesson = useSelector((state: RootState) => state.lesson);
 
   const editorRef = useRef(null);
   const log = () => {
@@ -26,7 +27,7 @@ export default function NoteTaking() {
       body: JSON.stringify({
         note: editorRef.current.getContent(),
         userId: user.id,
-        lessonId: 1,
+        lessonId: lesson.id,
       }),
     })
       .then((response) => response.json())
@@ -40,7 +41,7 @@ export default function NoteTaking() {
   };
   return (
     <>
-      <form onSubmit={handleFormSubmit}>
+      <form >
         <Editor
           apiKey='qhrccluh9egw2xnki7jb7iggq6y8w4kx4g8g8puqu42q3s7r'
           onInit={(evt, editor) => editorRef.current = editor}
@@ -60,7 +61,28 @@ export default function NoteTaking() {
               'bold italic backcolor | alignleft aligncenter ' +
               'alignright alignjustify | bullist numlist outdent indent | ' +
               'removeformat | help save',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            save_onsavecallback:  () => {
+              return fetch('https://classzoom.cyclic.app/noteBook', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  note: editorRef.current.getContent(),
+                  userId: user.id,
+                  lessonId: lesson.id,
+                }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log('Success:', data);
+                })
+                .catch((error) => {
+                  console.log(error)
+                  console.error({ "Error": error });
+                });
+          } 
           }}
         />
         <button type='submit'>Submit</button>
