@@ -38,13 +38,10 @@ exports.createSubject = createSubject;
 const getSubjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const subjects = yield database_1.prisma.school.findMany({
+        const subjects = yield database_1.prisma.subject.findMany({
             where: {
-                id: id,
+                schoolId: id,
             },
-            include: {
-                subjects: true
-            }
         });
         res.status(200);
         res.send(subjects);
