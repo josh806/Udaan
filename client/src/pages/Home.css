@@ -99,3 +99,82 @@ justify-content: space-between;
   cursor: pointer;
 }
 
+.Home_bottom{
+  padding: 0 10vw 0 10vw;
+    font-family: 'Playfair Display', serif;
+}
+
+.Home_bottom h1 {
+  font-size: 40px;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.Home_bottom p {
+    text-align: justify;
+}
+
+.pricing_elements {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.element_1, .element_2, .element_3 {
+  margin: 5px 20px 15px 20px;
+  border: black solid;
+  width: 300px ;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.pricing_elements p{
+  text-align: center;
+}
+
+.pricing_elements .title {
+  color: white;
+  padding: 15px 20px 15px 20px;
+  font-size: x-large;
+  border-radius: 5px 5px 0 0;
+}
+
+.pricing_elements .inner > * {
+  padding: 15px 15px 15px 15px;
+}
+
+.pricing_elements .price {
+  font-size: x-large;
+}
+
+.pricing_elements button {
+  width: 80%;
+  padding: 10px 0 10px 0;
+  color: white;
+  border-radius: 30px;
+  text-transform:uppercase;
+  border: none;
+}
+
+.pricing_elements button:hover {
+  cursor: pointer;
+}
+
+.pricing_elements .price_advantage{
+  font-weight: bold;
+}
+
+.element_1 .title, .element_1 button {
+    background-color: rgb(160, 31, 31);
+}
+
+.element_2 .title, .element_2 button {
+    background-color: #183a1d;
+}
+
+.element_3 .title, .element_3 button {
+    background-color:rgb(23, 23, 117);
+}
+
