@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { store } from '../../redux/store';
 export default class Preloader extends Phaser.Scene {
   avatar!: string;
+  role = 'Student';
   constructor() {
     super('preloader');
   }
@@ -31,12 +32,14 @@ export default class Preloader extends Phaser.Scene {
 
     const user = store.getState();
     this.avatar = user.users.avatar;
-    console.log(this.avatar);
-    const player = this.avatar;
+    const isStudent = user.users.student;
+    if (!isStudent) {
+      this.role = 'Teacher';
+    }
     this.load.atlas(
-      `${player}`,
-      `assets/${player}.png`,
-      `assets/${player}.json`
+      `${this.avatar}`,
+      `assets/${this.role}/${this.avatar}.png`,
+      `assets/${this.role}/${this.avatar}.json`
     );
   }
   create() {

@@ -16,7 +16,7 @@ const initialState: User = {
   student: true,
   newUser: true,
   schoolId: '',
-  avatar: 'Bob',
+  avatar: 'Jake',
 };
 
 export const userSlice = createSlice({
