@@ -38,8 +38,8 @@ export default class Preloader extends Phaser.Scene {
     }
     this.load.atlas(
       `${this.avatar}`,
-      `assets/${this.role}/${this.avatar}.png`,
-      `assets/${this.role}/${this.avatar}.json`
+      `assets/${this.role}/${this.avatar}/${this.avatar}.png`,
+      `assets/${this.role}/${this.avatar}/${this.avatar}.json`
     );
   }
   create() {

@@ -1,0 +1,25 @@
+.whiteboard {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  z-index: 1;
+}
+.netless-window-manager-playground {
+  width: 100% !important;
+  height: 92% !important;
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+  user-select: none !important;
+  background-color: #ffffff !important;
+}
+.whiteboard .netless-window-manager-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+.fastboard-bottom-left,
+.fastboard-bottom,
+.fastboard-bottom-right {
+  top: 0;
+  bottom: auto !important;
+}
