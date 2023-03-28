@@ -70,11 +70,11 @@
             "scaleInEditor": 1
         },
         "udaan_backup.tmx": {
-            "scale": 0.1783,
-            "selectedLayer": 0,
+            "scale": 0.1957,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 2619.1811553561415,
-                "y": 2779.0241166573196
+                "x": 3597.3428717424626,
+                "y": 3119.5707715891667
             }
         },
         "udaan_backup.tmx#Bathroom": {
@@ -126,7 +126,7 @@
             "scaleInEditor": 0.25
         },
         "udaan_backup.tmx#classroom_furnitures": {
-            "scaleInDock": 0.29,
+            "scaleInDock": 0.8018,
             "scaleInEditor": 0.32
         },
         "udaan_backup.tmx#generic": {
@@ -195,7 +195,7 @@
         "udaan_backup.tmx"
     ],
     "project": "bob_experiment.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
         "udaan_backup.tmx",
         "classroom.tmx",

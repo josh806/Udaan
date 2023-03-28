@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import React, { useEffect, useState } from 'react';
-import Game from './Game';
-import Preloader from './Preloader';
+import Game from './scene/Game';
+import Preloader from './scene/Preloader';
 
 const PhaserRoot = () => {
   const [phaser, setPhaser] = useState<Phaser.Game>();

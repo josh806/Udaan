@@ -66,11 +66,10 @@ router.put('/noteBook', noteBookController.updateNote);
 // router.post('/whiteboard/:lessonId', whiteboardController.createWhiteboard);
 // router.put('/whiteboard/:lessonId', whiteboardController.addToken);
 // router.get('/whiteboard/:lessonId', whiteboardController.getToken);
-//Agora WhiteboardroomToken
-// create token for the teacher
-router.get('/roomToken/teacher/:lessonId', roomTokenController.createOrGetToken);
-//get token for the students
-router.get('/roomToken/student/:lessonId', roomTokenController.getTokenForStudent);
+//Agora Whiteboardroom Token
+router.get('/roomToken/teacher/:lessonId', roomTokenController.createOrGetToken); // for the teacher
+router.get('/roomToken/student/:lessonId', roomTokenController.getTokenForStudent); // for the student
+router.delete('/roomToken/:lessonId', roomTokenController.deleteWhiteboard);
 router.post('/populate', populate_1.generateDatabase);
 //
 router.post('/populate', populate_1.generateDatabase);
