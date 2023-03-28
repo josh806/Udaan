@@ -31,6 +31,11 @@ class MySchool extends colyseus_1.Room {
                     player.y = input.chairPosition[1];
                     player.animation = input.sit[1];
                 }
+                else if (input.reading[0]) {
+                    player.x = input.chairPosition[0];
+                    player.y = input.chairPosition[1];
+                    player.animation = input.reading[1];
+                }
                 else {
                     player.x += 0;
                     player.y += 0;
