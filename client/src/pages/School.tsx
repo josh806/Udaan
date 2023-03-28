@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
-import VideoCall from '../Components/VideoCall/VideoCall';
-import BasicModal from '../Components/BasicModal';
+import VideoCall from '../components/VideoCall/VideoCall';
+import BasicModal from '../components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
-import Profile from './Profile';
+
 import NavBar from '../components/Navbar';
+import Profile from '../features/RegisterProfile';
+
 const School = () => {
   const [openModal, setOpenModal] = useState(true);
 
@@ -15,7 +17,6 @@ const School = () => {
   };
 
   const { newUser, inCall } = useSelector((state: RootState) => state.users);
-  console.log(newUser);
   const [chat, setChat] = useState(false);
 
   return (

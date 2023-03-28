@@ -5,6 +5,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .video-container {
@@ -29,11 +30,10 @@
 
 .controls {
   position: absolute;
-  bottom: 10%;
-  z-index: 1;
+  bottom: 3%;
+  z-index: 2;
   display: flex;
-  justify-content: space-evenly;
-  width: 25%;
+  gap: 1rem;
 }
 
 .controls p {
