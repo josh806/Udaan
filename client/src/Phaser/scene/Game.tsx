@@ -138,7 +138,7 @@ export default class Game extends Phaser.Scene {
             true
           );
           this.currentPlayer.body.collideWorldBounds = true;
-          this.cameras.main.setZoom(1.2);
+          this.cameras.main.setZoom(0.75);
           this.cameras.main.startFollow(this.currentPlayer, true);
           this.playerName = this.add
             .text(

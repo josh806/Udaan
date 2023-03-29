@@ -65,11 +65,11 @@
             "scaleInEditor": 1
         },
         "udaan_backup.tmx": {
-            "scale": 0.2037,
-            "selectedLayer": 26,
+            "scale": 0.09,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 3009.327442317133,
-                "y": 2628.8659793814436
+                "x": 4355.555555555556,
+                "y": 4161.11111111111
             }
         },
         "udaan_backup.tmx#Bathroom": {
