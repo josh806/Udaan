@@ -4,14 +4,13 @@ import alex from '../assets/reading.gif';
 import mark from '../assets/mark_sitting_left.gif';
 import adam from '../assets/adam_phone.gif';
 import AuthLoginBtn from '../auth/AuthLoginBtn';
-import About from '../components/HomePage/About';
-import Features from '../components/HomePage/Features';
-import Pricing from '../components/HomePage/Pricing';
-
+import About from '../components/homepage/About';
+import Features from '../components/homepage/Features';
+import Pricing from '../components/homepage/Pricing';
+import Loading from '../features/Loading';
 
 function Home() {
-
-  const handleClickScroll = (text:string) => {
+  const handleClickScroll = (text: string) => {
     let element;
     if (text === 'About') {
       element = document.getElementById('About_container');
@@ -23,7 +22,6 @@ function Home() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-
   };
 
   return (
@@ -40,7 +38,6 @@ function Home() {
         </div>
       </nav>
       <div className='Home_background'>
-        <div className='header'></div>
         <div className='details'>
           <div className='homepage_title_container'>
             <div className='homepage_wrapper'>
@@ -65,6 +62,7 @@ function Home() {
 
       </div>
     </>
+    // <Loading />
   );
 }
 

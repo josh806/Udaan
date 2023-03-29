@@ -15,7 +15,7 @@ const initialState: User = {
   email: '',
   username: '',
   student: true,
-  newUser: true,
+  newUser: false,
   schoolId: '',
   avatar: 'Jake',
 };
