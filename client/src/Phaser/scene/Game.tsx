@@ -67,6 +67,8 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.cameras.main.setZoom(0.75);
+    this.cameras.main.centerOn(3500, 3500);
   }
 
   async create() {
