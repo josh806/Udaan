@@ -81,7 +81,7 @@ const VideoCall = () => {
   useEffect(() => {
     if (ready && tracks) {
       init(channelName);
-      initWhiteboard('95b2a502-6ab1-4739-aeb5-86356222b33c');
+      initWhiteboard('7327d170-ff5c-465f-831f-dff9b12a5d02');
     }
   }, [channelName, client, ready, tracks]);
 

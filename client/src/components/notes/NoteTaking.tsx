@@ -15,30 +15,6 @@ export default function NoteTaking() {
     }
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log('Content was submitted:');
-    console.log(editorRef.current.getContent());
-    fetch('https://classzoom.cyclic.app/noteBook', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        note: editorRef.current.getContent(),
-        userId: 'auth0|642330ea936cc041cfc337cb',
-        lessonId: '95b2a502-6ab1-4739-aeb5-86356222b33c',
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.log(error);
-        console.error({ 'Error': error });
-      });
-  };
   return (
     <>
       <form >
@@ -70,13 +46,18 @@ export default function NoteTaking() {
                 },
                 body: JSON.stringify({
                   note: editorRef.current.getContent(),
+                  // note: 'tttttteeeessstttt',
+                  // userId: 'auth0|642330ea936cc041cfc337cb',
                   userId: user.id,
-                  lessonId: lesson.id,
+                  
+                  lessonId: '7327d170-ff5c-465f-831f-dff9b12a5d02',
+                  // lessonId: lesson.id,
                 }),
               })
                 .then((response) => response.json())
                 .then((data) => {
                   console.log('Success:', data);
+                  return data;
                 })
                 .catch((error) => {
                   console.log(error);
@@ -85,7 +66,6 @@ export default function NoteTaking() {
             } 
           }}
         />
-        <button type='submit'>Submit</button>
       </form>
     </>
   );

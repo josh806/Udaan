@@ -52,7 +52,7 @@ const Controls = (props: {
   };
 
   const toggleWhiteboard = () => {
-    mute('video');
+    // mute('video');
     setShowWhiteboard(!showWhiteboard);
   };
 
@@ -89,7 +89,7 @@ const Controls = (props: {
           <muiIcons.TextSnippet/>
         </muiIcons.Icon>
         <span className="_btn__label">
-          {showWhiteboard ? 'No Whiteboard' : 'Whiteboard'}
+          NoteBook
         </span>
       </muiIcons.Button>
       <muiIcons.Button
