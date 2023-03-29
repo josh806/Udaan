@@ -26,14 +26,14 @@ const AuthRequired = ({ children }: Props): JSX.Element => {
 
         if ('error' in response) {
           // New user => redirect to profile
-          setTimeout(() => {
-            navigate(routes.profile, {
-              state: {
-                authUser: auth.user,
-                message: 'Please fill out your details',
-              },
-            });
-          }, 3000);
+          // setTimeout(() => {
+          navigate(routes.profile, {
+            state: {
+              authUser: auth.user,
+              message: 'Please fill out your details',
+            },
+          });
+          // }, 3000);
         } else {
           // Registered user
           dispatch(reduxUser.updateUser(response));
