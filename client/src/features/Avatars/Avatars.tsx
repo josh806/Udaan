@@ -16,14 +16,9 @@ function Avatars({ valChecked, handleChange }: Props) {
   const [availableAvatars, setAvailableAvatars] = useState({});
 
   useEffect(() => {
-    console.log(avatar);
-    console.log(user);
-
     const userRole = user.student ? 'student' : 'teacher';
     setAvailableAvatars(avatar[userRole]);
   }, [user]);
-
-  useEffect(() => console.log(availableAvatars));
 
   return (
     <div className="CustomRadioGroup">

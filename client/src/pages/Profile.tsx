@@ -8,7 +8,6 @@ function Profile() {
     <AuthRequired>
       <>
         <NavBar />
-
         <section className="_section">
           <div className="_container _container--800px _textCenter">
             <RegisterProfile />
