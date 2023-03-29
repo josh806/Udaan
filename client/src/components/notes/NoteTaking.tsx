@@ -35,8 +35,8 @@ export default function NoteTaking() {
         console.log('Success:', data);
       })
       .catch((error) => {
-        console.log(error)
-        console.error({ "Error": error });
+        console.log(error);
+        console.error({ 'Error': error });
       });
   };
   return (
@@ -79,10 +79,10 @@ export default function NoteTaking() {
                   console.log('Success:', data);
                 })
                 .catch((error) => {
-                  console.log(error)
-                  console.error({ "Error": error });
+                  console.log(error);
+                  console.error({ 'Error': error });
                 });
-          } 
+            } 
           }}
         />
         <button type='submit'>Submit</button>
