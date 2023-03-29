@@ -1,0 +1,41 @@
+.CustomRadioGroup {
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.CustomRadioGroup__item {
+  cursor: pointer;
+}
+
+.CustomRadioGroup input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.CustomRadioGroup__item .label__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+}
+.CustomRadioGroup__item .label__inner:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background-color: transparent;
+  transition: 0.2s all;
+}
+.CustomRadioGroup__item input[type='radio']:checked + .label__inner:after,
+.CustomRadioGroup__item .label__inner:hover:after {
+  bottom: 0;
+  background-color: #1976d2;
+}
+.CustomRadioGroup__item img {
+  width: 50px;
+}

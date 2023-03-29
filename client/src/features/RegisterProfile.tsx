@@ -8,9 +8,9 @@ import { useLocation } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 import Field from '../components/Field';
+import Avatars from './Avatars/Avatars';
 import { Box, Alert, Button, Grid, Slide, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import avatar from '../utils/avatar';
 
 const initialUser = {
   firstName: '',
@@ -18,7 +18,7 @@ const initialUser = {
   email: '',
   username: '',
   student: true,
-  schoolId: '1',
+  schoolId: 'a1b2',
   avatar: '',
 };
 
@@ -66,9 +66,16 @@ const RegisterProfile = () => {
   };
 
   async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log('----- CHANGE -----');
     const tmpCurrUser = { ...currUser };
-    const userKey = e.target.name as 'firstName' | 'lastName' | 'username';
+    const userKey = e.target.name as
+      | 'firstName'
+      | 'lastName'
+      | 'username'
+      | 'avatar';
     tmpCurrUser[userKey] = e.target.value;
+
+    // if (userKey === 'avatar') console.log(tmpCurrUser);
 
     if (userKey === 'username') setUsernameChanged(true);
 
@@ -92,6 +99,8 @@ const RegisterProfile = () => {
         isError: false,
         helperText: '',
       });
+
+      console.log(currUser);
 
       let userFromDb;
       let successMessage;
@@ -130,21 +139,23 @@ const RegisterProfile = () => {
   return (
     <>
       <div className="profile">
-        <Typography
-          variant="h4"
-          gutterBottom
-        >
-          My Profile
-        </Typography>
-
-        {content && (
+        <div className="profile__content">
           <Typography
-            variant="subtitle1"
+            variant="h4"
             gutterBottom
           >
-            {content}
+            My Profile
           </Typography>
-        )}
+
+          {content && (
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+            >
+              {content}
+            </Typography>
+          )}
+        </div>
 
         <div className="_form">
           <Box
@@ -205,10 +216,27 @@ const RegisterProfile = () => {
                 item
                 xs={12}
               >
+                <Typography
+                  variant="subtitle1"
+                  gutterBottom
+                  align="left"
+                >
+                  Choose avatar
+                </Typography>
+                <Avatars
+                  valChecked={currUser.avatar}
+                  handleChange={handleChange}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+              >
                 <Button
                   className="_form__field _form__field--submit"
                   type="submit"
                   variant="contained"
+                  size="large"
                 >
                   Save
                 </Button>
