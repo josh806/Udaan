@@ -6,6 +6,7 @@ import { enterVideoCall, openLibrary, closeLibrary } from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
 import { loadingComplete } from '../../redux/loading';
+
 import {
   showInstruction,
   hideInstruction,
@@ -40,7 +41,7 @@ export default class Game extends Phaser.Scene {
   private role = 'Student';
 
   // private client = new Client(import.meta.env.VITE_PHASER);
-  private client = new Client('ws://192.168.0.185:4001');
+  private client = new Client('ws://192.168.0.100:4001');
   private room!: Room;
 
   private playerEntities: {
@@ -49,6 +50,7 @@ export default class Game extends Phaser.Scene {
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys;
 
   public inputPayload = {
+    avatar: this.avatar,
     left: [false, 'moveleft'],
     right: [false, 'moveright'],
     up: [false, 'moveup'],
@@ -71,18 +73,41 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.centerOn(3500, 3500);
     const user = store.getState();
     this.avatar = user.users.avatar;
-    const isStudent = user.users.student;
-    console.log(`student?: ${isStudent}`);
-    if (!isStudent) {
-      this.role = 'Teacher';
+    this.inputPayload.avatar = this.avatar;
+    const allStudents = [
+      'Claire',
+      'Damien',
+      'Daniel',
+      'Dona',
+      'Jake',
+      'Janet',
+      'Joaquin',
+      'Josh',
+      'Kate',
+      'Keiko',
+      'Kyle',
+      'Mathew',
+      'Mike',
+      'Stacy',
+      'Valentin',
+      'Victor',
+      'Yacine',
+    ];
+    const allTeachers = ['Jordan', 'Karen', 'Marie', 'Mark', 'Nancy'];
+    for (let i = 0; i < allStudents.length; i++) {
+      this.load.atlas(
+        `${allStudents[i]}`,
+        `assets/Student/${allStudents[i]}/${allStudents[i]}.png`,
+        `assets/Student/${allStudents[i]}/${allStudents[i]}.json`
+      );
     }
-    console.log(`assets/${this.role}/${this.avatar}/${this.avatar}.png`);
-    console.log(`assets/${this.role}/${this.avatar}/${this.avatar}.png`);
-    this.load.atlas(
-      `${this.avatar}`,
-      `assets/${this.role}/${this.avatar}/${this.avatar}.png`,
-      `assets/${this.role}/${this.avatar}/${this.avatar}.json`
-    );
+    for (let i = 0; i < allTeachers.length; i++) {
+      this.load.atlas(
+        `${allTeachers[i]}`,
+        `assets/Teacher/${allTeachers[i]}/${allTeachers[i]}.png`,
+        `assets/Teacher/${allTeachers[i]}/${allTeachers[i]}.json`
+      );
+    }
   }
 
   async create() {
@@ -124,7 +149,6 @@ export default class Game extends Phaser.Scene {
       this.room.state.players.onAdd((player: Player, sessionId: string) => {
         const entity = this.physics.add.sprite(player.x, player.y, this.avatar);
         this.playerEntities[sessionId] = entity;
-
         console.log('sesion id', sessionId);
         if (sessionId === this.room.sessionId) {
           this.currentPlayer = entity;
@@ -207,6 +231,7 @@ export default class Game extends Phaser.Scene {
             entity.setData('serverX', player.x);
             entity.setData('serverY', player.y);
             entity.setData('animation', player.animation);
+            entity.setData('avatar', player.avatar);
           });
         }
 
@@ -369,11 +394,12 @@ export default class Game extends Phaser.Scene {
         continue;
       }
       const entity = this.playerEntities[sessionId];
-      const { serverX, serverY, animation } = entity.data.values;
+      const { serverX, serverY, animation, avatar } = entity.data.values;
 
       entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
       entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
       entity.anims.play(`${animation}`, true);
+      entity.texture.manager.setTexture(entity, avatar);
     }
 
     this.checkCollisions = false;

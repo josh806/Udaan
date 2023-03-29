@@ -1,0 +1,175 @@
+{
+    "fileStates": {
+        "": {
+            "scaleInDock": 0.6948,
+            "scaleInEditor": 1
+        },
+        "Udaan.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "classroom.tmx": {
+            "scale": 0.43,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1058.139534883721,
+                "y": 563.953488372093
+            }
+        },
+        "classroom.tmx#floor": {
+            "scaleInDock": 1
+        },
+        "classroom.tmx#furnitures": {
+            "scaleInDock": 1
+        },
+        "school 2.0.tmx": {
+            "scale": 0.13,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 7930.7692307692305,
+                "y": 12673.076923076922
+            }
+        },
+        "school 2.0.tmx#Exterior": {
+            "dynamicWrapping": true
+        },
+        "school 2.0.tmx#Exterior_ground": {
+            "scaleInDock": 0.42,
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#Interior_floor": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.2715,
+            "scaleInEditor": 0.44
+        },
+        "school 2.0.tmx#SchoolExterior": {
+            "scaleInDock": 0.1847,
+            "scaleInEditor": 0.34
+        },
+        "school 2.0.tmx#Terrains_and_Fences": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#Terrance_and_Fences": {
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#classroom_furnitures": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "school 2.0.tmx#furnitures": {
+            "scaleInDock": 0.5927,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx": {
+            "scale": 0.4075,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 3190.184049079755,
+                "y": 3176.687116564417
+            }
+        },
+        "udaan_backup.tmx#Bathroom": {
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#Bathroom_Black_Shadow": {
+            "scaleInDock": 0.5319,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#Generic": {
+            "scaleInDock": 0.4603
+        },
+        "udaan_backup.tmx#Interior_floor": {
+            "scaleInDock": 0.4265
+        },
+        "udaan_backup.tmx#Interior_sports": {
+            "scaleInDock": 0.5712,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#LivingRoom": {
+            "scaleInDock": 0.6948,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#Music": {
+            "scaleInDock": 0.2929,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#SchoolExterior": {
+            "scaleInDock": 0.1847,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#Swimming_Pool": {
+            "scaleInDock": 0.2367,
+            "scaleInEditor": 0.98
+        },
+        "udaan_backup.tmx#Terrains_and_Fences": {
+            "scaleInDock": 0.1933
+        },
+        "udaan_backup.tmx#Trees": {
+            "scaleInDock": 0.4512,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#Vehicles": {
+            "scaleInDock": 0.2751,
+            "scaleInEditor": 0.3
+        },
+        "udaan_backup.tmx#bathroom": {
+            "scaleInDock": 0.5319,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#classroom_furnitures": {
+            "scaleInDock": 0.8018,
+            "scaleInEditor": 0.32
+        },
+        "udaan_backup.tmx#generic": {
+            "scaleInDock": 0.4603,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#interior_floor": {
+            "scaleInDock": 0.4265,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#interior_sports": {
+            "scaleInDock": 0.5712,
+            "scaleInEditor": 0.53
+        },
+        "udaan_backup.tmx#living_room": {
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#music": {
+            "scaleInDock": 0.2929,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#parking": {
+            "scaleInDock": 0.2309,
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#playground": {
+            "scaleInDock": 0.4206,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#school_exterior": {
+            "scaleInDock": 0.1847,
+            "scaleInEditor": 0.25
+        },
+        "udaan_backup.tmx#swimming_pool": {
+            "scaleInDock": 0.2367,
+            "scaleInEditor": 0.98
+        },
+        "udaan_backup.tmx#swings": {
+            "scaleInDock": 0.4122,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#terrains_and_fences": {
+            "scaleInEditor": 1
+        },
+        "udaan_backup.tmx#trees": {
+            "scaleInDock": 0.4512,
+            "scaleInEditor": 0.41
+        },
+        "udaan_backup.tmx#vehicles": {
+            "scaleInDock": 0.1191,
+            "scaleInEditor": 0.3
+        }
+    }
+}
