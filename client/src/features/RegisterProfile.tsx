@@ -9,21 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 import Field from '../components/Field';
-import { Box, Alert, Button, Grid, Slide, Typography } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import avatar from '../utils/avatar';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import Avatars from './Avatars/Avatars';
-
-const initialUser = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  username: '',
-  student: true,
-  schoolId: 'a1b2',
-  avatar: '',
-};
-
+import routes from '../utils/routes';
 
 const RegisterProfile = () => {
   const navigate = useNavigate();
