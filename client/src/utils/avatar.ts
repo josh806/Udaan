@@ -24,10 +24,6 @@ const avatar = {
       avatar: 'Janet',
       image: '../../public/assets/Student/Janet/Janet-single.png',
     },
-    Jennifer: {
-      avatar: 'Jennifer',
-      image: '../../public/assets/Student/Jennifer/Jennifer-single.png',
-    },
     Joaquin: {
       avatar: 'Joaquin',
       image: '../../public/assets/Student/Joaquin/Joaquin-single.png',

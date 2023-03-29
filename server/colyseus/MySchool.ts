@@ -8,6 +8,7 @@ export class MySchool extends Room<MySchoolSchema> {
     this.onMessage('move', (client, input) => {
       const player = this.state.players.get(client.sessionId);
       const velocity = 6;
+      player.avatar = input.avatar;
       if (!input.collider) {
         if (input.left[0]) {
           player.x -= velocity;
@@ -38,6 +39,7 @@ export class MySchool extends Room<MySchoolSchema> {
     });
     this.onMessage('stop', (client, input) => {
       const player = this.state.players.get(client.sessionId);
+      player.avatar = input.avatar;
       if (input.left[0]) {
         player.x -= 0;
         player.animation = input.left[1];

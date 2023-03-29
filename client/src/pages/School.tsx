@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AuthRequired from './AuthRequired';
 import { useSelector } from 'react-redux';
 import VideoCall from '../components/VideoCall/VideoCall';

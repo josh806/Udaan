@@ -12,6 +12,7 @@ import Field from '../components/Field';
 import { Box, Alert, Button, Grid, Slide, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import avatar from '../utils/avatar';
+import Avatars from './Avatars/Avatars';
 
 const initialUser = {
   firstName: '',
