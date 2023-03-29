@@ -5,9 +5,10 @@ import VideoCall from '../components/VideoCall/VideoCall';
 import BasicModal from '../components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
-
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import NavBar from '../components/Navbar';
 import Profile from '../features/RegisterProfile';
+import { Chat } from '../components/chat/Chat';
 
 const School = () => {
   const [openModal, setOpenModal] = useState(true);
@@ -23,15 +24,18 @@ const School = () => {
     <AuthRequired>
       <>
         <NavBar />
-        {chat && (
+        {<QuestionAnswerIcon>
           <button
             className="open_chat"
             onClick={() => setChat(!chat)}
           >
             Show chat
           </button>
-        )}
+        </QuestionAnswerIcon>}
+        {chat && <Chat />}
+
         {!newUser ? (
+
           <PhaserRoot />
         ) : (
           <BasicModal

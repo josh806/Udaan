@@ -181,16 +181,16 @@ export const  Chat: React.FC = () => {
         id: '1',
         name: 'Henry Mill',
         email: 'henrymill@example.com',
-        photoUrl: 'henry.jpeg',
+        photoUrl: 'https://ibb.co/8z7wPzn',
         welcomeMessage: 'Hello!',
         role: 'default',
       });
 
       const otherUser = new Talk.User({
         id: '2',
-        name: 'Jessica Wells',
+        name: 'Teacher',
         email: 'jessicawells@example.com',
-        photoUrl: 'jessica.jpeg',
+        photoUrl: 'https://i.ibb.co/7g1Drgx/IMG-5196.jpg',
         welcomeMessage: 'Hello!',
         role: 'default',
       });
