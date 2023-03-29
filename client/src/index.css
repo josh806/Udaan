@@ -16,3 +16,30 @@
 ._btn__icon svg {
   display: block !important;
 }
+
+._section {
+  margin: 60px 0;
+  padding: 0 15px;
+}
+._container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+._container--800px {
+  width: 800px;
+}
+
+._textCenter {
+  text-align: center;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

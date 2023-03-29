@@ -1,0 +1,48 @@
+.loading_page_background {
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading_avatar {
+  margin: 10px;
+}
+.loading_details {
+  position: relative;
+  height: 200px;
+  width: 600px;
+  animation-name: catch_bus;
+  animation-duration: 8s;
+}
+@keyframes catch_bus {
+  from {
+    width: 750px;
+  }
+  to {
+    width: 600px;
+  }
+}
+
+.avatar1 {
+  position: absolute;
+  bottom: 67px;
+  left: 100px;
+}
+.avatar2 {
+  position: absolute;
+  bottom: 52px;
+  left: 150px;
+}
+.avatar3 {
+  position: absolute;
+  bottom: 33px;
+  left: 200px;
+}
+.bus {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}

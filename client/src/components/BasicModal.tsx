@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
 const style = {
@@ -11,8 +10,11 @@ const style = {
   width: 600,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 6,
+  maxHeight: '80vh',
   textAlign: 'center',
+  outline: 'none',
+  overflow: 'scroll',
+  borderRadius: '5px',
 };
 
 type Props = {
@@ -22,13 +24,14 @@ type Props = {
   padding?: number;
 };
 
-function BasicModal({ open, handleModal, padding = 6, children }: Props) {
+function BasicModal({ open, handleModal, padding = 0, children }: Props) {
   return (
     <Modal
+      className="basicModal"
       open={open}
       onClose={handleModal}
-      aria-labelledby='modal-modal-title'
-      aria-describedby='modal-modal-description'
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
     >
       <Box sx={{ ...style, p: padding }}>{children}</Box>
     </Modal>
