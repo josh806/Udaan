@@ -35,6 +35,7 @@ export default function NoteTaking() {
       })
       .catch((error) => {
         console.log(error);
+        console.error({ 'Error': error });
       });
   };
   return (

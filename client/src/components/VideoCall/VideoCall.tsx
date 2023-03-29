@@ -13,7 +13,7 @@ import Fastboard from '../InteractiveWhiteboard/FastBoard';
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
-  '007eJxTYNjy+tOSL85PNP7m7fjLlpdgeH3DtAvJK6d9O/2lIMhKq41NgcHSwsjMzCwlNckoMcnEJNU80TgxydIUCAzMzZIszEyEtiumNAQyMmQVbWFiZIBAEJ+HISS1uCQ8syTDKz8rn4EBAF94JKQ=';
+  '007eJxTYLhTuL4haRaL7rOOZ+q3r9/+cet0+BRH9UNPZfKfqP2WM4tTYLC0MDIzM0tJTTJKTDIxSTVPNE5MsjQFAgNzsyQLM5PCb8opDYGMDOK/mhkYoRDE52EISS0uCc8syfDKz8pnYAAACmokPQ==';
 const useClient = createClient({
   mode: 'rtc',
   codec: 'vp8',
