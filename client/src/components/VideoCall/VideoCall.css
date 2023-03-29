@@ -6,10 +6,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
 }
 
 .video-container {
-  position: absolute;
   width: 100%;
   height: 100%;
   display: grid;
@@ -44,4 +44,9 @@
   border-width: 1px;
   border-color: #f7f7f7;
   border-style: solid;
+}
+
+.videocall-container form {
+ position: absolute;
+ z-index: 20;
 }
