@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../../server/colyseus/MySchoolSchema';
 import { store } from '../../redux/store';
-import { enterVideoCall, openLibrary } from '../../redux/user';
+import { enterVideoCall, openLibrary, closeLibrary } from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
 import {
@@ -40,7 +40,7 @@ export default class Game extends Phaser.Scene {
   private remoteRef!: Phaser.GameObjects.Rectangle;
 
   // private client = new Client(import.meta.env.VITE_PHASER);
-  private client = new Client('ws://192.168.0.241:4001');
+  private client = new Client('ws://192.168.0.185:4001');
   private room!: Room;
 
   private playerEntities: {
@@ -236,9 +236,7 @@ export default class Game extends Phaser.Scene {
     this.chairPosition[0] = chair.pixelX + chair.width / 2;
     this.chairPosition[1] = chair.pixelY + chair.height / 2;
     this.checkCollisions = true;
-    console.log(this.collisionCounter);
     if (this.collisionCounter === 0) {
-      console.log('enter library');
       showInstruction(this, 'Press' + ' O ' + 'to view your lessons');
       this.collisionCounter++;
     }
@@ -259,8 +257,9 @@ export default class Game extends Phaser.Scene {
     }
     if (user.users.isReading) {
       this.isReading = user.users.isReading;
-      console.log(this.isReading);
+      this.input.keyboard.manager.enabled = false;
     } else {
+      this.input.keyboard.manager.enabled = true;
       this.isReading = false;
     }
     this.inputPayload.left[0] = this.cursorKeys.left.isDown;

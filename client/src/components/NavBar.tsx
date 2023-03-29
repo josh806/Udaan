@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AuthLogin from '../auth/AuthLoginBtn';
 import AuthLogoutBtn from '../auth/AuthLogoutBtn';
 import RegisterProfile from '../features/RegisterProfile';
@@ -9,6 +9,9 @@ import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { Lessons } from '../pages';
+import { useSelector, useDispatch } from 'react-redux';
+import { openLibrary, closeLibrary } from '../redux/user';
+import { RootState } from '../redux/store';
 
 const NavBar = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -16,6 +19,8 @@ const NavBar = () => {
   const open = Boolean(anchorEl);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLessonsModal, setOpenLessonsModal] = useState(false);
+  const dispatch = useDispatch();
+  const isReading = useSelector((state: RootState) => state.users.isReading);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,11 +34,8 @@ const NavBar = () => {
     const clicked = event.currentTarget.dataset;
     if (clicked.menuItem === 'profile') {
       setOpenProfileModal(!openProfileModal);
-    } else if (clicked.menuItem === 'lessons') {
-      setOpenLessonsModal(!openLessonsModal);
     } else {
       setOpenProfileModal(false);
-      setOpenLessonsModal(false);
     }
   };
 
@@ -96,7 +98,10 @@ const NavBar = () => {
               Home
             </Link>
           </MenuItem>
-          <MenuItem onClick={handleModal} data-menu-item='lessons'>
+          <MenuItem
+            onClick={() => dispatch(openLibrary())}
+            data-menu-item='lessons'
+          >
             <ListItemIcon className='icon-menu-item'>
               <MenuBook sx={{ width: 32, height: 32 }} />
             </ListItemIcon>
@@ -113,13 +118,11 @@ const NavBar = () => {
         <BasicModal open={openProfileModal} handleModal={handleModal}>
           <RegisterProfile />
         </BasicModal>
-        <BasicModal
-          open={openLessonsModal}
-          handleModal={handleModal}
-          padding={0}
-        >
-          <Lessons />
-        </BasicModal>
+        {isReading && (
+          <BasicModal open={isReading} padding={0}>
+            <Lessons />
+          </BasicModal>
+        )}
       </div>
     </>
   );
