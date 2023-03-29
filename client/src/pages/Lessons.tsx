@@ -84,14 +84,16 @@ const Lessons = () => {
           >
             Lessons
           </Typography>
-          <Button
-            color='success'
-            variant='contained'
-            data-button-clicked='new-lesson'
-            onClick={(event) => handleModal(event, '')}
-          >
-            Create New Lesson
-          </Button>
+          {!user.student && (
+            <Button
+              color='success'
+              variant='contained'
+              data-button-clicked='new-lesson'
+              onClick={(event) => handleModal(event, '')}
+            >
+              Create New Lesson
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Container maxWidth='sm'>
