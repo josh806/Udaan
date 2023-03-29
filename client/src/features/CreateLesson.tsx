@@ -12,8 +12,10 @@ import {
   Input,
   InputLabel,
   SelectChangeEvent,
+  Tooltip,
+  IconButton,
 } from '@mui/material';
-import { MenuBook } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import moment from 'moment';
 import { Lesson, Subject } from '../types/types';
 import * as userService from '../services/user.service';
@@ -72,7 +74,14 @@ const CreateLesson: React.FC<CreateLessonProps> = ({
     <div className='lesson-form'>
       <AppBar position='static'>
         <Toolbar>
-          <MenuBook />
+          <Tooltip title='Back'>
+            <IconButton
+              color='inherit'
+              onClick={() => setOpenCreateLessonModal(false)}
+            >
+              <ArrowBack />
+            </IconButton>
+          </Tooltip>
           <Typography
             variant='h6'
             component='div'

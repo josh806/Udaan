@@ -19,7 +19,7 @@ const style = {
 
 type Props = {
   open: any;
-  handleModal: any;
+  handleModal?: any;
   children: JSX.Element;
   padding?: number;
 };
