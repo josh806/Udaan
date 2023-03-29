@@ -26,12 +26,14 @@ const AuthRequired = ({ children }: Props): JSX.Element => {
 
         if ('error' in response) {
           // New user => redirect to profile
-          navigate(routes.profile, {
-            state: {
-              authUser: auth.user,
-              message: 'Please fill out your details',
-            },
-          });
+          setTimeout(() => {
+            navigate(routes.profile, {
+              state: {
+                authUser: auth.user,
+                message: 'Please fill out your details',
+              },
+            });
+          }, 3000);
         } else {
           // Registered user
           response.avatar = 'Dona';
