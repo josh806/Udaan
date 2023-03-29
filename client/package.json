@@ -28,7 +28,8 @@
     "react-router-dom": "^6.9.0",
     "white-react-sdk": "^2.16.41",
     "white-web-sdk": "^2.16.41",
-    "@tinymce/tinymce-react" : "^3.11.2"
+    "@tinymce/tinymce-react" : "^3.11.2",
+    "agora-chat" : "latest"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
