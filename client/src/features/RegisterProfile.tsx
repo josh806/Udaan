@@ -3,35 +3,23 @@ import * as userService from '../services/user.service';
 import { User } from '../types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/user';
+import { showNewAlert } from '../redux/alert';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 import Field from '../components/Field';
-import { Box, Alert, Button, Grid, Slide, Typography } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import avatar from '../utils/avatar';
-
-const initialUser = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  username: '',
-  student: true,
-  schoolId: '1',
-  avatar: '',
-};
+import Avatars from './Avatars/Avatars';
+import { Box, Button, Grid, Typography, AlertColor } from '@mui/material';
+import routes from '../utils/routes';
 
 const RegisterProfile = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const storedUser = useSelector((state: RootState) => state.users);
   const dispatch = useDispatch();
 
-  const [currUser, setCurrUser] = useState<User>(initialUser);
-  const [successMessage, setSuccessMessage] = useState({
-    show: false,
-    message: '',
-  });
+  const [currUser, setCurrUser] = useState<User>(storedUser);
 
   const [usernameChanged, setUsernameChanged] = useState(false);
   const content = location.state?.message || 'Update your information';
@@ -58,7 +46,7 @@ const RegisterProfile = () => {
     } else {
       setCurrUser(storedUser);
     }
-  }, []);
+  }, [storedUser]);
 
   const usernameExists = async (username: string) => {
     const result = await userService.getUserByUsername(username);
@@ -67,7 +55,11 @@ const RegisterProfile = () => {
 
   async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const tmpCurrUser = { ...currUser };
-    const userKey = e.target.name as 'firstName' | 'lastName' | 'username';
+    const userKey = e.target.name as
+      | 'firstName'
+      | 'lastName'
+      | 'username'
+      | 'avatar';
     tmpCurrUser[userKey] = e.target.value;
 
     if (userKey === 'username') setUsernameChanged(true);
@@ -105,6 +97,7 @@ const RegisterProfile = () => {
         successMessage = 'Successfully updated user';
       }
 
+      // Update user
       dispatch(
         updateUser({
           ...userFromDb,
@@ -113,10 +106,17 @@ const RegisterProfile = () => {
         })
       );
 
-      setSuccessMessage({
-        show: true,
-        message: successMessage,
-      });
+      // Refresh page
+      navigate(0);
+
+      // Show alert
+      dispatch(
+        showNewAlert({
+          message: successMessage,
+          severity: 'success' as AlertColor,
+          checked: true,
+        })
+      );
     }
   };
 
@@ -130,21 +130,23 @@ const RegisterProfile = () => {
   return (
     <>
       <div className="profile">
-        <Typography
-          variant="h4"
-          gutterBottom
-        >
-          My Profile
-        </Typography>
-
-        {content && (
+        <div className="profile__content">
           <Typography
-            variant="subtitle1"
+            variant="h4"
             gutterBottom
           >
-            {content}
+            My Profile
           </Typography>
-        )}
+
+          {content && (
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+            >
+              {content}
+            </Typography>
+          )}
+        </div>
 
         <div className="_form">
           <Box
@@ -205,10 +207,27 @@ const RegisterProfile = () => {
                 item
                 xs={12}
               >
+                <Typography
+                  variant="subtitle1"
+                  gutterBottom
+                  align="left"
+                >
+                  Choose avatar
+                </Typography>
+                <Avatars
+                  valChecked={currUser.avatar}
+                  handleChange={handleChange}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+              >
                 <Button
                   className="_form__field _form__field--submit"
                   type="submit"
                   variant="contained"
+                  size="large"
                 >
                   Save
                 </Button>
@@ -217,22 +236,6 @@ const RegisterProfile = () => {
           </Box>
         </div>
       </div>
-
-      {successMessage.message && (
-        <Slide
-          direction="down"
-          in={successMessage.show}
-          mountOnEnter
-          unmountOnExit
-        >
-          <Alert
-            icon={<CheckIcon fontSize="inherit" />}
-            severity="success"
-          >
-            {successMessage.message}
-          </Alert>
-        </Slide>
-      )}
     </>
   );
 };

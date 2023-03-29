@@ -10,7 +10,7 @@ import NavBar from '../components/NavBar';
 import Profile from '../features/RegisterProfile';
 
 const School = () => {
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleModal = () => {
     setOpenModal(!openModal);
