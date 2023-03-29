@@ -1,5 +1,6 @@
 .Home_background {
   font-family: 'Playfair Display', serif;
+  background-color: white;
   height: 100%;
   width: 100%;
   display: flex;
@@ -60,7 +61,7 @@
   background-color: #183a1d;
   color: white;
 }
-.signin{
+.signin {
   width: 100px;
   height: 30px;
   border: none;
@@ -71,37 +72,37 @@
 .signin_button button:hover {
   cursor: pointer;
 }
-.Home_nav{
+.Home_nav {
   background-color: white;
   z-index: 3;
   overflow: hidden;
   position: sticky;
-  height:70px;
-  top:0;
+  height: 70px;
+  top: 0;
   box-shadow: 3px -5px 4px 2px;
-  display:flex;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.logo{
-  padding-left:20px;
+.logo {
+  padding-left: 20px;
 }
-.Home_nav_options{
+.Home_nav_options {
   display: flex;
   outline: none;
   list-style: none;
-  margin:10px 30px;
+  margin: 10px 30px;
 }
-.Home_nav_options>li{
+.Home_nav_options > li {
   margin: 0px 80px;
 }
-.Home_nav_options>li:hover{
+.Home_nav_options > li:hover {
   cursor: pointer;
 }
 
-.Home_bottom{
+.Home_bottom {
   padding: 0 10vw 0 10vw;
-    font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', serif;
 }
 
 .Home_bottom h1 {
@@ -111,7 +112,7 @@ justify-content: space-between;
 }
 
 .Home_bottom p {
-    text-align: justify;
+  text-align: justify;
 }
 
 .pricing_elements {
@@ -121,16 +122,20 @@ justify-content: space-between;
   justify-content: space-around;
 }
 
-.element_1, .element_2, .element_3 {
+.element_1,
+.element_2,
+.element_3 {
   margin: 5px 20px 15px 20px;
   border: black solid;
-  width: 300px ;
+  width: 300px;
   text-align: center;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.pricing_elements p{
+.pricing_elements p {
   text-align: center;
 }
 
@@ -154,7 +159,7 @@ justify-content: space-between;
   padding: 10px 0 10px 0;
   color: white;
   border-radius: 30px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   border: none;
 }
 
@@ -162,19 +167,21 @@ justify-content: space-between;
   cursor: pointer;
 }
 
-.pricing_elements .price_advantage{
+.pricing_elements .price_advantage {
   font-weight: bold;
 }
 
-.element_1 .title, .element_1 button {
-    background-color: rgb(160, 31, 31);
+.element_1 .title,
+.element_1 button {
+  background-color: rgb(160, 31, 31);
 }
 
-.element_2 .title, .element_2 button {
-    background-color: #183a1d;
+.element_2 .title,
+.element_2 button {
+  background-color: #183a1d;
 }
 
-.element_3 .title, .element_3 button {
-    background-color:rgb(23, 23, 117);
+.element_3 .title,
+.element_3 button {
+  background-color: rgb(23, 23, 117);
 }
-
