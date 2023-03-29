@@ -15,6 +15,7 @@ import NoteTaking from '../notes/NoteTaking';
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
   '007eJxTYLhTuL4haRaL7rOOZ+q3r9/+cet0+BRH9UNPZfKfqP2WM4tTYLC0MDIzM0tJTTJKTDIxSTVPNE5MsjQFAgNzsyQLM5PCb8opDYGMDOK/mhkYoRDE52EISS0uCc8syfDKz8pnYAAACmokPQ==';
+
 const useClient = createClient({
   mode: 'rtc',
   codec: 'vp8',
@@ -87,7 +88,7 @@ const VideoCall = () => {
 
   return (
     <>
-      <div className="videocall-container">
+      <div className='videocall-container'>
         {/* {ready && tracks && ( */}
         <Controls
           client={client}
@@ -104,6 +105,7 @@ const VideoCall = () => {
           />
         )}
         {showNote && <NoteTaking/>}
+
         {showWhiteboard && <Fastboard />}
       </div>
     </>

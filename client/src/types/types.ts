@@ -9,7 +9,7 @@ export type User = {
   newUser?: boolean;
   schoolId: string;
   inCall?: boolean;
-  isReading?: boolean;
+  isReading: boolean;
 };
 export type Library = {
   id: string;

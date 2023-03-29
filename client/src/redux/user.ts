@@ -8,7 +8,6 @@ import { User } from '../types/types';
 // Define the initial state using that type
 const initialState: User = {
   inCall: false,
-  isReading: false,
   id: '',
   firstName: '',
   lastName: '',
@@ -16,8 +15,9 @@ const initialState: User = {
   username: '',
   student: true,
   newUser: true,
-  schoolId: '',
+  schoolId: 'a1b2',
   avatar: 'Jake',
+  isReading: false,
 };
 
 export const userSlice = createSlice({

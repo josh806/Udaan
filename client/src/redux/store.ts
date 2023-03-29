@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import usersReducer from './user';
 import lessonReducer from './lesson';
+import loadingReducer from './loading';
+import alertReducer from './alert';
 
 export const store = configureStore({
   reducer: {
     users: usersReducer,
     lesson: lessonReducer,
-
+    loading: loadingReducer,
+    alert: alertReducer,
   },
 });
 

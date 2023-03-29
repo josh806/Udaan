@@ -3,10 +3,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import NotFound from './NotFound';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import Loading from '../features/Loading';
 import routes from '../utils/routes';
 import * as userService from '../services/user.service';
 import * as reduxUser from '../redux/user';
+import * as reduxLoading from '../redux/loading';
 
 type Props = {
   children: JSX.Element | undefined;
@@ -25,17 +26,18 @@ const AuthRequired = ({ children }: Props): JSX.Element => {
 
         if ('error' in response) {
           // New user => redirect to profile
-          navigate(routes.profile, {
-            state: {
-              authUser: auth.user,
-              message: 'Please fill out your details',
-            },
-          });
+          setTimeout(() => {
+            navigate(routes.profile, {
+              state: {
+                authUser: auth.user,
+                message: 'Please fill out your details',
+              },
+            });
+          }, 3000);
         } else {
           // Registered user
-          response.avatar = 'Dona';
-          console.log(response);
           dispatch(reduxUser.updateUser(response));
+          dispatch(reduxLoading.registeredInDatabase());
         }
       }
       setLoading(false);
@@ -43,7 +45,7 @@ const AuthRequired = ({ children }: Props): JSX.Element => {
   }, [auth.user]);
 
   if (auth.isLoading || loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return auth.isAuthenticated && children ? children : <NotFound />;

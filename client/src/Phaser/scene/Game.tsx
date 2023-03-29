@@ -2,9 +2,10 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../../server/colyseus/MySchoolSchema';
 import { store } from '../../redux/store';
-import { enterVideoCall, openLibrary } from '../../redux/user';
+import { enterVideoCall, openLibrary, closeLibrary } from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
+import { loadingComplete } from '../../redux/loading';
 import {
   showInstruction,
   hideInstruction,
@@ -36,11 +37,12 @@ export default class Game extends Phaser.Scene {
   private chairPosition = [0, 0];
   private chairDirection!: string;
   private avatar!: string;
-  private localRef!: Phaser.GameObjects.Rectangle;
-  private remoteRef!: Phaser.GameObjects.Rectangle;
+  private role = 'Student';
 
   // private client = new Client(import.meta.env.VITE_PHASER);
+
   private client = new Client('ws://192.168.0.184:4001');
+
   private room!: Room;
 
   private playerEntities: {
@@ -67,13 +69,28 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.cameras.main.setZoom(0.75);
+    this.cameras.main.centerOn(3500, 3500);
+    const user = store.getState();
+    this.avatar = user.users.avatar;
+    const isStudent = user.users.student;
+    console.log(`student?: ${isStudent}`);
+    if (!isStudent) {
+      this.role = 'Teacher';
+    }
+    console.log(`assets/${this.role}/${this.avatar}/${this.avatar}.png`);
+    console.log(`assets/${this.role}/${this.avatar}/${this.avatar}.png`);
+    this.load.atlas(
+      `${this.avatar}`,
+      `assets/${this.role}/${this.avatar}/${this.avatar}.png`,
+      `assets/${this.role}/${this.avatar}/${this.avatar}.json`
+    );
   }
 
   async create() {
     const user = store.getState();
     if (user) {
-      this.userName = user.users.firstName;
-      this.avatar = user.users.avatar;
+      this.userName = user.users.username;
     }
 
     //create map
@@ -113,6 +130,18 @@ export default class Game extends Phaser.Scene {
         console.log('sesion id', sessionId);
         if (sessionId === this.room.sessionId) {
           this.currentPlayer = entity;
+          this.cameras.main.setBounds(0, 0, 7200, 6200, true);
+          this.physics.world.setBounds(
+            0,
+            0,
+            7200,
+            6200,
+            true,
+            true,
+            true,
+            true
+          );
+          this.currentPlayer.body.collideWorldBounds = true;
           this.cameras.main.setZoom(0.75);
           this.cameras.main.startFollow(this.currentPlayer, true);
           this.playerName = this.add
@@ -128,6 +157,7 @@ export default class Game extends Phaser.Scene {
             .setVisible(true)
             .setOrigin(0.5)
             .setFontSize(16);
+
           // add collision between layers
           this.physics.add.collider(this.currentPlayer, genericLayer);
           this.physics.add.collider(this.currentPlayer, libraryPropsLayer);
@@ -205,6 +235,8 @@ export default class Game extends Phaser.Scene {
     );
     this.O = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+
+    store.dispatch(loadingComplete());
   }
 
   public checkCollision() {
@@ -236,9 +268,7 @@ export default class Game extends Phaser.Scene {
     this.chairPosition[0] = chair.pixelX + chair.width / 2;
     this.chairPosition[1] = chair.pixelY + chair.height / 2;
     this.checkCollisions = true;
-    console.log(this.collisionCounter);
     if (this.collisionCounter === 0) {
-      console.log('enter library');
       showInstruction(this, 'Press' + ' O ' + 'to view your lessons');
       this.collisionCounter++;
     }
@@ -259,8 +289,9 @@ export default class Game extends Phaser.Scene {
     }
     if (user.users.isReading) {
       this.isReading = user.users.isReading;
-      console.log(this.isReading);
+      this.input.keyboard.manager.enabled = false;
     } else {
+      this.input.keyboard.manager.enabled = true;
       this.isReading = false;
     }
     this.inputPayload.left[0] = this.cursorKeys.left.isDown;

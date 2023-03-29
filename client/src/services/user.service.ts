@@ -2,7 +2,7 @@
 Add try/catch blocks on each request --------------
 */
 
-import { Lesson, User } from '../types/types';
+import { Lesson, NoteBook, User } from '../types/types';
 
 const usersDomain = import.meta.env.VITE_SERVER_DOMAIN;
 
@@ -66,9 +66,9 @@ export const getNotebyUserLesson = async (userId: string, lessonId: string) => {
   }
 };
 
-export const getAllLessons = async (userId: string) => {
+export const getAllLessons = async (schoolId: string) => {
   try {
-    const response = await fetch(`${usersDomain}/library/${userId}`);
+    const response = await fetch(`${usersDomain}/lesson/school/${schoolId}`);
     return response.json();
   } catch (error) {
     console.log(error);
@@ -92,6 +92,26 @@ export const postNewLesson = async (lesson: Lesson) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(lesson),
+    });
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const editNote = async (
+  userId: string,
+  lessonId: string,
+  note: string
+) => {
+  console.log(note);
+  try {
+    const response = await fetch(`${usersDomain}/noteBook`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ note, userId, lessonId }),
     });
     return response.json();
   } catch (error) {
