@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as userService from '../services/user.service';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { Lesson, NoteBook } from '../types/types';
+import { Lesson} from '../types/types';
 import {
   AppBar,
   Toolbar,
@@ -20,7 +20,6 @@ import BasicModal from '../components/BasicModal';
 import Notes from '../features/Notes';
 import CreateLesson from '../features/CreateLesson';
 import './Lessons.css';
-import AuthRequired from './AuthRequired';
 import { useDispatch } from 'react-redux';
 import { closeLibrary } from '../redux/user';
 

@@ -1,7 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { Lesson } from '../types/types';
-
 const initialState = {
   isLoading: true,
   isRegistered: false,
