@@ -7,11 +7,11 @@ import './Avatars.css';
 import { Grid } from '@mui/material';
 
 type Props = {
-  valChecked?: string;
+  valChecked: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-function Avatars({ valChecked, handleChange }: Props) {
+function Avatars({ valChecked = 'Jake', handleChange }: Props) {
   const user = useSelector((state: RootState) => state.users);
   const [availableAvatars, setAvailableAvatars] = useState({});
 

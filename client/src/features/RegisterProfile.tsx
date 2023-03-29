@@ -33,7 +33,7 @@ const RegisterProfile = () => {
   });
 
   useEffect(() => {
-    if (location.state?.authUser) {
+    if (location.state?.authUser && location.state.newUser === undefined) {
       const { authUser } = location.state;
 
       // New user
@@ -43,6 +43,8 @@ const RegisterProfile = () => {
         email: authUser.email,
         newUser: true,
       });
+
+      location.state.newUser = false;
     } else {
       setCurrUser(storedUser);
     }
@@ -107,7 +109,7 @@ const RegisterProfile = () => {
       );
 
       // Refresh page
-      navigate(0);
+      navigate(routes.school);
 
       // Show alert
       dispatch(
