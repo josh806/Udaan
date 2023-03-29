@@ -11,7 +11,7 @@ function App() {
         <Route path={routes.home} element={<pages.Home />} />
         <Route path={routes.profile} element={<pages.Profile />} />
         <Route path={routes.school} element={<pages.School />} />
-        <Route path={routes.lessons} element={<pages.Lessons />} />
+        {/* <Route path={routes.lessons} element={<pages.Lessons />} /> */}
         <Route path='*' element={<pages.NotFound />} />
       </Routes>
     </div>
