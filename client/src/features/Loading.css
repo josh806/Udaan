@@ -1,0 +1,12 @@
+.loading_page_background {
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading_avatar {
+margin: 10px;
+}

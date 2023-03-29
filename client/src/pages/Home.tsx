@@ -1,13 +1,12 @@
 import React from 'react';
 import './Home.css';
-import alex from '../assets/reading.gif';
-import mark from '../assets/mark_sitting_left.gif';
-import adam from '../assets/adam_phone.gif';
+import alex from '../assets/gifs/homepage/reading.gif';
+import mark from '../assets/gifs/homepage/mark_sitting_left.gif';
+import adam from '../assets/gifs/homepage/adam_phone.gif';
 import AuthLoginBtn from '../auth/AuthLoginBtn';
 import About from '../components/homepage/About';
 import Features from '../components/homepage/Features';
 import Pricing from '../components/homepage/Pricing';
-import Loading from '../features/Loading';
 
 function Home() {
   const handleClickScroll = (text: string) => {
@@ -29,13 +28,17 @@ function Home() {
       <nav className='Home_nav'>
         <div className='logo'>Logo</div>
         <div className='Home_nav_options'>
-          <li onClick={(e) => handleClickScroll(e.currentTarget.innerText) }>About</li>
-          <li onClick={(e) => handleClickScroll(e.currentTarget.innerText) }>Features</li>
-          <li onClick={(e) => handleClickScroll(e.currentTarget.innerText) }>Pricing</li>
+          <li onClick={(e) => handleClickScroll(e.currentTarget.innerText)}>
+            About
+          </li>
+          <li onClick={(e) => handleClickScroll(e.currentTarget.innerText)}>
+            Features
+          </li>
+          <li onClick={(e) => handleClickScroll(e.currentTarget.innerText)}>
+            Pricing
+          </li>
         </div>
-        <div>
-          {/* <button className='signin'>Sign in</button> */}
-        </div>
+        <div>{/* <button className='signin'>Sign in</button> */}</div>
       </nav>
       <div className='Home_background'>
         <div className='details'>
@@ -58,11 +61,8 @@ function Home() {
         <Features />
         <Pricing />
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </>
-    // <Loading />
   );
 }
 
