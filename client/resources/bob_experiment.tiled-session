@@ -1,12 +1,7 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
     "activeFile": "udaan_backup.tmx",
     "expandedProjectPaths": [
     ],
-    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
             "scaleInDock": 0.6948,
@@ -70,11 +65,11 @@
             "scaleInEditor": 1
         },
         "udaan_backup.tmx": {
-            "scale": 0.1957,
-            "selectedLayer": 5,
+            "scale": 0.09,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 3597.3428717424626,
-                "y": 3119.5707715891667
+                "x": 4355.555555555556,
+                "y": 4161.11111111111
             }
         },
         "udaan_backup.tmx#Bathroom": {
@@ -180,35 +175,14 @@
             "scaleInEditor": 0.3
         }
     },
-    "frame.defaultDuration": 30,
-    "last.exportedFilePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles",
-    "last.externalTilesetPath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles",
-    "last.imagePath": "/Users/josh/Thesis-Project/classzoom/client/public/tiles/Exterior",
-    "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
-    "map.height": 300,
-    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
-    "map.lastUsedFormat": "tmx",
-    "map.tileHeight": 48,
-    "map.tileWidth": 48,
-    "map.width": 300,
     "openFiles": [
         "udaan_backup.tmx"
     ],
     "project": "bob_experiment.tiled-project",
-    "property.type": "string",
     "recentFiles": [
         "udaan_backup.tmx",
         "classroom.tmx",
         "Udaan.tsx",
         "school 2.0.tmx"
-    ],
-    "resizeMap.removeObjects": false,
-    "tileset.embedInMap": true,
-    "tileset.lastUsedFilter": "All Files (*)",
-    "tileset.lastUsedFormat": "tsx",
-    "tileset.tileSize": {
-        "height": 48,
-        "width": 48
-    },
-    "tileset.type": 0
+    ]
 }

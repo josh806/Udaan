@@ -13,7 +13,7 @@ import Fastboard from '../InteractiveWhiteboard/FastBoard';
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
-  '007eJxTYNjy+tOSL85PNP7m7fjLlpdgeH3DtAvJK6d9O/2lIMhKq41NgcHSwsjMzCwlNckoMcnEJNU80TgxydIUCAzMzZIszEyEtiumNAQyMmQVbWFiZIBAEJ+HISS1uCQ8syTDKz8rn4EBAF94JKQ=';
+  '007eJxTYJB/PI9r/bXWzgt7ZjGfuWrm9mbXviWLtPmdb1zRUCtxi16pwGBpYWRmZpaSmmSUmGRikmqeaJyYZGkKBAbmZkkWZiYfOJVTGgIZGUL2v2ViZIBAEJ+HISS1uCQ8syTDKz8rn4EBAJ96IxU=';
 const useClient = createClient({
   mode: 'rtc',
   codec: 'vp8',
@@ -79,13 +79,13 @@ const VideoCall = () => {
   useEffect(() => {
     if (ready && tracks) {
       init(channelName);
-      initWhiteboard('95b2a502-6ab1-4739-aeb5-86356222b33c');
+      initWhiteboard('38a67a76-68c2-4a61-b1de-4d59353185bc');
     }
   }, [channelName, client, ready, tracks]);
 
   return (
     <>
-      <div className="videocall-container">
+      <div className='videocall-container'>
         {/* {ready && tracks && ( */}
         <Controls
           client={client}
@@ -94,12 +94,7 @@ const VideoCall = () => {
           whiteboardState={{ showWhiteboard, setShowWhiteboard }}
         />
         {/* )} */}
-        {start && tracks && (
-          <Videos
-            users={remoteUsers}
-            tracks={tracks}
-          />
-        )}
+        {start && tracks && <Videos users={remoteUsers} tracks={tracks} />}
         {showWhiteboard && <Fastboard />}
       </div>
     </>
