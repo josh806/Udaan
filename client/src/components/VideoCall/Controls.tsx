@@ -17,8 +17,13 @@ const Controls = (props: {
     showWhiteboard: boolean;
     setShowWhiteboard: React.Dispatch<React.SetStateAction<boolean>>;
   };
+  noteState: {
+    showNote: boolean;
+    setNote: React.Dispatch<React.SetStateAction<boolean>>;
+  }
 }) => {
   const { showWhiteboard, setShowWhiteboard } = props.whiteboardState;
+  const { showNote, setNote } = props.noteState;
   const dispatch = useDispatch();
   const { tracks, setStart, client } = props;
   const [trackState, setTrackState] = useState({
@@ -51,6 +56,10 @@ const Controls = (props: {
     setShowWhiteboard(!showWhiteboard);
   };
 
+  const toggleNote = () => {
+    setNote(!showNote);
+  };
+
   return (
     <div className="controls">
       <muiIcons.Button
@@ -65,6 +74,19 @@ const Controls = (props: {
           ) : (
             <muiIcons.WebAssetIcon />
           )}
+        </muiIcons.Icon>
+        <span className="_btn__label">
+          {showWhiteboard ? 'No Whiteboard' : 'Whiteboard'}
+        </span>
+      </muiIcons.Button>
+      <muiIcons.Button
+        color="info"
+        variant="contained"
+        onClick={toggleNote}
+        className="_btn"
+      >
+        <muiIcons.Icon className="_btn__icon">
+          <muiIcons.TextSnippet/>
         </muiIcons.Icon>
         <span className="_btn__label">
           {showWhiteboard ? 'No Whiteboard' : 'Whiteboard'}

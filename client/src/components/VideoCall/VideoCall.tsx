@@ -10,6 +10,7 @@ import * as reduxLesson from '../../redux/lesson';
 import { useDispatch } from 'react-redux';
 
 import Fastboard from '../InteractiveWhiteboard/FastBoard';
+import NoteTaking from '../notes/NoteTaking';
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
@@ -25,6 +26,7 @@ const VideoCall = () => {
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
   const [start, setStart] = useState<boolean>(false);
   const [showWhiteboard, setShowWhiteboard] = useState(false);
+  const [showNote, setNote] = useState(false);
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
   const dispatch = useDispatch();
@@ -92,6 +94,7 @@ const VideoCall = () => {
           tracks={tracks}
           setStart={setStart}
           whiteboardState={{ showWhiteboard, setShowWhiteboard }}
+          noteState={{ showNote, setNote }}
         />
         {/* )} */}
         {start && tracks && (
@@ -100,6 +103,7 @@ const VideoCall = () => {
             tracks={tracks}
           />
         )}
+        {showNote && <NoteTaking/>}
         {showWhiteboard && <Fastboard />}
       </div>
     </>
