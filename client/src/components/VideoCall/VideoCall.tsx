@@ -106,36 +106,4 @@ const VideoCall = () => {
     </>
   );
 };
-
-/*
-//Form to enter the channel name, to be used for teachers to create class.
-// right now it is for entering the class. need to be refactored
-// const ChannelForm = (props: {
-//   setInCall: React.Dispatch<React.SetStateAction<boolean>>;
-//   setChannelName: React.Dispatch<React.SetStateAction<string>>;
-// }) => {
-//   const { setInCall, setChannelName } = props;
-//   return (
-//     <form className="join">
-//       {appId === '' ? (
-//         <p style={{ color: 'red' }}>Please enter your Student ID</p>
-//       ) : null}
-//       <input
-//         type="text"
-//         placeholder="Enter Channel Name"
-//         onChange={(e) => setChannelName(e.target.value)}
-//       />
-//       <button
-//         onClick={(e) => {
-//           e.preventDefault();
-//           setInCall(true);
-//         }}
-//       >
-//         Join
-//       </button>
-//     </form>
-//   );
-// };
-*/
-
 export default VideoCall;
