@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../../server/colyseus/MySchoolSchema';
 import { store } from '../../redux/store';
-import { enterVideoCall, openLibrary, closeLibrary } from '../../redux/user';
+import { enterVideoCall, openLibrary} from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
 import { loadingComplete } from '../../redux/loading';
@@ -47,6 +47,9 @@ export default class Game extends Phaser.Scene {
   private playerEntities: {
     [sessionId: string]: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   } = {};
+  private Allavatars: {
+    [sessionId: string]: string;
+  } = {};
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys;
 
   public inputPayload = {
@@ -66,7 +69,6 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
   }
-
   preload() {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.cameras.main.setZoom(0.75);
@@ -145,10 +147,18 @@ export default class Game extends Phaser.Scene {
     try {
       this.room = await this.client.joinOrCreate('my_school');
       console.log('Joined successfully!');
+      this.room.send('avatar', { avatar: this.avatar });
+      this.Allavatars[this.room.sessionId] = this.avatar;
 
       this.room.state.players.onAdd((player: Player, sessionId: string) => {
-        const entity = this.physics.add.sprite(player.x, player.y, this.avatar);
+        this.Allavatars[sessionId] = player.avatar;
+        const entity = this.physics.add.sprite(
+          player.x,
+          player.y,
+          this.Allavatars[sessionId]
+        );
         this.playerEntities[sessionId] = entity;
+        console.log(this.playerEntities);
         console.log('sesion id', sessionId);
         if (sessionId === this.room.sessionId) {
           this.currentPlayer = entity;
@@ -236,7 +246,11 @@ export default class Game extends Phaser.Scene {
         }
 
         //animations
-        createAnimation(entity, this.avatar);
+        for (sessionId in this.playerEntities) {
+          const entity = this.playerEntities[sessionId];
+          const avatar = this.Allavatars[sessionId];
+          createAnimation(entity, avatar);
+        }
       });
 
       this.room.state.players.onRemove((player: Player, sessionId: string) => {
@@ -383,6 +397,7 @@ export default class Game extends Phaser.Scene {
       if ((!this.sitting || !this.inCall) && !this.isReading) {
         this.currentPlayer.anims.play('idle', true);
         this.inputPayload.sit[0] = false;
+        this.inputPayload.reading[0] = false;
         this.room.send('move', this.inputPayload);
       }
     }
@@ -395,11 +410,9 @@ export default class Game extends Phaser.Scene {
       }
       const entity = this.playerEntities[sessionId];
       const { serverX, serverY, animation, avatar } = entity.data.values;
-
       entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
       entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
       entity.anims.play(`${animation}`, true);
-      entity.texture.manager.setTexture(entity, avatar);
     }
 
     this.checkCollisions = false;
