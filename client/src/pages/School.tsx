@@ -6,7 +6,7 @@ import BasicModal from '../components/BasicModal';
 import PhaserRoot from '../Phaser/Phaser';
 import { RootState } from '../redux/store';
 
-import NavBar from '../components/NavBar';
+import NavBar from '../components/Navbar/NavbarDropdown';
 import Profile from '../features/RegisterProfile';
 
 const School = () => {
@@ -21,22 +21,28 @@ const School = () => {
 
   return (
     <AuthRequired>
-      <>
+      <div className="schoolPage">
         <NavBar />
         {chat && (
-          <button className='open_chat' onClick={() => setChat(!chat)}>
+          <button
+            className="open_chat"
+            onClick={() => setChat(!chat)}
+          >
             Show chat
           </button>
         )}
         {!newUser && <PhaserRoot />}
         {newUser && (
-          <BasicModal open={openModal} handleModal={handleModal}>
+          <BasicModal
+            open={openModal}
+            handleModal={handleModal}
+          >
             <Profile />
           </BasicModal>
         )}
 
         {inCall && <VideoCall />}
-      </>
+      </div>
     </AuthRequired>
   );
 };

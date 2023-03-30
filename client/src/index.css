@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #447e71;
+  --primary-color-hover: #3d7467;
+}
+
+body,
+body * {
+  font-family: 'Raleway', sans-serif;
+}
+
 ._btn {
   position: relative;
   display: inline-block !important;
@@ -42,4 +54,39 @@
 .example {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+._btnCustom {
+  background-color: var(--primary-color) !important;
+  text-transform: none !important;
+  padding: 6px 2.5rem !important;
+}
+._btnCustom:hover {
+  background-color: var(--primary-color-hover) !important;
+}
+
+.menu--center a {
+  display: block;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 5px;
+  transition: 0.2s all;
+}
+.menu--center a:hover,
+.menu__item--active a {
+  background-color: var(--primary-color-hover);
+}
+
+.schoolPage .navbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+.navBlank {
+  width: 45px;
+}
+
+#account-menu li.MuiMenuItem-root:last-child {
+  background-color: inherit !important;
 }
