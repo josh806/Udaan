@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Client, Room } from 'colyseus.js';
 import { Player } from '../../../../server/colyseus/MySchoolSchema';
 import { store } from '../../redux/store';
-import { enterVideoCall, openLibrary, closeLibrary } from '../../redux/user';
+import { enterVideoCall, openLibrary} from '../../redux/user';
 import { createAnimation } from '../helperfunctions/CreateAnimation';
 import { createMap } from '../helperfunctions/CreateMap';
 import { loadingComplete } from '../../redux/loading';
@@ -69,7 +69,6 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
   }
-
   preload() {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.cameras.main.setZoom(0.75);

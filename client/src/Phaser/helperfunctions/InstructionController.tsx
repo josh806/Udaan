@@ -1,4 +1,7 @@
-export const showInstruction = (scene: any, message: string) => {
+export const showInstruction = (
+  scene:any,
+  message: string
+) => {
   const screenCenterX = scene.cameras.main.worldView.centerX;
   const screenCenterY = scene.cameras.main.worldView.centerY;
   scene.textBox = scene.add
