@@ -1,21 +1,24 @@
 import React from 'react';
-import AuthLogin from '../auth/AuthLoginBtn';
-import AuthLogoutBtn from '../auth/AuthLogoutBtn';
-import RegisterProfile from '../features/RegisterProfile';
-import BasicModal from './BasicModal';
+import AuthLogin from '../../auth/AuthLoginBtn';
+import AuthLogoutBtn from '../../auth/AuthLogoutBtn';
+import RegisterProfile from '../../features/RegisterProfile';
+import BasicModal from '../BasicModal';
 import { Avatar, Menu, MenuItem, ListItemIcon } from '@mui/material';
-import { Home, School, MenuBook } from '@mui/icons-material';
+import { Home, MenuBook } from '@mui/icons-material';
 import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
-import { Lessons } from '../pages';
+import { Lessons } from '../../pages';
+import { useLocation } from 'react-router-dom';
+import routes from '../../utils/routes';
 
-const NavBar = () => {
+const NavbarDropdown = () => {
   const { isAuthenticated, user } = useAuth0();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLessonsModal, setOpenLessonsModal] = useState(false);
+  const location = useLocation();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,21 +40,62 @@ const NavBar = () => {
     }
   };
 
+  const renderModals = () => {
+    if (location.pathname === routes.school.url) {
+      return (
+        <>
+          <MenuItem
+            onClick={handleModal}
+            data-menu-item="profile"
+          >
+            <Avatar
+              className="menu-item"
+              src={user?.picture}
+            />
+            My Profile
+          </MenuItem>
+          <MenuItem>
+            <Link
+              className="menu-item"
+              to="/"
+            >
+              <ListItemIcon className="icon-menu-item">
+                <Home sx={{ width: 32, height: 32 }} />
+              </ListItemIcon>
+              Home
+            </Link>
+          </MenuItem>
+          <MenuItem
+            onClick={handleModal}
+            data-menu-item="lessons"
+          >
+            <ListItemIcon className="icon-menu-item">
+              <MenuBook sx={{ width: 32, height: 32 }} />
+            </ListItemIcon>
+            Lessons
+          </MenuItem>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <>
-      <div className='navbar'>
+      <div className="navbar">
         <Avatar
           onClick={handleClick}
           aria-controls={open ? 'account-menu' : undefined}
-          aria-haspopup='true'
+          aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           src={user?.picture}
-          sx={{ width: 70, height: 70 }}
-          className='avatar'
+          sx={{ width: 45, height: 45 }}
+          className="avatar"
         ></Avatar>
         <Menu
           anchorEl={anchorEl}
-          id='account-menu'
+          id="account-menu"
           open={open}
           onClose={handleClose}
           onClick={handleClose}
@@ -84,24 +128,7 @@ const NavBar = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem onClick={handleModal} data-menu-item='profile'>
-            <Avatar className='menu-item' src={user?.picture} />
-            My Profile
-          </MenuItem>
-          <MenuItem>
-            <Link className='menu-item' to='/'>
-              <ListItemIcon className='icon-menu-item'>
-                <Home sx={{ width: 32, height: 32 }} />
-              </ListItemIcon>
-              Home
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={handleModal} data-menu-item='lessons'>
-            <ListItemIcon className='icon-menu-item'>
-              <MenuBook sx={{ width: 32, height: 32 }} />
-            </ListItemIcon>
-            Lessons
-          </MenuItem>
+          {renderModals()}
           <MenuItem onClick={handleClose}>
             {!isAuthenticated ? (
               <AuthLogin buttonLabel={'Log in'} />
@@ -110,7 +137,10 @@ const NavBar = () => {
             )}
           </MenuItem>
         </Menu>
-        <BasicModal open={openProfileModal} handleModal={handleModal}>
+        <BasicModal
+          open={openProfileModal}
+          handleModal={handleModal}
+        >
           <RegisterProfile />
         </BasicModal>
         <BasicModal
@@ -124,4 +154,4 @@ const NavBar = () => {
     </>
   );
 };
-export default NavBar;
+export default NavbarDropdown;

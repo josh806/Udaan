@@ -25,7 +25,7 @@ const AuthRequired = ({ children }: Props): JSX.Element => {
 
         if ('error' in response) {
           // New user => redirect to profile
-          navigate(routes.profile, {
+          navigate(routes.profile.url, {
             state: {
               authUser: auth.user,
               message: 'Please fill out your details',

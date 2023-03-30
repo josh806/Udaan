@@ -11,7 +11,6 @@ import { RootState } from '../redux/store';
 import Field from '../components/Field';
 import Avatars from './Avatars/Avatars';
 import { Box, Button, Grid, Typography, AlertColor } from '@mui/material';
-import routes from '../utils/routes';
 
 const RegisterProfile = () => {
   const navigate = useNavigate();
