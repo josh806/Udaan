@@ -9,9 +9,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 import Field from '../components/Field';
-import { Box, Button, Grid, Typography } from '@mui/material';
 import Avatars from './Avatars/Avatars';
-import routes from '../utils/routes';
+import { Box, Button, Grid, Typography, AlertColor } from '@mui/material';
 
 const RegisterProfile = () => {
   const navigate = useNavigate();
