@@ -5,6 +5,7 @@ export class Player extends Schema {
   @type('number') y: number;
   @type('string') animation: string;
   @type('string') avatar: string;
+
 }
 
 export class MySchoolSchema extends Schema {
