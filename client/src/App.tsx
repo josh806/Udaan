@@ -45,7 +45,7 @@ function App() {
         />
         <Route
           path={routes.lessons.url}
-          element={<pages.Lessons />}
+          element={<pages.LessonsPage />}
         />
         <Route
           path="*"

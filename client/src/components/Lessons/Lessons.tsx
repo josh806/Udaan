@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import * as userService from '../services/user.service';
+import * as userService from '../../services/user.service';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { Lesson} from '../types/types';
+import { RootState } from '../../redux/store';
+import { Lesson } from '../../types/types';
 import {
   AppBar,
   Toolbar,
@@ -16,12 +16,14 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { MenuBook, Description } from '@mui/icons-material';
-import BasicModal from '../components/BasicModal';
-import Notes from '../features/Notes';
-import CreateLesson from '../features/CreateLesson';
+import BasicModal from '../BasicModal';
+import Notes from '../../features/Notes';
+import CreateLesson from '../../features/CreateLesson';
 import './Lessons.css';
 import { useDispatch } from 'react-redux';
-import { closeLibrary } from '../redux/user';
+import { closeLibrary } from '../../redux/user';
+import { useLocation } from 'react-router-dom';
+import routes from '../../utils/routes';
 
 const Lessons = () => {
   const [lessons, setLessons] = useState([]);
@@ -31,6 +33,7 @@ const Lessons = () => {
   const [openCreateLessonModal, setOpenCreateLessonModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const user = useSelector((state: RootState) => state.users);
 
@@ -71,38 +74,51 @@ const Lessons = () => {
   }, []);
 
   return (
-    // <AuthRequired>
-    <>
-      <AppBar position='static'>
-        <Toolbar>
-          <MenuBook />
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{ flexGrow: 1, marginLeft: 2 }}
-          >
-            Lessons
-          </Typography>
-          {!user.student && (
-            <Button
-              color='success'
-              variant='contained'
-              data-button-clicked='new-lesson'
-              onClick={(event) => handleModal(event, '')}
+    <div className="lessons">
+      {location.pathname !== routes.lessons.url ? (
+        <AppBar
+          className="nav"
+          position="static"
+        >
+          <Toolbar>
+            <MenuBook />
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, marginLeft: 2 }}
             >
-              Create New Lesson
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth='sm'>
+              Lessons
+            </Typography>
+            {!user.student && (
+              <Button
+                color="success"
+                variant="contained"
+                data-button-clicked="new-lesson"
+                onClick={(event) => handleModal(event, '')}
+              >
+                Create New Lesson
+              </Button>
+            )}
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <div className="lessons__content">
+          <Typography
+            variant="h4"
+            gutterBottom
+          >
+            My Lessons
+          </Typography>
+        </div>
+      )}
+      <Container maxWidth="sm">
         <Stack
           spacing={2}
           mt={5}
           mb={5}
-          justifyContent='center'
-          alignItems='center'
-          width='100%'
+          justifyContent="center"
+          alignItems="center"
+          width="100%"
         >
           {loading ? (
             <CircularProgress />
@@ -110,14 +126,17 @@ const Lessons = () => {
             <>
               {allLessons ? (
                 allLessons.map((lesson: Lesson) => (
-                  <Paper key={lesson.id} className='lesson'>
+                  <Paper
+                    key={lesson.id}
+                    className="lesson"
+                  >
                     <Typography>{lesson.name}</Typography>
-                    <Tooltip title='Open Notes'>
+                    <Tooltip title="Open Notes">
                       <>
                         {lessons.some((e: Lesson) => e.id === lesson.id) && (
                           <IconButton
                             onClick={(event) => handleModal(event, lesson.id)}
-                            data-button-clicked='note'
+                            data-button-clicked="note"
                           >
                             <Description />
                           </IconButton>
@@ -133,8 +152,8 @@ const Lessons = () => {
           )}
           <div>
             <Button
-              variant='contained'
-              color='error'
+              variant="contained"
+              color="error"
               sx={{ width: 100 }}
               onClick={() => dispatch(closeLibrary())}
             >
@@ -142,7 +161,10 @@ const Lessons = () => {
             </Button>
           </div>
         </Stack>
-        <BasicModal open={openNotesModal} handleModal={handleModal}>
+        <BasicModal
+          open={openNotesModal}
+          handleModal={handleModal}
+        >
           <Notes
             userId={user.id}
             lessonId={lessonId}
@@ -157,8 +179,7 @@ const Lessons = () => {
           <CreateLesson setOpenCreateLessonModal={setOpenCreateLessonModal} />
         </BasicModal>
       </Container>
-    </>
-    // </AuthRequired>
+    </div>
   );
 };
 

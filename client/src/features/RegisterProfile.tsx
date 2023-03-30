@@ -12,6 +12,8 @@ import Field from '../components/Field';
 import Avatars from './Avatars/Avatars';
 import { Box, Button, Grid, Typography, AlertColor } from '@mui/material';
 
+import routes from '../utils/routes';
+
 const RegisterProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -108,7 +110,11 @@ const RegisterProfile = () => {
       );
 
       // Refresh page
-      navigate(routes.school);
+      if (location.pathname === routes.school.url) {
+        navigate(0); // refresh page
+      } else {
+        navigate(routes.school.url);
+      }
 
       // Show alert
       dispatch(
