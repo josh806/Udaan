@@ -225,7 +225,7 @@ const RegisterProfile = () => {
                 xs={12}
               >
                 <Button
-                  className="_form__field _form__field--submit"
+                  className="_btnCustom _form__field _form__field--submit"
                   type="submit"
                   variant="contained"
                   size="large"

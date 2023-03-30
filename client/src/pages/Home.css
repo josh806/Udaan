@@ -1,15 +1,11 @@
 .Home_background {
   font-family: 'Playfair Display', serif;
-<<<<<<< HEAD
-  background-color: white;
-  height: 100%;
-=======
   height: calc(100vh - 68px);
->>>>>>> josh-navbar
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: #ffffff;
 }
 .homepage_title_container {
   position: relative;
@@ -63,11 +59,7 @@
   border-radius: 5px;
   background-color: #183a1d;
   color: white;
-<<<<<<< HEAD
-}
-=======
 } */
->>>>>>> josh-navbar
 .signin {
   width: 100px;
   height: 30px;

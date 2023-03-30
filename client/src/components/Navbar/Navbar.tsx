@@ -35,7 +35,6 @@ function Navbar({ navItems }: Props) {
   };
 
   const renderMenu = () => {
-    console.log(navItems);
     if (navItems) {
       return navItems.map((item, key) => (
         <Box
@@ -148,7 +147,7 @@ function Navbar({ navItems }: Props) {
               <NavbarDropdown />
             </Box>
           ) : (
-            ''
+            <div className="navBlank" />
           )}
         </Toolbar>
       </Container>

@@ -82,3 +82,11 @@ body * {
   justify-content: flex-end;
   padding: 15px;
 }
+
+.navBlank {
+  width: 45px;
+}
+
+#account-menu li.MuiMenuItem-root:last-child {
+  background-color: inherit !important;
+}

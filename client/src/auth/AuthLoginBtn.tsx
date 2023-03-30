@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 type prop = {
   buttonLabel: string;
-  type: string;
+  type?: string;
 };
 
 const AuthLoginBtn = ({ buttonLabel = 'Log in', type = 'button' }: prop) => {

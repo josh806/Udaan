@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AuthLogin from '../../auth/AuthLoginBtn';
 import AuthLogoutBtn from '../../auth/AuthLogoutBtn';
 import RegisterProfile from '../../features/RegisterProfile';
@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom';
 import { Lessons } from '../../pages';
 import { useLocation } from 'react-router-dom';
 import routes from '../../utils/routes';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import AuthLoginBtn from '../../auth/AuthLoginBtn';
 
 const NavbarDropdown = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -18,7 +21,6 @@ const NavbarDropdown = () => {
   const open = Boolean(anchorEl);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLessonsModal, setOpenLessonsModal] = useState(false);
-  const dispatch = useDispatch();
   const isReading = useSelector((state: RootState) => state.users.isReading);
   const location = useLocation();
 
@@ -32,28 +34,23 @@ const NavbarDropdown = () => {
 
   const handleModal = (event) => {
     const clicked = event.currentTarget.dataset;
+
     if (clicked.menuItem === 'profile') {
       setOpenProfileModal(!openProfileModal);
+    } else if (clicked.menuItem === 'lessons') {
+      setOpenLessonsModal(!openLessonsModal);
     } else {
       setOpenProfileModal(false);
+      setOpenLessonsModal(false);
     }
   };
 
   const renderModals = () => {
     if (location.pathname === routes.school.url) {
-      return (
-        <>
-          <MenuItem
-            onClick={handleModal}
-            data-menu-item="profile"
-          >
-            <Avatar
-              className="menu-item"
-              src={user?.picture}
-            />
-            My Profile
-          </MenuItem>
-          <MenuItem>
+      const modalItems = [
+        {
+          menuItem: {},
+          jsx: (
             <Link
               className="menu-item"
               to="/"
@@ -63,18 +60,47 @@ const NavbarDropdown = () => {
               </ListItemIcon>
               Home
             </Link>
-          </MenuItem>
-          <MenuItem
-            onClick={handleModal}
-            data-menu-item="lessons"
-          >
-            <ListItemIcon className="icon-menu-item">
-              <MenuBook sx={{ width: 32, height: 32 }} />
-            </ListItemIcon>
-            Lessons
-          </MenuItem>
-        </>
-      );
+          ),
+        },
+        {
+          menuItem: {
+            onClick: handleModal,
+            'data-menu-item': 'profile',
+          },
+          jsx: (
+            <>
+              <Avatar
+                className="menu-item"
+                src={user?.picture}
+              />
+              My Profile
+            </>
+          ),
+        },
+        {
+          menuItem: {
+            onClick: handleModal,
+            'data-menu-item': 'lessons',
+          },
+          jsx: (
+            <>
+              <ListItemIcon className="icon-menu-item">
+                <MenuBook sx={{ width: 32, height: 32 }} />
+              </ListItemIcon>
+              Lessons
+            </>
+          ),
+        },
+      ];
+
+      return modalItems.map((item, key) => (
+        <MenuItem
+          key={key}
+          {...item.menuItem}
+        >
+          {item.jsx}
+        </MenuItem>
+      ));
     }
 
     return null;
@@ -130,7 +156,7 @@ const NavbarDropdown = () => {
           {renderModals()}
           <MenuItem onClick={handleClose}>
             {!isAuthenticated ? (
-              <AuthLogin buttonLabel={'Log in'} />
+              <AuthLoginBtn buttonLabel={'Log in'} />
             ) : (
               <AuthLogoutBtn />
             )}
@@ -142,14 +168,13 @@ const NavbarDropdown = () => {
         >
           <RegisterProfile />
         </BasicModal>
-        {isReading && (
-          <BasicModal
-            open={isReading}
-            padding={0}
-          >
-            <Lessons />
-          </BasicModal>
-        )}
+        <BasicModal
+          open={isReading || openLessonsModal}
+          handleModal={handleModal}
+          padding={0}
+        >
+          <Lessons />
+        </BasicModal>
       </div>
     </>
   );

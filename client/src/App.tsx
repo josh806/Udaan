@@ -17,8 +17,6 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const location = useLocation();
 
-  useEffect(() => console.log(location));
-
   useEffect(() => {
     setShowAlert(alert.checked);
   }, [alert]);

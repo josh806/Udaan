@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import AuthLoginBtn from '../auth/AuthLoginBtn';
 import About from '../components/HomePage/About';
@@ -6,8 +6,11 @@ import Features from '../components/HomePage/Features';
 import Pricing from '../components/HomePage/Pricing';
 import Navbar from '../components/Navbar/Navbar';
 import { Typography } from '@mui/material';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Home() {
+  const { isAuthenticated } = useAuth0();
+
   const handleClickScroll = (text: string) => {
     let element;
     if (text === 'About') {
@@ -60,7 +63,7 @@ function Home() {
           </div>
           <div className="signin_button">
             <AuthLoginBtn
-              buttonLabel={'Sign in'}
+              buttonLabel={isAuthenticated ? 'Play' : 'Sign in'}
               type="muiBtn"
             ></AuthLoginBtn>
           </div>
