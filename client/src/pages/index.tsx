@@ -1,7 +1,7 @@
 import Home from './Home';
 import Profile from './Profile';
-import Lessons from './Lessons';
+import LessonsPage from './LessonsPage';
 import School from './School';
 import NotFound from './NotFound';
 
-export { Home, Profile, Lessons, School, NotFound };
+export { Home, Profile, LessonsPage, School, NotFound };

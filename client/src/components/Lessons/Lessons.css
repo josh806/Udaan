@@ -5,3 +5,7 @@
   align-items: center;
   width: 100%;
 }
+
+.nav {
+  background-color: var(--primary-color-hover) !important;
+}

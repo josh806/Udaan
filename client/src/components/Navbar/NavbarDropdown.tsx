@@ -8,7 +8,7 @@ import { Home, MenuBook } from '@mui/icons-material';
 import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
-import { Lessons } from '../../pages';
+import Lessons from '../Lessons/Lessons';
 import { useLocation } from 'react-router-dom';
 import routes from '../../utils/routes';
 import { RootState } from '../../redux/store';
