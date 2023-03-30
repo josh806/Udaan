@@ -1,20 +1,16 @@
 .Home_background {
   font-family: 'Playfair Display', serif;
-  background-color: white;
-  height: 100%;
+  height: calc(100vh - 68px);
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: #ffffff;
 }
 .homepage_title_container {
   position: relative;
   display: flex;
   justify-content: center;
-  height: 8rem;
-}
-.homepage_wrapper {
-  position: absolute;
 }
 .homepage_title {
   position: relative;
@@ -25,8 +21,11 @@
   width: 350px;
 }
 .tagline {
-  display: flex;
-  justify-content: center;
+  text-align: center;
+  margin-top: 5px;
+}
+.tagline > * {
+  font-size: 1.05em !important;
 }
 .gif {
   width: 16px;
@@ -53,14 +52,14 @@
   justify-content: center;
   margin: 20px;
 }
-.signin_button button {
+/* .signin_button button {
   width: 100px;
   height: 30px;
   border: none;
   border-radius: 5px;
   background-color: #183a1d;
   color: white;
-}
+} */
 .signin {
   width: 100px;
   height: 30px;
