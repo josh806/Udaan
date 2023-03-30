@@ -9,21 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 import Field from '../components/Field';
-import { Box, Alert, Button, Grid, Slide, Typography } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import avatar from '../utils/avatar';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import Avatars from './Avatars/Avatars';
-
-const initialUser = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  username: '',
-  student: true,
-  schoolId: 'a1b2',
-  avatar: '',
-};
-
+import routes from '../utils/routes';
 
 const RegisterProfile = () => {
   const navigate = useNavigate();
@@ -45,7 +33,7 @@ const RegisterProfile = () => {
   });
 
   useEffect(() => {
-    if (location.state?.authUser) {
+    if (location.state?.authUser && location.state.newUser === undefined) {
       const { authUser } = location.state;
 
       // New user
@@ -55,6 +43,8 @@ const RegisterProfile = () => {
         email: authUser.email,
         newUser: true,
       });
+
+      location.state.newUser = false;
     } else {
       setCurrUser(storedUser);
     }
@@ -119,7 +109,7 @@ const RegisterProfile = () => {
       );
 
       // Refresh page
-      navigate(0);
+      navigate(routes.school);
 
       // Show alert
       dispatch(

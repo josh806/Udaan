@@ -26,8 +26,8 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     updateUser: (state, action: PayloadAction<User>) => {
-      const tempState = { ...action.payload };
-      state = tempState;
+      // const tempState = { ...action.payload };
+      state = action.payload;
       return state;
     },
     enterVideoCall: (state) => {
