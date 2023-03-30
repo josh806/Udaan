@@ -14,7 +14,7 @@ import NoteTaking from '../notes/NoteTaking';
 
 const appId = '982666deb2ab44e7a3ab95555076b864';
 const token: string | null =
-  '007eJxTYLhTuL4haRaL7rOOZ+q3r9/+cet0+BRH9UNPZfKfqP2WM4tTYLC0MDIzM0tJTTJKTDIxSTVPNE5MsjQFAgNzsyQLM5PCb8opDYGMDOK/mhkYoRDE52EISS0uCc8syfDKz8pnYAAACmokPQ==';
+  '007eJxTYOCOUZ52eEnLJLH8r55SO+eGq5wsLX3oeypvYlXXZ9OUQE4FBksLIzMzs5TUJKPEJBOTVPNE48QkS1MgMDA3S7IwM3HzU01pCGRkSNfIYGFkgEAQn4chJLW4JDyzJMMrPyufgQEA1e0gKA==';
 
 const useClient = createClient({
   mode: 'rtc',
@@ -98,13 +98,8 @@ const VideoCall = () => {
           noteState={{ showNote, setNote }}
         />
         {/* )} */}
-        {start && tracks && (
-          <Videos
-            users={remoteUsers}
-            tracks={tracks}
-          />
-        )}
-        {showNote && <NoteTaking/>}
+        {start && tracks && <Videos users={remoteUsers} tracks={tracks} />}
+        {showNote && <NoteTaking />}
 
         {showWhiteboard && <Fastboard />}
       </div>
