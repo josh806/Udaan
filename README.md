@@ -83,8 +83,6 @@ Start client and server: From `/` run dev environment: `npm run start`
 
 Udaan is an open-source application; contributions welcome.
 
-## License
-
 ## Development
 
 ### Git
