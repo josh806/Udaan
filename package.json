@@ -1,5 +1,5 @@
 {
-  "name": "classZoom",
+  "name": "Udaan",
   "version": "1.0.0",
   "description": "hello",
   "main": "index.js",
@@ -15,7 +15,10 @@
     "client-install": "cd client && npm i",
     "install-all-deps": "npm i && npm run server-install && npm run client-install",
     "prepare": "husky install",
-    "commit": "npm run lint && git cz"
+    "commit": "npm run lint && git cz",
+    "server-start": "cd server && npm start",
+    "client-start": "cd client && npm run dev",
+    "start": "concurrently \"npm run server-start\" \"npm run client-start\""
   },
   "repository": {
     "type": "git",
