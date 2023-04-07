@@ -63,15 +63,21 @@ Basic knowledge of the following technologies:
 
 ### Installation
 
-1. Clone the git repository
+#### Steps
+1. Clone the git repository to local machine
 
-   git clone
+2. Install dependencies<br/>
+From `/` run `npm i` then `npm run install-all-deps` to install all dependecies
 
-2. Install dependencies:
+3. Setup env variables<br/>
+Create `.env` files in `/server` and `/client` (see examples `.env-example`)
 
-3. setup env variables:
+4. Database<br/>
+You will need a database running on your local machine. Add access details to `/server/.env`<br/>
+Database UI: From `/` run `npm run db-ui`
 
-4. Start the server:
+5. Start<br/>
+Start client and server: From `/` run dev environment: `npm run start`
 
 ## Contributing
 
@@ -81,80 +87,55 @@ Udaan is an open-source application; contributions welcome.
 
 ## Development
 
-### Getting started
-
-- From `/` run `npm run install-all-deps` to install all dependecies
-- Create `.env` files in `/server` and `/client` (see examples `.env-example`)
-- Start: From `/` run dev environment: `npm run dev`
-- Database UI: From `/` run `npm run db-ui`
-
-### Git
-
-- Commit with [Commitizen](https://commitizen-tools.github.io/commitizen/)
-
-## Development
-
 ### Git
 
 #### Commit
 
-Run linter followed by `git cz`
+`npm run commit`<br/>
+Linter will run and then [Commitizen](https://commitizen-tools.github.io/commitizen/)
 
-```
-npm run commit
-```
+#### Backend
 
-#### BackEnd
+##### Mock data
 
-In `/server`:
+Seed the database with mock data
+In `/server` run `npx ts-node dataGenerate.ts`
 
-```
-npx ts-node dataGenerate.ts
-```
+#### Linter
 
-Runs the file and create a mock data on database
-
-```
-npm start
-```
-
-Runs `tsc -w` and `nodemon` at the same time.
-
-#### linter
-
-Run lint checker on `/server` and `/client`
+Run linter on `/server` and `/client`
 
 ```
 npm run lint
 ```
 
-Run lint checker on `/server`
+Run linter on `/server`
 
 ```
 npm run lint:server
 ```
 
-Run lint checker on `/client`
+Run linter on `/client`
 
 ```
 npm run lint:client
 ```
 
-##### Fix
+##### Auto-fix
 
-Fix linting issues `/server` and `/client`
+Auto-fix linting issues `/server` and `/client`
 
 ```
 npm run lint:fix
 ```
 
-Fix linting issues on `/server`
+Auto-fix linting issues on `/server`
 
 ```
 npm run lint:fix:server
 ```
 
-Fix linting issues on `/client`
+Auto-fix linting issues on `/client`
 
 ```
 npm run lint:fix:client
